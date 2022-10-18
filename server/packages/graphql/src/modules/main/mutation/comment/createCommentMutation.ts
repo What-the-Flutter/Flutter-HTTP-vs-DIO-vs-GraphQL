@@ -6,33 +6,33 @@ import CommentType from "../../CommentType";
 export default mutationWithClientMutationId({
   name: "createCommentMutation",
   inputFields: {
-    idArticle: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-    username: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-    description: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
     userId: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    articleId: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    authorName: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    text: {
       type: new GraphQLNonNull(GraphQLString)
     }
   },
   mutateAndGetPayload: async (
-    { idArticle, username, description, userId },
-    context,
-    options
+    { articleId, authorName, text, userId }
   ) => {
-    // const idUser = context.user.id; <- o certo seria usar o id do user logado, mas estou colocando direto
+    const date = Date.now();
+    
     const comment = await Comment.create({
-      idArticle,
-      username,
-      description,
-      userId
+      articleId,
+      authorName,
+      text,
+      userId,
+      date
     });
 
-    const CommentUpdate = await Comment.find({ idArticle });
+    const CommentUpdate = await Comment.find({ articleId });
     if (comment) {
       return {
         success: "success",

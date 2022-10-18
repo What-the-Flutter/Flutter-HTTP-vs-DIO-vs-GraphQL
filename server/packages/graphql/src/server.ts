@@ -1,14 +1,14 @@
-import json from "koa-json";
-import dotenv from "dotenv-safe";
+import schema from "./schema";
+import multer from "koa-multer";
+
+const json = require("koa-json");
+const dotenv = require("dotenv-safe");
 const koa = require("koa");
 const route = require("koa-router");
 const logger = require("koa-logger");
 const bodyparser = require("koa-bodyparser");
 const cors = require("kcors");
 const graphqlHTTP = require("koa-graphql");
-
-import schema from "./schema";
-import multer from "koa-multer";
 
 // init router and koa
 const app = new koa();

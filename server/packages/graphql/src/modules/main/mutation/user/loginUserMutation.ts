@@ -1,19 +1,19 @@
 import Users from "./../../../../model/users";
-import { GraphQLString, GraphQLNonNull, GraphQLUnionType, GraphQLObjectType } from "graphql";
+import { GraphQLString, GraphQLNonNull } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 
 export default mutationWithClientMutationId({
   name: "loginUserMutation",
   inputFields: {
-    email: {
+    name: {
       type: new GraphQLNonNull(GraphQLString)
     },
     password: {
       type: new GraphQLNonNull(GraphQLString)
     }
   },
-  mutateAndGetPayload: async ({ email, password }) => {
-    const user = await Users.findOne({ email, password });
+  mutateAndGetPayload: async (name, password) => {
+    const user = await Users.findOne({ name, password });
 
     const defaultErrorMessage = "Invalid login or password";
     if (!user) {
@@ -21,12 +21,11 @@ export default mutationWithClientMutationId({
         error: defaultErrorMessage
       };
     }
-    const { _id, name } = user;
+    const { _id } = user;
 
     return {
       id: _id,
       name: name,
-      email: email
     };
   },
   outputFields: {
@@ -41,10 +40,6 @@ export default mutationWithClientMutationId({
     name: {
       type: GraphQLString,
       resolve: ({ name }) => name
-    },
-    email: {
-      type: GraphQLString,
-      resolve: ({ email }) => email
     }
   }
 });

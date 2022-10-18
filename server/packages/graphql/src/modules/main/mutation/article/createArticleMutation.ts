@@ -1,5 +1,5 @@
 import Article from "./../../../../model/article";
-import { GraphQLString, GraphQLNonNull, GraphQLList } from "graphql";
+import { GraphQLString, GraphQLNonNull, GraphQLList, GraphQLSchema } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import ArticleType from "../../ArticleType";
 
@@ -12,31 +12,20 @@ export default mutationWithClientMutationId({
     title: {
       type: new GraphQLNonNull(GraphQLString)
     },
-    subtitle: {
+    text: {
       type: new GraphQLNonNull(GraphQLString)
-    },
-    description: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-    author: {
-      type: new GraphQLNonNull(new GraphQLList(GraphQLString))
     },
   },
   mutateAndGetPayload: async (
-    { userId, title, subtitle, description, author },
-    context,
-    options
+    { userId, title, text }
   ) => {
     const date = Date.now();
 
     const article = await Article.create({
       userId,
       title,
-      subtitle,
-      description,
-      author,
+      text,
       date,
-      date_update: null,
     });
     
     const ArticleUpdate = await Article.find({});

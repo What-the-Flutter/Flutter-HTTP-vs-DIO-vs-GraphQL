@@ -10,8 +10,7 @@ export default mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLString)
     },
   },
-  mutateAndGetPayload: async ({ id, idArticle }, context, options) => {
-    // const idUser = context.user.id; <- o certo seria usar o id do user logado, mas estou colocando direto
+  mutateAndGetPayload: async ({ id }) => {
     const { deletedCount } = await Comment.deleteOne({ _id: id });
     if (deletedCount === 0) {
       return {

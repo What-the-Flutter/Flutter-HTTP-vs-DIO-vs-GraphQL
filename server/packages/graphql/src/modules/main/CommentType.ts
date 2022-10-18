@@ -3,25 +3,26 @@ import {
     GraphQLString,
     GraphQLID,
 } from 'graphql'
-import {globalIdField} from 'graphql-relay'
 
 export default new GraphQLObjectType({
     name: 'Comments',
     fields: () => ({
-        //id: globalIdField('Comments'),
         id:{
             type: GraphQLID
         },
-        username:{
+        userId:{
             type: GraphQLString,
         },
-        description:{
+        articleId: {
             type: GraphQLString
         },
-        idArticle: {
+        authorName:{
             type: GraphQLString
         },
-        userId: {
+        text:{
+            type: GraphQLString
+        },
+        date:{
             type: GraphQLString
         },
     })

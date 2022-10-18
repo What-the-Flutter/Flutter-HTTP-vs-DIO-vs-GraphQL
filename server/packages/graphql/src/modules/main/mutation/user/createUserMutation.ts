@@ -8,21 +8,18 @@ export default mutationWithClientMutationId({
     name: {
       type: new GraphQLNonNull(GraphQLString)
     },
-    email: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
     password: {
       type: new GraphQLNonNull(GraphQLString)
     }
   },
-  mutateAndGetPayload: async ({ name, email, password }) => {
-    const user = await Users.findOne({ email });
+
+  mutateAndGetPayload: async ({  name, password }) => {
+    const user = await Users.findOne({ name, password });
     // msg's
     const createUserSuccess = "User created successfully";
     const userExist = "User exist";
-
     if (!user) {
-      await Users.create({ name, email, password });
+      await Users.create({ name, password });
       return {
         msg: createUserSuccess
       };

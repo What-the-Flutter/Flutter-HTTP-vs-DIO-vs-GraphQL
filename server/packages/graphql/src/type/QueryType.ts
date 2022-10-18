@@ -48,7 +48,7 @@ export default new GraphQLObjectType({
     comments: {
       type: new GraphQLList(CommentType),
       args: {
-        idArticle: {
+        articleId: {
           type: new GraphQLNonNull(GraphQLID)
         },
         skip: {
@@ -66,18 +66,6 @@ export default new GraphQLObjectType({
           .find({ idArticle })
           .limit(limit)
           .skip(skip);
-      }
-    },
-    findPermalink: {
-      type: ArticleType,
-      args: {
-        slug: {
-          type: new GraphQLNonNull(GraphQLString)
-        }
-      },
-      resolve: (parentValue, args, ctx) => {
-        const slug = args.slug;
-        return articleModel.findOne({ slug });
       }
     }
   })

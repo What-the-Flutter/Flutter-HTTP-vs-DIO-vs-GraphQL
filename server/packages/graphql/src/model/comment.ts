@@ -6,17 +6,21 @@ const comment = new Schema({
     type: String,
     required: "user id required"
   },
-  username: {
+  articleId: {
     type: String,
-    required: "name is required"
+    required: "article id required"
   },
-  description: {
+  authorName: {
     type: String,
-    required: "description is required"
+    required: "author name is required"
   },
-  idArticle: {
+  text: {
     type: String,
-    required: "idArticle required"
+    required: "text is required"
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 });
 

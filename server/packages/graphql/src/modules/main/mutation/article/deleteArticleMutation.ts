@@ -1,7 +1,6 @@
 import Article from "./../../../../model/article";
 import { GraphQLString, GraphQLNonNull, GraphQLList, GraphQLInt } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import ArticleType from "../../ArticleType";
 import comment from "../../../../model/comment";
 
 export default mutationWithClientMutationId({

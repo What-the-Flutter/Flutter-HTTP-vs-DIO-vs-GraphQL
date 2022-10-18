@@ -2,41 +2,26 @@ import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
-    GraphQLList
 } from 'graphql'
-import {globalIdField} from 'graphql-relay'
 
 export default new GraphQLObjectType({
     name: 'Articles',
     fields: () => ({
-        //id: globalIdField('Articles'),
         id:{
             type: GraphQLID
         },
-        author:{
-            type: new GraphQLList(GraphQLString),
-        },
-        date:{
-            type: GraphQLString
-        },
-        date_update:{
+        userId: {
             type: GraphQLString
         },
         title:{
             type: GraphQLString
         },
-        subtitle:{
+        text:{
             type: GraphQLString
         },
-        description:{
+        date:{
             type: GraphQLString
         },
-        userId: {
-            type: GraphQLString
-        },
-        slug: {
-            type: GraphQLString
-        }
     })
 })
 

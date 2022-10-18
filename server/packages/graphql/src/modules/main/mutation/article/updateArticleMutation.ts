@@ -12,25 +12,17 @@ export default mutationWithClientMutationId({
     title: {
       type: GraphQLString
     },
-    subtitle: {
-      type: GraphQLString
-    },
-    description: {
-      type: GraphQLString
-    },
-    date_update: {
+    text: {
       type: GraphQLString
     }
   },
   mutateAndGetPayload: async (
-    { title, subtitle, description, date_update, id },
-    context,
-    options
+    { id, title, text },
   ) => {
     const date = Date.now();
     const {nModified: numModifiedFields} = await Article.updateOne(
       { _id: id },
-      { title, subtitle, description, date_update: date }
+      { title, text, date }
     );
     console.log(numModifiedFields);
     const ArticleUpdate = await Article.find({});
