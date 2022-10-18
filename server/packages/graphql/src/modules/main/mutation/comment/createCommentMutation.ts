@@ -23,7 +23,7 @@ export default mutationWithClientMutationId({
     { articleId, authorName, text, userId }
   ) => {
     const date = Date.now();
-    
+
     const comment = await Comment.create({
       articleId,
       authorName,

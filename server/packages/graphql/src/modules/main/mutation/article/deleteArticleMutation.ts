@@ -11,8 +11,8 @@ export default mutationWithClientMutationId({
     }
   },
   mutateAndGetPayload: async ({ id }, context, options) => {
-    const { deletedCount : deletedArticlesCount } = await Article.deleteOne({ _id: id });
-    const {  deletedCount : deletedCommentsCount } = await comment.deleteMany({ idArticle : id });
+    const { deletedCount: deletedArticlesCount } = await Article.deleteOne({ _id: id });
+    const { deletedCount: deletedCommentsCount } = await comment.deleteMany({ idArticle: id });
 
     const ArticleUpdate = await Article.find({});
     if (deletedArticlesCount === 0) {
@@ -22,7 +22,7 @@ export default mutationWithClientMutationId({
     }
     return {
       success: "success",
-      deletedComments : deletedCommentsCount
+      deletedComments: deletedCommentsCount
     };
   },
   outputFields: {

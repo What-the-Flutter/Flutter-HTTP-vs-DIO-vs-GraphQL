@@ -2,13 +2,13 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const users = new Schema({
-    name:{
+    name: {
         type: String,
         required: 'name is required',
     },
-    password:{
+    password: {
         type: String,
-        required: 'password is required',  
+        required: 'password is required',
     }
 });
 

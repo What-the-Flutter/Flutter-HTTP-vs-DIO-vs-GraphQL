@@ -1,4 +1,4 @@
-import { 
+import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
@@ -7,19 +7,19 @@ import {
 export default new GraphQLObjectType({
     name: 'Articles',
     fields: () => ({
-        id:{
+        id: {
             type: GraphQLID
         },
         userId: {
             type: GraphQLString
         },
-        title:{
+        title: {
             type: GraphQLString
         },
-        text:{
+        text: {
             type: GraphQLString
         },
-        date:{
+        date: {
             type: GraphQLString
         },
     })

@@ -1,4 +1,4 @@
-import { 
+import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
@@ -7,22 +7,22 @@ import {
 export default new GraphQLObjectType({
     name: 'Comments',
     fields: () => ({
-        id:{
+        id: {
             type: GraphQLID
         },
-        userId:{
+        userId: {
             type: GraphQLString,
         },
         articleId: {
             type: GraphQLString
         },
-        authorName:{
+        authorName: {
             type: GraphQLString
         },
-        text:{
+        text: {
             type: GraphQLString
         },
-        date:{
+        date: {
             type: GraphQLString
         },
     })

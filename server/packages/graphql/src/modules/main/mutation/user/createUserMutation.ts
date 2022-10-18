@@ -13,7 +13,7 @@ export default mutationWithClientMutationId({
     }
   },
 
-  mutateAndGetPayload: async ({  name, password }) => {
+  mutateAndGetPayload: async ({ name, password }) => {
     const user = await Users.findOne({ name, password });
     // msg's
     const createUserSuccess = "User created successfully";

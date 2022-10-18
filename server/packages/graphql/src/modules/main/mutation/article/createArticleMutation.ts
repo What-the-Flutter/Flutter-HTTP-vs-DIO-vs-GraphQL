@@ -27,7 +27,7 @@ export default mutationWithClientMutationId({
       text,
       date,
     });
-    
+
     const ArticleUpdate = await Article.find({});
     if (article) {
       return {

@@ -20,7 +20,7 @@ export default mutationWithClientMutationId({
     { id, title, text },
   ) => {
     const date = Date.now();
-    const {nModified: numModifiedFields} = await Article.updateOne(
+    const { nModified: numModifiedFields } = await Article.updateOne(
       { _id: id },
       { title, text, date }
     );
