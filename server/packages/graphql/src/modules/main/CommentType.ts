@@ -13,7 +13,7 @@ export default new GraphQLObjectType({
         userId: {
             type: GraphQLString,
         },
-        articleId: {
+        postId: {
             type: GraphQLString
         },
         authorName: {

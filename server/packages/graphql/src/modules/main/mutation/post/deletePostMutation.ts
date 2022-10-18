@@ -1,21 +1,20 @@
-import Article from "./../../../../model/article";
+import Post from "../../../../model/post";
 import { GraphQLString, GraphQLNonNull, GraphQLList, GraphQLInt } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import comment from "../../../../model/comment";
+import Comment from "../../../../model/comment";
 
 export default mutationWithClientMutationId({
-  name: "deleteArticleMutation",
+  name: "deletePostMutation",
   inputFields: {
     id: {
       type: new GraphQLNonNull(GraphQLString)
     }
   },
   mutateAndGetPayload: async ({ id }, context, options) => {
-    const { deletedCount: deletedArticlesCount } = await Article.deleteOne({ _id: id });
-    const { deletedCount: deletedCommentsCount } = await comment.deleteMany({ idArticle: id });
+    const { deletedCount: deletedPostsCount } = await Post.deleteOne({ _id: id });
+    const { deletedCount: deletedCommentsCount } = await Comment.deleteMany({ postId: id });
 
-    const ArticleUpdate = await Article.find({});
-    if (deletedArticlesCount === 0) {
+    if (deletedPostsCount === 0) {
       return {
         error: "Error to delete post"
       };

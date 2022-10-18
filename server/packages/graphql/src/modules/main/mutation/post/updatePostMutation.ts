@@ -1,10 +1,10 @@
-import Article from "./../../../../model/article";
+import Post from "../../../../model/post";
 import { GraphQLString, GraphQLNonNull, GraphQLList } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import ArticleType from "../../ArticleType";
+import PostType from "../../PostType";
 
 export default mutationWithClientMutationId({
-  name: "updateArticleMutation",
+  name: "updatePostMutation",
   inputFields: {
     id: {
       type: new GraphQLNonNull(GraphQLString)
@@ -20,20 +20,20 @@ export default mutationWithClientMutationId({
     { id, title, text },
   ) => {
     const date = Date.now();
-    const { nModified: numModifiedFields } = await Article.updateOne(
+    const { nModified: numModifiedFields } = await Post.updateOne(
       { _id: id },
       { title, text, date }
     );
     console.log(numModifiedFields);
-    const ArticleUpdate = await Article.find({});
+    const PostUpdate = await Post.find({});
     if (numModifiedFields > 0) {
       return {
         success: "success",
-        article: ArticleUpdate
+        post: PostUpdate
       };
     }
     return {
-      error: "Error to update the article"
+      error: "Error to update a post"
     };
   },
   outputFields: {
@@ -45,9 +45,9 @@ export default mutationWithClientMutationId({
       type: GraphQLString,
       resolve: ({ error }) => error
     },
-    article: {
-      type: new GraphQLList(ArticleType),
-      resolve: ({ article }) => article
+    post: {
+      type: new GraphQLList(PostType),
+      resolve: ({ post }) => post
     }
   }
 });

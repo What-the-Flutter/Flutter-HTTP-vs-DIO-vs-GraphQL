@@ -6,7 +6,7 @@ const comment = new Schema({
     type: String,
     required: "user id required"
   },
-  articleId: {
+  postId: {
     type: String,
     required: "article id required"
   },

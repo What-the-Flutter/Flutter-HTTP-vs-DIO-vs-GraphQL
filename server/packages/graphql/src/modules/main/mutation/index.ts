@@ -1,19 +1,19 @@
 import loginMutation from './user/loginUserMutation'
 import createUserMutation from './user/createUserMutation'
-import createArticleMutation from './article/createArticleMutation'
+import createPostMutation from './post/createPostMutation'
 import createCommentMutation from './comment/createCommentMutation'
-import deleteArticleMutation from './article/deleteArticleMutation'
-import updateArticleMutation from './article/updateArticleMutation'
+import deletePostMutation from './post/deletePostMutation'
+import updatePostMutation from './post/updatePostMutation'
 import deleteCommentMutation from './comment/deleteCommentMutation'
 import updateCommentMutation from './comment/updateCommentMutation'
 
 export default {
     loginMutation,
     createUserMutation,
-    createArticleMutation,
+    createPostMutation,
     createCommentMutation,
-    deleteArticleMutation,
-    updateArticleMutation,
+    deletePostMutation,
+    updatePostMutation,
     deleteCommentMutation,
     updateCommentMutation
 }

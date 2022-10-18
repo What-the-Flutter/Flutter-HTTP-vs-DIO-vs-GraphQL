@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const article = new Schema({
+const post = new Schema({
   userId: {
     type: String,
-    required: "user id is required"
+    required: "user id is required",
   },
   title: {
     type: String,
-    required: "title is required"
+    required: "title is required",
   },
   text: {
     type: String,
-    required: "text is required"
+    required: "text is required",
   },
   date: {
     type: Date,
@@ -20,4 +20,4 @@ const article = new Schema({
   },
 });
 
-export default mongoose.model("articles", article);
+export default mongoose.model("posts", post);

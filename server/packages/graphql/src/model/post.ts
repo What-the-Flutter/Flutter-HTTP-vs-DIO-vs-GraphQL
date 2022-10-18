@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const article = new Schema({
+const post = new Schema({
   userId: {
     type: String,
     required: "user id is required"
@@ -20,4 +20,4 @@ const article = new Schema({
   },
 });
 
-export default mongoose.model("articles", article);
+export default mongoose.model("posts", post);

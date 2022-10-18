@@ -6,28 +6,28 @@ import {
   GraphQLString,
   GraphQLInt
 } from "graphql";
-import ArticleType from "../modules/main/ArticleType";
 import CommentType from "./../modules/main/CommentType";
-import articleModel from "../model/article";
 import commentModel from "../model/comment";
+import postModel from "../model/post";
+import PostType from "../modules/main/PostType";
 
 export default new GraphQLObjectType({
   name: "QueryType",
   description: "Get planets[] and planet",
   fields: () => ({
-    article: {
-      type: ArticleType,
+    post: {
+      type: PostType,
       args: {
         id: {
           type: new GraphQLNonNull(GraphQLID)
         }
       },
       resolve: (parentValue, args, ctx) => {
-        return articleModel.findOne({ _id: args.id });
+        return postModel.findOne({ _id: args.id });
       }
     },
-    articles: {
-      type: new GraphQLList(ArticleType),
+    posts: {
+      type: new GraphQLList(PostType),
       args: {
         skip: {
           type: GraphQLInt
@@ -39,7 +39,7 @@ export default new GraphQLObjectType({
       resolve: (parentValue, args, ctx) => {
         const limit = args.limit;
         const skip = Math.max(0, args.skip);
-        return articleModel
+        return postModel
           .find({})
           .limit(limit)
           .skip(skip);
@@ -48,7 +48,7 @@ export default new GraphQLObjectType({
     comments: {
       type: new GraphQLList(CommentType),
       args: {
-        articleId: {
+        postId: {
           type: new GraphQLNonNull(GraphQLID)
         },
         skip: {
@@ -61,9 +61,9 @@ export default new GraphQLObjectType({
       resolve: (parentValue, args, ctx) => {
         const limit = args.limit;
         const skip = Math.max(0, args.skip);
-        const idArticle = args.idArticle;
+        const postId = args.postId;
         return commentModel
-          .find({ idArticle })
+          .find({ postId })
           .limit(limit)
           .skip(skip);
       }

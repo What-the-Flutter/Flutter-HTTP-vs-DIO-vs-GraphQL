@@ -9,7 +9,7 @@ export default mutationWithClientMutationId({
     userId: {
       type: new GraphQLNonNull(GraphQLString)
     },
-    articleId: {
+    postId: {
       type: new GraphQLNonNull(GraphQLString)
     },
     authorName: {
@@ -20,19 +20,19 @@ export default mutationWithClientMutationId({
     }
   },
   mutateAndGetPayload: async (
-    { articleId, authorName, text, userId }
+    { postId, authorName, text, userId }
   ) => {
     const date = Date.now();
 
     const comment = await Comment.create({
-      articleId,
+      postId,
       authorName,
       text,
       userId,
       date
     });
 
-    const CommentUpdate = await Comment.find({ articleId });
+    const CommentUpdate = await Comment.find({ postId });
     if (comment) {
       return {
         success: "success",
