@@ -20,8 +20,8 @@ Post _$PostFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Post {
-  int get id => throw _privateConstructorUsedError;
-  int get userId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
   String get authorName => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
@@ -37,7 +37,11 @@ abstract class $PostCopyWith<$Res> {
       _$PostCopyWithImpl<$Res, Post>;
   @useResult
   $Res call(
-      {int id, int userId, String authorName, String text, DateTime date});
+      {String id,
+      String userId,
+      String authorName,
+      String text,
+      DateTime date});
 }
 
 /// @nodoc
@@ -63,11 +67,11 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       authorName: null == authorName
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
@@ -91,7 +95,11 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id, int userId, String authorName, String text, DateTime date});
+      {String id,
+      String userId,
+      String authorName,
+      String text,
+      DateTime date});
 }
 
 /// @nodoc
@@ -113,11 +121,11 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       authorName: null == authorName
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
@@ -147,9 +155,9 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
-  final int userId;
+  final String userId;
   @override
   final String authorName;
   @override
@@ -208,8 +216,8 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
 
 abstract class _Post implements Post {
   const factory _Post(
-      {required final int id,
-      required final int userId,
+      {required final String id,
+      required final String userId,
       required final String authorName,
       required final String text,
       required final DateTime date}) = _$_Post;
@@ -217,9 +225,9 @@ abstract class _Post implements Post {
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
-  int get userId;
+  String get userId;
   @override
   String get authorName;
   @override

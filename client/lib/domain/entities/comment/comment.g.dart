@@ -7,9 +7,9 @@ part of 'comment.dart';
 // **************************************************************************
 
 _$_Comment _$$_CommentFromJson(Map<String, dynamic> json) => _$_Comment(
-      id: json['id'] as int,
-      userId: json['userId'] as int,
-      postId: json['postId'] as int,
+      id: json['id'] as String,
+      userId: json['userId'] as String,
+      postId: json['postId'] as String,
       authorName: json['authorName'] as String,
       text: json['text'] as String,
       date: DateTime.parse(json['date'] as String),
