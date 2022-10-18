@@ -12,7 +12,7 @@ export default mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLString)
     }
   },
-  mutateAndGetPayload: async (name, password) => {
+  mutateAndGetPayload: async ({ name, password }) => {
     const user = await Users.findOne({ name, password });
 
     const defaultErrorMessage = "Invalid login or password";
