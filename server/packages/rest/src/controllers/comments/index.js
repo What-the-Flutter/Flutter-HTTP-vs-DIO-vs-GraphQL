@@ -3,34 +3,52 @@ import Comment from "./../../models/comment";
 
 // get a comment
 export const GetComments = async ctx => {
-    const { idArticle } = ctx.params;
+    const { articleId } = ctx.params;
     const { limit, skip } = ctx.query;
     const skipInt = Math.max(0, parseInt(skip));
     const limitInt = parseInt(limit);
-  
-    const comment = await Comment.find({ idArticle })
+    
+    const rawComments = await Comment.find({ articleId })
       .limit(limitInt)
       .skip(skipInt);
+      
+      let comments = [];
   
-    return (ctx.body = comment);
+      for (let i = 0; i < rawComments.length; i++) {
+        const comment = { 
+          "id": rawComments[i]._id,
+          "articleId": rawComments[i].articleId,
+          "authorName":  rawComments[i].authorName,
+          "text": rawComments[i].text,
+          "date": rawComments[i].date,
+        };
+        comments.push(comment);
+      }
+  
+    return (ctx.body = comments);
   };
   
   // create a comment
   export const CreateOneComment = async ctx => {
-    const { userId, username, description, idArticle } = ctx.request.body;
+    const { userId, articleId, authorName, text } = ctx.request.body;
+    const date = Date.now();
+
     await Comment.create({
-      idArticle,
-      username,
-      description,
-      userId
+      userId,
+      articleId,
+      authorName,
+      text,
+      date
     });
     return (ctx.status = 200);
   };
   
   // create a update
   export const UpdateOneComment = async ctx => {
-    const { id, description } = ctx.request.body;
-    await Comment.updateOne({ _id: id }, { description });
+    const { id, text } = ctx.request.body;
+    const date = Date.now();
+
+    await Comment.updateOne({ _id: id }, { text, date });
     return (ctx.status = 200);
   };
   

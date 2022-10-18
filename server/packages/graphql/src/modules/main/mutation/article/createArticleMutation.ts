@@ -2,7 +2,6 @@ import Article from "./../../../../model/article";
 import { GraphQLString, GraphQLNonNull, GraphQLList } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import ArticleType from "../../ArticleType";
-import GetSlug from './../../../helper/GetSlug'
 
 export default mutationWithClientMutationId({
   name: "createArticleMutation",
@@ -28,9 +27,6 @@ export default mutationWithClientMutationId({
     context,
     options
   ) => {
-    // permalink and slug
-    const slug = GetSlug("articles", title)
-    console.log(slug)
     const date = Date.now();
 
     const article = await Article.create({
@@ -41,7 +37,6 @@ export default mutationWithClientMutationId({
       author,
       date,
       date_update: null,
-      slug
     });
     
     const ArticleUpdate = await Article.find({});

@@ -4,11 +4,11 @@ import Users from "../../models/users";
 
 // login an user
 export const loginUser = async ctx => {
-    const { email, password } = ctx.request.body;
-    let user = await Users.findOne({ email, password });
+    const { name, password } = ctx.request.body;
+    let user = await Users.findOne({ name, password });
     if (user) {
       const { _id, name} = user;
-      ctx.body = { id: _id, name, email };
+      ctx.body = { id: _id, name };
     } else {
       ctx.status = 401;
     }
@@ -16,12 +16,17 @@ export const loginUser = async ctx => {
   
   // create an user
   export const createUser = async ctx => {
-    const { name, email, password } = ctx.request.body;
-    const user = await Users.findOne({ email });
+    const { name, password } = ctx.request.body;
+    const user = await Users.findOne({ name, password });
     if (!user) {
-      await Users.create({ name, email, password });
-      return (ctx.status = 200);
+      try {
+        await Users.create({ name, password });
+        return (ctx.status = 200);
+      } catch (error) {
+        ctx.body = {error};
+        return (ctx.status = 500);
+      }
     } else {
-      ctx.status = 501;
+      return ctx.status = 409;
     }
   };

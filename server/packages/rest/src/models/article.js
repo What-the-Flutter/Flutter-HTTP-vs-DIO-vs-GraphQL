@@ -4,35 +4,20 @@ const Schema = mongoose.Schema;
 const article = new Schema({
   userId: {
     type: String,
-    required: "user id is requerid"
+    required: "user id is required"
   },
   title: {
     type: String,
-    required: "title is requerid"
+    required: "title is required"
   },
-  subtitle: {
+  text: {
     type: String,
-    required: "subtitle is requerid"
-  },
-  description: {
-    type: String,
-    required: "author is requerid"
-  },
-  author: {
-    type: [String],
-    required: "author is requerid"
+    required: "text is required"
   },
   date: {
     type: Date,
     default: Date.now,
   },
-  date_update: {
-    type: Date
-  },
-  slug: {
-    type: String,
-    required: "slug is requerid"
-  }
 });
 
 export default mongoose.model("articles", article);

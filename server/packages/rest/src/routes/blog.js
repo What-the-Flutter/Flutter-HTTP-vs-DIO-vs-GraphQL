@@ -30,12 +30,9 @@ router.post("/api/article", CreateOneArticles);
 router.delete("/api/article/:id", DeleteOneArticle);
 router.put("/api/article/:id", UpdateOneArticle);
 // comments
-router.get("/api/comment/:idArticle", GetComments);
+router.get("/api/comment/:articleId", GetComments);
 router.post("/api/comment", CreateOneComment);
 router.put("/api/comment", UpdateOneComment);
 router.delete("/api/comment/:id", DeleteOneComment);
-
-//permalink
-router.get("/api/permalink", Permalink);
 
 export default router.routes();

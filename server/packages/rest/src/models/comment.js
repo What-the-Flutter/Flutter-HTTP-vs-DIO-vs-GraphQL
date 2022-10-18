@@ -2,22 +2,26 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const comment = new Schema({
-  username: {
-    type: String,
-    required: "name is required"
-  },
-  description: {
-    type: String,
-    required: "description is required"
-  },
-  idArticle: {
-    type: String,
-    required: "idArticle required"
-  },
   userId: {
     type: String,
-    required: "idUser required"
-  }
+    required: "user id required"
+  },
+  articleId: {
+    type: String,
+    required: "article id required"
+  },
+  authorName: {
+    type: String,
+    required: "author name is required"
+  },
+  text: {
+    type: String,
+    required: "text is required"
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 export default mongoose.model("comments", comment);
