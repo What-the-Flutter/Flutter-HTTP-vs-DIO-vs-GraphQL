@@ -24,6 +24,7 @@ mixin _$Post {
   String get userId => throw _privateConstructorUsedError;
   String get authorName => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $PostCopyWith<$Res> {
       String userId,
       String authorName,
       String text,
+      String title,
       DateTime date});
 }
 
@@ -61,6 +63,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? userId = null,
     Object? authorName = null,
     Object? text = null,
+    Object? title = null,
     Object? date = null,
   }) {
     return _then(_value.copyWith(
@@ -79,6 +82,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       date: null == date
           ? _value.date
@@ -99,6 +106,7 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       String userId,
       String authorName,
       String text,
+      String title,
       DateTime date});
 }
 
@@ -115,6 +123,7 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
     Object? userId = null,
     Object? authorName = null,
     Object? text = null,
+    Object? title = null,
     Object? date = null,
   }) {
     return _then(_$_Post(
@@ -134,6 +143,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -150,6 +163,7 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
       required this.userId,
       required this.authorName,
       required this.text,
+      required this.title,
       required this.date});
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
@@ -163,11 +177,13 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
   @override
   final String text;
   @override
+  final String title;
+  @override
   final DateTime date;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Post(id: $id, userId: $userId, authorName: $authorName, text: $text, date: $date)';
+    return 'Post(id: $id, userId: $userId, authorName: $authorName, text: $text, title: $title, date: $date)';
   }
 
   @override
@@ -179,6 +195,7 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('authorName', authorName))
       ..add(DiagnosticsProperty('text', text))
+      ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('date', date));
   }
 
@@ -192,13 +209,14 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
             (identical(other.authorName, authorName) ||
                 other.authorName == authorName) &&
             (identical(other.text, text) || other.text == text) &&
+            (identical(other.title, title) || other.title == title) &&
             (identical(other.date, date) || other.date == date));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, userId, authorName, text, date);
+      Object.hash(runtimeType, id, userId, authorName, text, title, date);
 
   @JsonKey(ignore: true)
   @override
@@ -220,6 +238,7 @@ abstract class _Post implements Post {
       required final String userId,
       required final String authorName,
       required final String text,
+      required final String title,
       required final DateTime date}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
@@ -232,6 +251,8 @@ abstract class _Post implements Post {
   String get authorName;
   @override
   String get text;
+  @override
+  String get title;
   @override
   DateTime get date;
   @override

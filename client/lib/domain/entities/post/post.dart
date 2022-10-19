@@ -11,6 +11,7 @@ class Post with _$Post{
     required String userId,
     required String authorName,
     required String text,
+    required String title,
     required DateTime date,
   }) = _Post;
 
