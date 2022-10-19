@@ -27,7 +27,7 @@ export default mutationWithClientMutationId({
       };
     }
     return {
-      error: "Error in update an comment"
+      error: "Error  updating a comment"
     };
   },
   outputFields: {

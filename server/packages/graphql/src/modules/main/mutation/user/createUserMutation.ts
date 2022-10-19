@@ -16,26 +16,26 @@ export default mutationWithClientMutationId({
   mutateAndGetPayload: async ({ name, password }) => {
     const user = await Users.findOne({ name, password });
     // msg's
-    const createUserSuccess = "User created successfully";
-    const userExist = "User exist";
+    const createUserSuccess = "success";
+    const error = "Error creating a new user. User migh already exist";
     if (!user) {
       await Users.create({ name, password });
       return {
-        msg: createUserSuccess
+        success: createUserSuccess
       };
     }
     return {
-      userExist: userExist
+      error: error
     };
   },
   outputFields: {
-    msg: {
+    success: {
       type: GraphQLString,
-      resolve: ({ msg }) => msg
+      resolve: ({ success }) => success
     },
-    userExist: {
+    error: {
       type: GraphQLString,
-      resolve: ({ userExist }) => userExist
+      resolve: ({ error }) => error
     }
   }
 });

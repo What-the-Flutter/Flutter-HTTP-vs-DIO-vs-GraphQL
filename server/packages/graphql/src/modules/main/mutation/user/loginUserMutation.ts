@@ -24,6 +24,7 @@ export default mutationWithClientMutationId({
     const { _id } = user;
 
     return {
+      success: "success",
       id: _id,
       name: name,
     };
@@ -32,6 +33,10 @@ export default mutationWithClientMutationId({
     error: {
       type: GraphQLString,
       resolve: ({ error }) => error
+    },
+    success: {
+      type: GraphQLString,
+      resolve: ({ success }) => success
     },
     id: {
       type: GraphQLString,

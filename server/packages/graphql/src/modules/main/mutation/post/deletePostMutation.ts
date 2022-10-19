@@ -10,13 +10,13 @@ export default mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLString)
     }
   },
-  mutateAndGetPayload: async ({ id }, context, options) => {
+  mutateAndGetPayload: async ({ id }) => {
     const { deletedCount: deletedPostsCount } = await Post.deleteOne({ _id: id });
     const { deletedCount: deletedCommentsCount } = await Comment.deleteMany({ postId: id });
 
     if (deletedPostsCount === 0) {
       return {
-        error: "Error to delete post"
+        error: "Error deleting a post"
       };
     }
     return {

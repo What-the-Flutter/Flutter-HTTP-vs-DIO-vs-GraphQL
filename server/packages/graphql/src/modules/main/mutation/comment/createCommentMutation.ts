@@ -32,15 +32,13 @@ export default mutationWithClientMutationId({
       date
     });
 
-    const CommentUpdate = await Comment.find({ postId });
     if (comment) {
       return {
-        success: "success",
-        comment: CommentUpdate
+        success: "success"
       };
     }
     return {
-      error: "Error in create an comment"
+      error: "Error creating a comment"
     };
   },
   outputFields: {
@@ -51,10 +49,6 @@ export default mutationWithClientMutationId({
     error: {
       type: GraphQLString,
       resolve: ({ error }) => error
-    },
-    comment: {
-      type: new GraphQLList(CommentType),
-      resolve: ({ comment }) => comment
     }
   }
 });

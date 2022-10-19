@@ -24,16 +24,13 @@ export default mutationWithClientMutationId({
       { _id: id },
       { title, text, date }
     );
-    console.log(numModifiedFields);
-    const PostUpdate = await Post.find({});
     if (numModifiedFields > 0) {
       return {
-        success: "success",
-        post: PostUpdate
+        success: "success"
       };
     }
     return {
-      error: "Error to update a post"
+      error: "Error updating a post"
     };
   },
   outputFields: {
@@ -44,10 +41,6 @@ export default mutationWithClientMutationId({
     error: {
       type: GraphQLString,
       resolve: ({ error }) => error
-    },
-    post: {
-      type: new GraphQLList(PostType),
-      resolve: ({ post }) => post
     }
   }
 });

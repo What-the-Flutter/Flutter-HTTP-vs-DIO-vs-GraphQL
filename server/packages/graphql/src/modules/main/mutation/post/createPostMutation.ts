@@ -9,6 +9,9 @@ export default mutationWithClientMutationId({
     userId: {
       type: new GraphQLNonNull(GraphQLString)
     },
+    authorName: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
     title: {
       type: new GraphQLNonNull(GraphQLString)
     },
@@ -17,26 +20,25 @@ export default mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: async (
-    { userId, title, text }
+    { userId, authorName, title, text }
   ) => {
     const date = Date.now();
 
     const post = await Post.create({
       userId,
+      authorName,
       title,
       text,
       date,
     });
 
-    const PostUpdate = await Post.find({});
     if (post) {
       return {
         success: "success",
-        post: PostUpdate
       };
     }
     return {
-      error: "Error in creating a post"
+      error: "Error creating a post"
     };
   },
   outputFields: {
@@ -47,10 +49,6 @@ export default mutationWithClientMutationId({
     error: {
       type: GraphQLString,
       resolve: ({ error }) => error
-    },
-    post: {
-      type: new GraphQLList(PostType),
-      resolve: ({ post }) => post
     }
   }
 });

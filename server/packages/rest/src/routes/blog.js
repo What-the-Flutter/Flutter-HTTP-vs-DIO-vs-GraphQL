@@ -10,7 +10,6 @@ import {
   CreateOnePost,
   DeleteOnePost,
   FindPosts,
-  FindOnePost,
   UpdateOnePost,
 } from "../controllers/posts";
 
@@ -21,7 +20,6 @@ router.post("/api/login", loginUser);
 router.post("/api/createUser", createUser);
 // posts
 router.get("/api/posts", FindPosts);
-router.get("/api/post/:id", FindOnePost);
 router.post("/api/post", CreateOnePost);
 router.delete("/api/post/:id", DeleteOnePost);
 router.put("/api/post/:id", UpdateOnePost);

@@ -14,7 +14,7 @@ export default mutationWithClientMutationId({
     const { deletedCount } = await Comment.deleteOne({ _id: id });
     if (deletedCount === 0) {
       return {
-        error: "Error occured"
+        error: "Error deleting a comment"
       };
     }
 

@@ -8,7 +8,7 @@ const comment = new Schema({
   },
   postId: {
     type: String,
-    required: "article id required"
+    required: "post id required"
   },
   authorName: {
     type: String,

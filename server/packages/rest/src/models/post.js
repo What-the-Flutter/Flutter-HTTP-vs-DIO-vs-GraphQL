@@ -6,6 +6,10 @@ const post = new Schema({
     type: String,
     required: "user id is required",
   },
+  authorName: {
+    type: String,
+    required: "author name is required",
+  },
   title: {
     type: String,
     required: "title is required",

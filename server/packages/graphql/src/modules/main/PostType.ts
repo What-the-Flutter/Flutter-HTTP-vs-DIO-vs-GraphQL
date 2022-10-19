@@ -13,6 +13,9 @@ export default new GraphQLObjectType({
         userId: {
             type: GraphQLString
         },
+        authorName: {
+            type: GraphQLString
+        },
         title: {
             type: GraphQLString
         },
