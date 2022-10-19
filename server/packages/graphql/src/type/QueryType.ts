@@ -3,7 +3,6 @@ import {
   GraphQLList,
   GraphQLNonNull,
   GraphQLID,
-  GraphQLString,
   GraphQLInt
 } from "graphql";
 import CommentType from "./../modules/main/CommentType";
