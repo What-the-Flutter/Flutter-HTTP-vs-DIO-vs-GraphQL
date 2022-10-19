@@ -20,9 +20,9 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Comment {
-  int get id => throw _privateConstructorUsedError;
-  int get userId => throw _privateConstructorUsedError;
-  int get postId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  String get postId => throw _privateConstructorUsedError;
   String get authorName => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
@@ -38,9 +38,9 @@ abstract class $CommentCopyWith<$Res> {
       _$CommentCopyWithImpl<$Res, Comment>;
   @useResult
   $Res call(
-      {int id,
-      int userId,
-      int postId,
+      {String id,
+      String userId,
+      String postId,
       String authorName,
       String text,
       DateTime date});
@@ -70,15 +70,15 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       authorName: null == authorName
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
@@ -103,9 +103,9 @@ abstract class _$$_CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      int userId,
-      int postId,
+      {String id,
+      String userId,
+      String postId,
       String authorName,
       String text,
       DateTime date});
@@ -132,15 +132,15 @@ class __$$_CommentCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       authorName: null == authorName
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
@@ -172,11 +172,11 @@ class _$_Comment with DiagnosticableTreeMixin implements _Comment {
       _$$_CommentFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
-  final int userId;
+  final String userId;
   @override
-  final int postId;
+  final String postId;
   @override
   final String authorName;
   @override
@@ -237,9 +237,9 @@ class _$_Comment with DiagnosticableTreeMixin implements _Comment {
 
 abstract class _Comment implements Comment {
   const factory _Comment(
-      {required final int id,
-      required final int userId,
-      required final int postId,
+      {required final String id,
+      required final String userId,
+      required final String postId,
       required final String authorName,
       required final String text,
       required final DateTime date}) = _$_Comment;
@@ -247,11 +247,11 @@ abstract class _Comment implements Comment {
   factory _Comment.fromJson(Map<String, dynamic> json) = _$_Comment.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
-  int get userId;
+  String get userId;
   @override
-  int get postId;
+  String get postId;
   @override
   String get authorName;
   @override
