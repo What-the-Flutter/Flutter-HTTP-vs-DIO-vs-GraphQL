@@ -39,7 +39,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
     return Container(
       margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
       child: TextField(
-        decoration: const InputDecoration.collapsed(hintText: 'Username'),
+        decoration: const InputDecoration.collapsed(hintText: 'Name'),
         onChanged: (text) => ref.read(authProvider.notifier).setButtonActive(
               text,
               _passwordTextController.value.text,
