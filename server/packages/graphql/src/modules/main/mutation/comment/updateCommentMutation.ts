@@ -9,18 +9,16 @@ export default mutationWithClientMutationId({
     id: {
       type: new GraphQLNonNull(GraphQLString)
     },
-    description: {
+    text: {
       type: GraphQLString
     },
   },
   mutateAndGetPayload: async (
-    {  description, id },
-    context,
-    options
+    { id, text }
   ) => {
     const comment = await Comment.updateOne(
       { _id: id },
-      { description }
+      { text }
     );
 
     if (comment) {
@@ -29,7 +27,7 @@ export default mutationWithClientMutationId({
       };
     }
     return {
-      error: "Error in update an comment"
+      error: "Error  updating a comment"
     };
   },
   outputFields: {

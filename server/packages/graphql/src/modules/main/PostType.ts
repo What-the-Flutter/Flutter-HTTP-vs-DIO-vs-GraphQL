@@ -5,18 +5,18 @@ import {
 } from 'graphql'
 
 export default new GraphQLObjectType({
-    name: 'Comments',
+    name: 'Posts',
     fields: () => ({
         id: {
             type: GraphQLID
         },
         userId: {
-            type: GraphQLString,
-        },
-        postId: {
             type: GraphQLString
         },
         authorName: {
+            type: GraphQLString
+        },
+        title: {
             type: GraphQLString
         },
         text: {

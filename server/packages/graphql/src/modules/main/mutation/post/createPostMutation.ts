@@ -1,44 +1,44 @@
-import Comment from "./../../../../model/comment";
-import { GraphQLString, GraphQLNonNull, GraphQLList } from "graphql";
+import Post from "../../../../model/post";
+import { GraphQLString, GraphQLNonNull, GraphQLList, GraphQLSchema } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import CommentType from "../../CommentType";
+import PostType from "../../PostType";
 
 export default mutationWithClientMutationId({
-  name: "createCommentMutation",
+  name: "createPostMutation",
   inputFields: {
     userId: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-    postId: {
       type: new GraphQLNonNull(GraphQLString)
     },
     authorName: {
       type: new GraphQLNonNull(GraphQLString)
     },
+    title: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
     text: {
       type: new GraphQLNonNull(GraphQLString)
-    }
+    },
   },
   mutateAndGetPayload: async (
-    { postId, authorName, text, userId }
+    { userId, authorName, title, text }
   ) => {
     const date = Date.now();
 
-    const comment = await Comment.create({
-      postId,
-      authorName,
-      text,
+    const post = await Post.create({
       userId,
-      date
+      authorName,
+      title,
+      text,
+      date,
     });
 
-    if (comment) {
+    if (post) {
       return {
-        success: "success"
+        success: "success",
       };
     }
     return {
-      error: "Error creating a comment"
+      error: "Error creating a post"
     };
   },
   outputFields: {

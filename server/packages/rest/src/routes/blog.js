@@ -1,41 +1,32 @@
 import Router from "koa-router";
-import {
-  loginUser,
-  createUser,
-} from "../controllers/users";
+import { loginUser, createUser } from "../controllers/users";
 import {
   CreateOneComment,
   GetComments,
   DeleteOneComment,
-  UpdateOneComment
+  UpdateOneComment,
 } from "../controllers/comments";
 import {
-  CreateOneArticles,
-  DeleteOneArticle,
-  FindArticles,
-  FindOneArticles,
-  UpdateOneArticle,
-  Permalink
-} from "../controllers/articles";
+  CreateOnePost,
+  DeleteOnePost,
+  FindPosts,
+  UpdateOnePost,
+} from "../controllers/posts";
 
 const router = new Router();
 
 // create user and login
 router.post("/api/login", loginUser);
 router.post("/api/createUser", createUser);
-// articles
-router.get("/api/articles", FindArticles);
-router.get("/api/article/:id", FindOneArticles);
-router.post("/api/article", CreateOneArticles);
-router.delete("/api/article/:id", DeleteOneArticle);
-router.put("/api/article/:id", UpdateOneArticle);
+// posts
+router.get("/api/posts", FindPosts);
+router.post("/api/post", CreateOnePost);
+router.delete("/api/post/:id", DeleteOnePost);
+router.put("/api/post/:id", UpdateOnePost);
 // comments
-router.get("/api/comment/:idArticle", GetComments);
+router.get("/api/comment/:postId", GetComments);
 router.post("/api/comment", CreateOneComment);
 router.put("/api/comment", UpdateOneComment);
 router.delete("/api/comment/:id", DeleteOneComment);
-
-//permalink
-router.get("/api/permalink", Permalink);
 
 export default router.routes();
