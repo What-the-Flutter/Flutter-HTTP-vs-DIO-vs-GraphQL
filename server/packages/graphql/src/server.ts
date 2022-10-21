@@ -1,8 +1,5 @@
 import schema from "./schema";
 import multer from "koa-multer";
-const { createPubSub } = require("graphql-yoga");
-
-const pubsub = createPubSub();
 
 const json = require("koa-json");
 const koa = require("koa");
@@ -34,8 +31,7 @@ const graphqlSettingsPerReq = async (ctx: { req: any; res: any; }) => {
       request: ctx.req
     },
     context: {
-      request,
-      pubsub
+      request
     }
   };
 };
