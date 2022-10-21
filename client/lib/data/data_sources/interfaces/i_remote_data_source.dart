@@ -7,6 +7,7 @@ abstract class IRemoteDataSource {
   Future<User> loginUser(CreateUserModel user);
 
   Future<List<Post>> getAllPosts();
+  Future<Post> getPost(String postId);
   Future<void> createPost(CreatePostModel post);
   Future<void> updatePost(Post post);
   Future<void> deletePost(String postId);

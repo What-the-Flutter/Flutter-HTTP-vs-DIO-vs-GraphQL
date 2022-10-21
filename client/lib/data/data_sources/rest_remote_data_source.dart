@@ -72,4 +72,10 @@ class RestRemoteDataSource implements IRemoteDataSource {
     final response = await _dio.put('/post/${post.id}', data: post.toJson());
     return response.retrieveResult();
   }
+
+  @override
+  Future<Post> getPost(String postId) async {
+    final response = await _dio.get('/posts/$postId');
+    return response.retrieveResult<Post>()!;
+  }
 }

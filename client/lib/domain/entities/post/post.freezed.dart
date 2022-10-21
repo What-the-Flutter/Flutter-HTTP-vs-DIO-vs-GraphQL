@@ -26,6 +26,7 @@ mixin _$Post {
   String get text => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
+  int get commentCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +44,8 @@ abstract class $PostCopyWith<$Res> {
       String authorName,
       String text,
       String title,
-      DateTime date});
+      DateTime date,
+      int commentCount});
 }
 
 /// @nodoc
@@ -65,6 +67,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? text = null,
     Object? title = null,
     Object? date = null,
+    Object? commentCount = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -91,6 +94,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      commentCount: null == commentCount
+          ? _value.commentCount
+          : commentCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -107,7 +114,8 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       String authorName,
       String text,
       String title,
-      DateTime date});
+      DateTime date,
+      int commentCount});
 }
 
 /// @nodoc
@@ -125,6 +133,7 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
     Object? text = null,
     Object? title = null,
     Object? date = null,
+    Object? commentCount = null,
   }) {
     return _then(_$_Post(
       id: null == id
@@ -151,6 +160,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      commentCount: null == commentCount
+          ? _value.commentCount
+          : commentCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -164,7 +177,8 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
       required this.authorName,
       required this.text,
       required this.title,
-      required this.date});
+      required this.date,
+      this.commentCount = 0});
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
@@ -180,10 +194,13 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
   final String title;
   @override
   final DateTime date;
+  @override
+  @JsonKey()
+  final int commentCount;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Post(id: $id, userId: $userId, authorName: $authorName, text: $text, title: $title, date: $date)';
+    return 'Post(id: $id, userId: $userId, authorName: $authorName, text: $text, title: $title, date: $date, commentCount: $commentCount)';
   }
 
   @override
@@ -196,7 +213,8 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
       ..add(DiagnosticsProperty('authorName', authorName))
       ..add(DiagnosticsProperty('text', text))
       ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('date', date));
+      ..add(DiagnosticsProperty('date', date))
+      ..add(DiagnosticsProperty('commentCount', commentCount));
   }
 
   @override
@@ -210,13 +228,15 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
                 other.authorName == authorName) &&
             (identical(other.text, text) || other.text == text) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.date, date) || other.date == date));
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.commentCount, commentCount) ||
+                other.commentCount == commentCount));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, userId, authorName, text, title, date);
+  int get hashCode => Object.hash(
+      runtimeType, id, userId, authorName, text, title, date, commentCount);
 
   @JsonKey(ignore: true)
   @override
@@ -239,7 +259,8 @@ abstract class _Post implements Post {
       required final String authorName,
       required final String text,
       required final String title,
-      required final DateTime date}) = _$_Post;
+      required final DateTime date,
+      final int commentCount}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
@@ -256,6 +277,8 @@ abstract class _Post implements Post {
   @override
   DateTime get date;
   @override
+  int get commentCount;
+  @override
   @JsonKey(ignore: true)
   _$$_PostCopyWith<_$_Post> get copyWith => throw _privateConstructorUsedError;
 }
@@ -271,6 +294,7 @@ mixin _$CreatePostModel {
   String get text => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
+  int get commentCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -289,7 +313,8 @@ abstract class $CreatePostModelCopyWith<$Res> {
       String authorName,
       String text,
       String title,
-      DateTime date});
+      DateTime date,
+      int commentCount});
 }
 
 /// @nodoc
@@ -310,6 +335,7 @@ class _$CreatePostModelCopyWithImpl<$Res, $Val extends CreatePostModel>
     Object? text = null,
     Object? title = null,
     Object? date = null,
+    Object? commentCount = null,
   }) {
     return _then(_value.copyWith(
       userId: null == userId
@@ -332,6 +358,10 @@ class _$CreatePostModelCopyWithImpl<$Res, $Val extends CreatePostModel>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      commentCount: null == commentCount
+          ? _value.commentCount
+          : commentCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -349,7 +379,8 @@ abstract class _$$_CreatePostModelCopyWith<$Res>
       String authorName,
       String text,
       String title,
-      DateTime date});
+      DateTime date,
+      int commentCount});
 }
 
 /// @nodoc
@@ -368,6 +399,7 @@ class __$$_CreatePostModelCopyWithImpl<$Res>
     Object? text = null,
     Object? title = null,
     Object? date = null,
+    Object? commentCount = null,
   }) {
     return _then(_$_CreatePostModel(
       userId: null == userId
@@ -390,6 +422,10 @@ class __$$_CreatePostModelCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      commentCount: null == commentCount
+          ? _value.commentCount
+          : commentCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -404,7 +440,8 @@ class _$_CreatePostModel
       required this.authorName,
       required this.text,
       required this.title,
-      required this.date});
+      required this.date,
+      this.commentCount = 0});
 
   factory _$_CreatePostModel.fromJson(Map<String, dynamic> json) =>
       _$$_CreatePostModelFromJson(json);
@@ -419,10 +456,13 @@ class _$_CreatePostModel
   final String title;
   @override
   final DateTime date;
+  @override
+  @JsonKey()
+  final int commentCount;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CreatePostModel(userId: $userId, authorName: $authorName, text: $text, title: $title, date: $date)';
+    return 'CreatePostModel(userId: $userId, authorName: $authorName, text: $text, title: $title, date: $date, commentCount: $commentCount)';
   }
 
   @override
@@ -434,7 +474,8 @@ class _$_CreatePostModel
       ..add(DiagnosticsProperty('authorName', authorName))
       ..add(DiagnosticsProperty('text', text))
       ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('date', date));
+      ..add(DiagnosticsProperty('date', date))
+      ..add(DiagnosticsProperty('commentCount', commentCount));
   }
 
   @override
@@ -447,13 +488,15 @@ class _$_CreatePostModel
                 other.authorName == authorName) &&
             (identical(other.text, text) || other.text == text) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.date, date) || other.date == date));
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.commentCount, commentCount) ||
+                other.commentCount == commentCount));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, userId, authorName, text, title, date);
+  int get hashCode => Object.hash(
+      runtimeType, userId, authorName, text, title, date, commentCount);
 
   @JsonKey(ignore: true)
   @override
@@ -475,7 +518,8 @@ abstract class _CreatePostModel implements CreatePostModel {
       required final String authorName,
       required final String text,
       required final String title,
-      required final DateTime date}) = _$_CreatePostModel;
+      required final DateTime date,
+      final int commentCount}) = _$_CreatePostModel;
 
   factory _CreatePostModel.fromJson(Map<String, dynamic> json) =
       _$_CreatePostModel.fromJson;
@@ -490,6 +534,8 @@ abstract class _CreatePostModel implements CreatePostModel {
   String get title;
   @override
   DateTime get date;
+  @override
+  int get commentCount;
   @override
   @JsonKey(ignore: true)
   _$$_CreatePostModelCopyWith<_$_CreatePostModel> get copyWith =>

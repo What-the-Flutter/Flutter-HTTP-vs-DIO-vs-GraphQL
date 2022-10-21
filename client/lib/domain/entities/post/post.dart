@@ -14,6 +14,7 @@ class Post with _$Post {
     required String text,
     required String title,
     required DateTime date,
+    @Default(0) int commentCount,
   }) = _Post;
 
   factory Post.fromJson(Map<String, Object?> json) => _$PostFromJson(json);
@@ -27,6 +28,7 @@ class CreatePostModel with _$CreatePostModel {
     required String text,
     required String title,
     required DateTime date,
+    @Default(0) int commentCount,
   }) = _CreatePostModel;
 
   factory CreatePostModel.fromJson(Map<String, Object?> json) => _$CreatePostModelFromJson(json);
