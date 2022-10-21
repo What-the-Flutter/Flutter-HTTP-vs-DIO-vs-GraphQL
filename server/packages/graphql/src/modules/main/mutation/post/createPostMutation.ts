@@ -20,7 +20,7 @@ export default mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: async (
-    { userId, authorName, title, text }, { pubsub }
+    { userId, authorName, title, text }
   ) => {
     const date = Date.now();
 
@@ -31,12 +31,6 @@ export default mutationWithClientMutationId({
       text,
       date,
     });
-
-    pubsub.publish('shouldUpdate', {
-      shouldUpdate:{
-        shouldUpdate: true,
-      }
-    }); 
 
     if (post) {
       return {
