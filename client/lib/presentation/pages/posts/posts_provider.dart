@@ -24,7 +24,7 @@ class PostsStateNotifier extends StateNotifier<PostsState> {
           ),
         ) {
     //_postInteractor = i.get();
-    _getPosts();
+    //_getPosts();
   }
 
   void initPolling() {
@@ -36,31 +36,12 @@ class PostsStateNotifier extends StateNotifier<PostsState> {
   }
 
   void _poll(Timer _) {
-    _getPosts();
+    //_getPosts();
   }
 
   Future<void> _getPosts() async {
-    //final newPosts = await _postInteractor.getPosts();
-    state = state.copyWith(posts: [
-      Post(
-        id: 'id1',
-        userId: 'userId1',
-        authorName: 'user',
-        text:
-            'very very very very very very very very very very very very very very very very very very very very interesting text',
-        title: 'meaningful titile',
-        date: DateTime.now(),
-      ),
-      Post(
-        id: 'id1',
-        userId: 'userId1',
-        authorName: 'user2',
-        text:
-            'very very very very very very very very very very very very very very very very very very very very interesting text',
-        title: 'meaningful titile',
-        date: DateTime.now(),
-      )
-    ]);
+    final newPosts = await _postInteractor.getPosts();
+    state = state.copyWith(posts: newPosts);
     return;
   }
 

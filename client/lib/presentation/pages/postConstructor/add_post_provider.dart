@@ -27,8 +27,7 @@ class AddPageStateNotifier extends StateNotifier<AddPageState> {
   Future<void> addPost(String title, String text) async {
     //getit user singleton
     // final user = i.get<User>();
-    // final post = Post(
-    //   id: '',
+    // final post = CreatePostModel(
     //   userId: user.id,
     //   authorName: user.name,
     //   text: text,
@@ -36,8 +35,6 @@ class AddPageStateNotifier extends StateNotifier<AddPageState> {
     //   date: DateTime.now(),
     // );
     // await _postInteractor.addPost(post);
-    await Future.delayed(const Duration(seconds: 2));
-    //throw Exception();
   }
 
   void setButtonActive(String title, String text) => state =
