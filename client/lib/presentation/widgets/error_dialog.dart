@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-AlertDialog errorDialog(
-    BuildContext context, String errorTitle, String errorMessage) {
+AlertDialog errorDialog({
+  required BuildContext context,
+  required String errorTitle,
+  required String errorMessage,
+}) {
   return AlertDialog(
     title: Text(errorTitle),
     content: Text(errorMessage),

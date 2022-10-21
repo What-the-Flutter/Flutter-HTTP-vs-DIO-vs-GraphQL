@@ -5,8 +5,7 @@ import 'package:client/domain/interactors/post_iteractor.dart';
 import 'package:client/presentation/pages/posts/posts_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final postsProvider =
-    StateNotifierProvider<PostsStateNotifier, PostsState>((ref) {
+final postsProvider = StateNotifierProvider<PostsStateNotifier, PostsState>((ref) {
   return PostsStateNotifier();
 });
 

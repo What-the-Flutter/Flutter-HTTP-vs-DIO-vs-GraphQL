@@ -7,7 +7,7 @@ class PostInteractor extends BaseInteractor {
 
   PostInteractor(this._postRepository);
 
-  Future<void> addPost(CreatePostModel post) async {
+  Future<void> addPost(CreatePostModel post) {
     return _postRepository.create(post);
   }
 

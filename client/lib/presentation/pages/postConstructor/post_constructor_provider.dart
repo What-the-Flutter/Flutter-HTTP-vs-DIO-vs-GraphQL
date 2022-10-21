@@ -2,7 +2,7 @@ import 'package:client/domain/entities/post/post.dart';
 import 'package:client/domain/entities/user/user.dart';
 import 'package:client/domain/interactors/post_iteractor.dart';
 import 'package:client/presentation/di/injector.dart';
-import 'package:client/presentation/pages/postConstructor/add_post_state.dart';
+import 'package:client/presentation/pages/postConstructor/post_constructor_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final addPostProvider =

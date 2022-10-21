@@ -1,4 +1,4 @@
-import 'package:client/presentation/pages/postConstructor/add_post_provider.dart';
+import 'package:client/presentation/pages/postConstructor/post_constructor_provider.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
 import 'package:client/presentation/widgets/text_button.dart';
 import 'package:flutter/material.dart';
@@ -27,14 +27,20 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _titleField(),
-            _textField(),
+            _inputField(
+              hintText: 'Title',
+              controller: _titleTextController,
+            ),
+            _inputField(
+              hintText: 'Text',
+              controller: _postTextController,
+            ),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 NetworkingTextButton(
-                  buttonText: 'creat',
+                  buttonText: 'create',
                   isButtonActive: ref.watch(addPostProvider).isButtonActive,
                   onClick: () {
                     final postTitle = _titleTextController.text;
@@ -49,9 +55,9 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
                           (error, stackTrace) => showDialog(
                             context: context,
                             builder: (_) => errorDialog(
-                              context,
-                              'Post error',
-                              error.toString(),
+                              context: context,
+                              errorTitle: 'Post error',
+                              errorMessage: error.toString(),
                             ),
                             barrierDismissible: true,
                           ),
@@ -66,31 +72,21 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
     );
   }
 
-  Widget _titleField() {
+  Widget _inputField({
+    required String hintText,
+    required TextEditingController controller,
+  }) {
     return Container(
       margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
       child: TextField(
-        decoration: const InputDecoration.collapsed(hintText: 'Title'),
-        onChanged: (_) => ref.read(addPostProvider.notifier).setButtonActive(
-              _titleTextController.value.text,
-              _postTextController.value.text,
-            ),
-        controller: _postTextController,
-        textAlign: TextAlign.start,
-      ),
-    );
-  }
-
-  Widget _textField() {
-    return Container(
-      margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
-      child: TextField(
-        decoration: const InputDecoration.collapsed(hintText: 'Text'),
-        onChanged: (_) => ref.read(addPostProvider.notifier).setButtonActive(
-              _titleTextController.value.text,
-              _postTextController.value.text,
-            ),
-        controller: _titleTextController,
+        decoration: InputDecoration.collapsed(hintText: hintText),
+        onChanged: (_) => {
+          ref.read(addPostProvider.notifier).setButtonActive(
+                _titleTextController.value.text,
+                _postTextController.value.text,
+              )
+        },
+        controller: controller,
         textAlign: TextAlign.start,
       ),
     );
