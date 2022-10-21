@@ -25,7 +25,7 @@ export const FindPosts = async (ctx) => {
       };
       posts.push(post);
     }
-    return (ctx.body = { posts });
+    return (ctx.body = posts );
   } catch (error) {
     ctx.status = 500;
     ctx.body = error;
@@ -78,7 +78,7 @@ export const UpdateOnePost = async (ctx) => {
   const date = Date.now();
 
   try {
-    const post = await Post.updateOne({ _id: id }, { title, text, date });
+    const post = await Post.updateOne({ _id: id }, { title, text });
     if (!post) return (ctx.status = 500);
 
     return (ctx.status = 200);
