@@ -17,6 +17,7 @@ export const GetComments = async (ctx) => {
     for (let i = 0; i < rawComments.length; i++) {
       const comment = {
         id: rawComments[i]._id,
+        userId: rawComments[i].userId,
         postId: rawComments[i].postId,
         authorName: rawComments[i].authorName,
         text: rawComments[i].text,
@@ -56,11 +57,12 @@ export const CreateOneComment = async (ctx) => {
 
 // create a update
 export const UpdateOneComment = async (ctx) => {
-  const { id, text } = ctx.request.body;
+  const { id } = ctx.params;
+  const { text } = ctx.request.body;
   const date = Date.now();
 
   try {
-    const comment = await Comment.updateOne({ _id: id }, { text, date });
+    const comment = await Comment.updateOne({ _id: id }, { text });
     if (!comment) return (ctx.status = 500);
 
     return (ctx.status = 200);

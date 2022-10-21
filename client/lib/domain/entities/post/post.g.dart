@@ -23,3 +23,21 @@ Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'title': instance.title,
       'date': instance.date.toIso8601String(),
     };
+
+_$_CreatePostModel _$$_CreatePostModelFromJson(Map<String, dynamic> json) =>
+    _$_CreatePostModel(
+      userId: json['userId'] as String,
+      authorName: json['authorName'] as String,
+      text: json['text'] as String,
+      title: json['title'] as String,
+      date: DateTime.parse(json['date'] as String),
+    );
+
+Map<String, dynamic> _$$_CreatePostModelToJson(_$_CreatePostModel instance) =>
+    <String, dynamic>{
+      'userId': instance.userId,
+      'authorName': instance.authorName,
+      'text': instance.text,
+      'title': instance.title,
+      'date': instance.date.toIso8601String(),
+    };

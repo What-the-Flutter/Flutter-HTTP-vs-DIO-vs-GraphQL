@@ -30,7 +30,10 @@ export const createUser = async (ctx) => {
     if (!user) {
       await Users.create({ name, password });
       return (ctx.status = 200);
-    } else return (ctx.body = { error: "User already exist" });
+    } else {
+      ctx.status = 409;
+      return (ctx.body = { error: "User already exist" });
+    }
   } catch (error) {
     ctx.body = { error };
     ctx.status = 500;
