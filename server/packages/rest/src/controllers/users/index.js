@@ -32,7 +32,7 @@ export const createUser = async (ctx) => {
       return (ctx.status = 200);
     } else {
       ctx.status = 409;
-      return (ctx.body = { error: "User already exist" });
+      return (ctx.body = { error: "User already exists" });
     }
   } catch (error) {
     ctx.body = { error };
