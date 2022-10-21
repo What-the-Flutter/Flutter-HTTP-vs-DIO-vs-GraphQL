@@ -26,7 +26,7 @@ router.put("/api/post/:id", UpdateOnePost);
 // comments
 router.get("/api/comment/:postId", GetComments);
 router.post("/api/comment", CreateOneComment);
-router.put("/api/comment", UpdateOneComment);
+router.put("/api/comment/:id", UpdateOneComment);
 router.delete("/api/comment/:id", DeleteOneComment);
 
 export default router.routes();

@@ -16,6 +16,7 @@ dependencies:
   json_annotation: ^4.7.0
   flutter_riverpod: ^2.0.2
   get_it: ^7.2.0
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_test:

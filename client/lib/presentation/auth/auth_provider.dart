@@ -25,12 +25,13 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> signup(String username, String password) async {
-    final user = User(id: '', name: username, password: password);
+    final user = CreateUserModel(name: username, password: password);
     return _userInteractor.signup(user);
   }
 
   Future<bool> login(String username, String password) async {
-    return _userInteractor.login(username, password);
+    final user = CreateUserModel(name: username, password: password);
+    return _userInteractor.login(user);
   }
 
   void switchPageView(AuthPageView newView) =>

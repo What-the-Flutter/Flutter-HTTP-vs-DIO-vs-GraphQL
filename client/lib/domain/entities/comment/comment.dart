@@ -2,10 +2,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
 part 'comment.freezed.dart';
+
 part 'comment.g.dart';
 
 @freezed
-class Comment with _$Comment{
+class Comment with _$Comment {
   const factory Comment({
     required String id,
     required String userId,
@@ -13,7 +14,21 @@ class Comment with _$Comment{
     required String authorName,
     required String text,
     required DateTime date,
-  })  = _Comment;
+  }) = _Comment;
 
   factory Comment.fromJson(Map<String, Object?> json) => _$CommentFromJson(json);
+}
+
+@freezed
+class CreateCommentModel with _$CreateCommentModel {
+  const factory CreateCommentModel({
+    required String userId,
+    required String postId,
+    required String authorName,
+    required String text,
+    required DateTime date,
+  }) = _CreateCommentModel;
+
+  factory CreateCommentModel.fromJson(Map<String, Object?> json) =>
+      _$CreateCommentModelFromJson(json);
 }
