@@ -6,11 +6,11 @@ import 'package:client/domain/entities/post/post.dart';
 import 'package:client/domain/entities/user/user.dart';
 import 'package:dio/dio.dart';
 
-class RestRemoteDataSource implements IRemoteDataSource {
+class DioRestRemoteDataSource implements IRemoteDataSource {
   final _dio = Dio();
 
-  RestRemoteDataSource() {
-    _dio.options.baseUrl = baseUrl;
+  DioRestRemoteDataSource() {
+    _dio.options.baseUrl = ConnectivityStrings.baseUrl;
   }
 
   @override
