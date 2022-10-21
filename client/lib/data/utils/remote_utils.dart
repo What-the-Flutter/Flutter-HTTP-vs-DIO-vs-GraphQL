@@ -12,7 +12,7 @@ extension ResponseTo on Response {
       result = data.isNotEmpty ? _createFromJSON<T>(data)! : null;
       return result;
     } else {
-      throw Exception('Ошибка: $statusCode \n Код ошибки: $statusCode');
+      throw Exception('Ошибка: $statusMessage \n Код ошибки: $statusCode');
     }
   }
 
@@ -23,8 +23,7 @@ extension ResponseTo on Response {
       result = a;
       return result;
     }
-    //TODO: replace code to message
-    throw Exception('Ошибка: $statusCode \n Код ошибки: $statusCode');
+    throw Exception('Ошибка: $statusMessage \n Код ошибки: $statusCode');
   }
 }
 
