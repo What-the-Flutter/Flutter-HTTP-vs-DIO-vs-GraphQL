@@ -14,7 +14,7 @@ class UserInteractor extends BaseInteractor {
 
   Future<bool> login(String username, String password) async {
     final dbUser = await _userRepository.loginUser(username, password);
-    if(dbUser != null){
+    if (dbUser != null) {
       user = dbUser;
       return true;
     }

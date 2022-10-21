@@ -21,7 +21,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
             pageView: AuthPageView.login,
           ),
         ) {
-    _userInteractor = i.get();
+    //_userInteractor = i.get();
   }
 
   Future<void> signup(String username, String password) async {
@@ -33,8 +33,9 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     return _userInteractor.login(username, password);
   }
 
-  void switchPageView(AuthPageView newView) => state = state.copyWith(pageView: newView);
+  void switchPageView(AuthPageView newView) =>
+      state = state.copyWith(pageView: newView);
 
-  void setButtonActive(String username, String password) =>
-      state = state.copyWith(isButtonActive: username.isNotEmpty && password.isNotEmpty);
+  void setButtonActive(String username, String password) => state = state
+      .copyWith(isButtonActive: username.isNotEmpty && password.isNotEmpty);
 }
