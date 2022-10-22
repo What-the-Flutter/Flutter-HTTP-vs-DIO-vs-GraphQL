@@ -1,4 +1,5 @@
 import Comment from "./../../models/comment";
+import Post from "./../../models/post";
 /* COMMENTS */
 
 // get a comment
@@ -29,7 +30,7 @@ export const GetComments = async (ctx) => {
     return (ctx.body = comments);
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = error.message;
   }
 };
 
@@ -39,6 +40,8 @@ export const CreateOneComment = async (ctx) => {
   const date = Date.now();
 
   try {
+    let { commentCount } = await Post.findOne({ _id: postId });
+    await Post.updateOne({ _id: postId }, { commentCount: ++commentCount });
     const comment = await Comment.create({
       userId,
       postId,
@@ -51,7 +54,7 @@ export const CreateOneComment = async (ctx) => {
     return (ctx.status = 200);
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = error.message;
   }
 };
 
@@ -68,7 +71,7 @@ export const UpdateOneComment = async (ctx) => {
     return (ctx.status = 200);
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = error.message;
   }
 };
 
@@ -84,6 +87,6 @@ export const DeleteOneComment = async (ctx) => {
     return (ctx.status = 200);
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = error.message;
   }
 };

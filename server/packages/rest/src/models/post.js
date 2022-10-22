@@ -18,6 +18,10 @@ const post = new Schema({
     type: String,
     required: "text is required",
   },
+  commentCount: {
+    type: Number,
+    default: 0,
+  },
   date: {
     type: Date,
     default: Date.now,

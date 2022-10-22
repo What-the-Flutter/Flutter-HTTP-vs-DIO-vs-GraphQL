@@ -1,7 +1,7 @@
 import Comment from "./../../../../model/comment";
+import Post from "./../../../../model/post";
 import { GraphQLString, GraphQLNonNull, GraphQLList } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import CommentType from "../../CommentType";
 
 export default mutationWithClientMutationId({
   name: "createCommentMutation",
@@ -31,6 +31,8 @@ export default mutationWithClientMutationId({
       userId,
       date
     });
+    let { commentCount } = await Post.findOne({ _id: postId });
+    await Post.updateOne({ _id: postId }, { commentCount: ++commentCount });
 
     if (comment) {
       return {
