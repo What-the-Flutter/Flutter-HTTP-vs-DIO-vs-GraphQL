@@ -1,3 +1,4 @@
+import 'package:client/domain/entities/api_object.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
@@ -6,7 +7,7 @@ part 'comment.freezed.dart';
 part 'comment.g.dart';
 
 @freezed
-class Comment with _$Comment {
+class Comment with _$Comment implements ApiObject{
   const factory Comment({
     required String id,
     required String userId,
@@ -20,7 +21,7 @@ class Comment with _$Comment {
 }
 
 @freezed
-class CreateCommentModel with _$CreateCommentModel {
+class CreateCommentModel with _$CreateCommentModel implements ApiObject{
   const factory CreateCommentModel({
     required String userId,
     required String postId,
