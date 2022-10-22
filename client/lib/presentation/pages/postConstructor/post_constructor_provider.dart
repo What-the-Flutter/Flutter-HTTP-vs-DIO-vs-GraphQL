@@ -5,8 +5,7 @@ import 'package:client/presentation/di/injector.dart';
 import 'package:client/presentation/pages/postConstructor/post_constructor_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final addPostProvider =
-    StateNotifierProvider<AddPageStateNotifier, AddPageState>((ref) {
+final addPostProvider = StateNotifierProvider<AddPageStateNotifier, AddPageState>((ref) {
   return AddPageStateNotifier();
 });
 
@@ -37,6 +36,6 @@ class AddPageStateNotifier extends StateNotifier<AddPageState> {
     // await _postInteractor.addPost(post);
   }
 
-  void setButtonActive(String title, String text) => state =
-      state.copyWith(isButtonActive: title.isNotEmpty && text.isNotEmpty);
+  void setButtonActive(String title, String text) =>
+      state = state.copyWith(isButtonActive: title.isNotEmpty && text.isNotEmpty);
 }

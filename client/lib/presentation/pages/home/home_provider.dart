@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:client/domain/entities/post/post.dart';
 import 'package:client/domain/interactors/post_iteractor.dart';
-import 'package:client/presentation/pages/posts/posts_state.dart';
+import 'package:client/presentation/pages/home/home_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final postsProvider = StateNotifierProvider<PostsStateNotifier, PostsState>((ref) {
@@ -44,5 +44,5 @@ class PostsStateNotifier extends StateNotifier<PostsState> {
     return;
   }
 
-  void onPostClick(String postId) {}
+  void openPostPage(String postId) {}
 }
