@@ -1,3 +1,4 @@
+import 'package:client/domain/entities/api_object.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
@@ -6,7 +7,7 @@ part 'post.freezed.dart';
 part 'post.g.dart';
 
 @freezed
-class Post with _$Post {
+class Post with _$Post implements ApiObject {
   const factory Post({
     required String id,
     required String userId,
@@ -21,7 +22,7 @@ class Post with _$Post {
 }
 
 @freezed
-class CreatePostModel with _$CreatePostModel {
+class CreatePostModel with _$CreatePostModel implements ApiObject {
   const factory CreatePostModel({
     required String userId,
     required String authorName,

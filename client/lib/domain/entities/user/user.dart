@@ -1,3 +1,4 @@
+import 'package:client/domain/entities/api_object.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
@@ -16,7 +17,7 @@ class User with _$User {
 }
 
 @freezed
-class CreateUserModel with _$CreateUserModel {
+class CreateUserModel with _$CreateUserModel implements ApiObject {
   const factory CreateUserModel({
     required String name,
     required String password,

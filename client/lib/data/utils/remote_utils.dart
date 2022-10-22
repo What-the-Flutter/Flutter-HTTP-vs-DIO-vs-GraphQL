@@ -1,29 +1,44 @@
+import 'dart:convert';
+
 import 'package:client/domain/entities/comment/comment.dart';
 import 'package:client/domain/entities/post/post.dart';
 import 'package:client/domain/entities/user/user.dart';
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 
-extension ResponseTo on Response {
+extension DioResponseTo on dio.Response {
+  T? retrieveResult<T>() {
+    return data.isNotEmpty ? _createFromJSON<T>(data)! : null;
+  }
+
+  List<T> retrieveResultAsList<T>() {
+    return (data as List).map((e) => (_createFromJSON<T>(e)!)).toList();
+  }
+}
+
+extension HttpResponseTo on http.Response {
   bool isSuccessful() => statusCode == 200 || statusCode == 201 || statusCode == 204;
 
   T? retrieveResult<T>() {
     T? result;
     if (isSuccessful()) {
-      result = data.isNotEmpty ? _createFromJSON<T>(data)! : null;
-      return result;
+      return body == 'OK'
+          ? result
+          : body.isNotEmpty
+              ? _createFromJSON<T>(json.decode(body.toString()))!
+              : null;
     } else {
-      throw Exception('Error: $statusMessage \n Error code: $statusCode');
+      throw Exception('Error: $reasonPhrase \n Error code: $statusCode');
     }
   }
 
   List<T> retrieveResultAsList<T>() {
     List<T> result;
     if (isSuccessful()) {
-      var a = (data as List).map((e) => (_createFromJSON<T>(e)!)).toList();
-      result = a;
+      result = (json.decode(body.toString()) as List).map((e) => (_createFromJSON<T>(e)!)).toList();
       return result;
     }
-    throw Exception('Error: $statusMessage \n Error code: $statusCode');
+    throw Exception('Error: $reasonPhrase \n Error code: $statusCode');
   }
 }
 
@@ -36,18 +51,8 @@ T? _createFromJSON<T>(Map<String, dynamic> json) {
     return Post.fromJson(json) as T;
   } else if (type == typeOf<Comment>()) {
     return Comment.fromJson(json) as T;
-  } else {
-    final parseTypes = [int, String, double];
-    if (json.isNotEmpty && json.length == 1) {
-      for (var parseType in parseTypes) {
-        if (parseType == type) {
-          return json[json.keys.first];
-        }
-      }
-    }
-    if (typeOf<dynamic>() == type || typeOf<void>() == type) {
-      return null;
-    }
+  } else if (typeOf<dynamic>() == type || typeOf<void>() == type) {
+    return null;
   }
   throw ArgumentError('Looks like you forgot to add processing for type ${type.toString()}');
 }
