@@ -17,7 +17,7 @@ export const loginUser = async (ctx) => {
     }
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = error.message;
   }
 };
 
@@ -35,7 +35,7 @@ export const createUser = async (ctx) => {
       return (ctx.body = { error: "User already exists" });
     }
   } catch (error) {
-    ctx.body = { error };
     ctx.status = 500;
+    ctx.body = error.message;
   }
 };

@@ -2,7 +2,6 @@ import schema from "./schema";
 import multer from "koa-multer";
 
 const json = require("koa-json");
-const dotenv = require("dotenv-safe");
 const koa = require("koa");
 const route = require("koa-router");
 const logger = require("koa-logger");
@@ -13,8 +12,6 @@ const graphqlHTTP = require("koa-graphql");
 // init router and koa
 const app = new koa();
 const router = new route();
-//init doenv
-dotenv.load();
 
 // middlewares
 app.use(logger());

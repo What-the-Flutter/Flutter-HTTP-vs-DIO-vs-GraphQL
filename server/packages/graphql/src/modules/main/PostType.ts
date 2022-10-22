@@ -2,6 +2,7 @@ import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
+    GraphQLInt,
 } from 'graphql'
 
 export default new GraphQLObjectType({
@@ -21,6 +22,9 @@ export default new GraphQLObjectType({
         },
         text: {
             type: GraphQLString
+        },
+        commentCount: {
+            type: GraphQLInt
         },
         date: {
             type: GraphQLString
