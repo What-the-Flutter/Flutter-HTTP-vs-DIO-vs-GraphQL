@@ -14,6 +14,17 @@ export default new GraphQLObjectType({
   name: "QueryType",
   description: "Get entities[]",
   fields: () => ({
+    post: {
+      type: PostType,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLID)
+        }
+      },
+      resolve: (parentValue, args, ctx) => {
+        return postModel.findOne({ _id: args.id });
+      }
+    },
     posts: {
       type: new GraphQLList(PostType),
       args: {

@@ -21,14 +21,35 @@ export const FindPosts = async (ctx) => {
         authorName: rawPosts[i].authorName,
         title: rawPosts[i].title,
         text: rawPosts[i].text,
+        commentCount: rawPosts[i].commentCount,
         date: rawPosts[i].date,
       };
       posts.push(post);
     }
-    return (ctx.body = posts );
+    return (ctx.body = posts);
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = error.message;
+  }
+};
+
+// find a post
+export const FindOnePost = async (ctx) => {
+  const { id } = ctx.params;
+  try {
+    const post = await Post.findOne({ _id: id });
+    ctx.body = {
+      id: post._id,
+      userId: post.userId,
+      authorName: post.authorName,
+      title: post.title,
+      text: post.text,
+      commentCount: post.commentCount,
+      date: post.date,
+    };
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = error.message;
   }
 };
 
@@ -50,7 +71,7 @@ export const CreateOnePost = async (ctx) => {
     return (ctx.status = 200);
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = error.message;
   }
 };
 
@@ -67,7 +88,7 @@ export const DeleteOnePost = async (ctx) => {
     return (ctx.status = 200);
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = error.message;
   }
 };
 
@@ -84,6 +105,6 @@ export const UpdateOnePost = async (ctx) => {
     return (ctx.status = 200);
   } catch (error) {
     ctx.status = 500;
-    ctx.body = error;
+    ctx.body = error.message;
   }
 };
