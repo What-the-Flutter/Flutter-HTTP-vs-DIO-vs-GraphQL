@@ -21,7 +21,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
             pageView: AuthPageView.login,
           ),
         ) {
-    _userInteractor = i.get();
+    //_userInteractor = i.get();
   }
 
   Future<void> signup(String username, String password) async {

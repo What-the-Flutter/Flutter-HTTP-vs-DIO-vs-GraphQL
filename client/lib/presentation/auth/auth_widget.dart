@@ -72,7 +72,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         return NetworkingTextButton(
           isButtonActive: state.isButtonActive,
           buttonText: 'Login',
-          onClick: () {},
+          onClick: () => Navigator.pushNamed(context, '/posts'),
         );
       case AuthPageView.signup:
         return NetworkingTextButton(
@@ -92,7 +92,9 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         return Container(
           margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
           child: GestureDetector(
-            onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.signup),
+            onTap: () => ref
+                .read(authProvider.notifier)
+                .switchPageView(AuthPageView.signup),
             child: const Text(
               'I don`t have an account',
               style: TextStyle(
@@ -107,7 +109,9 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         return Container(
           margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
           child: GestureDetector(
-            onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.login),
+            onTap: () => ref
+                .read(authProvider.notifier)
+                .switchPageView(AuthPageView.login),
             child: const Text(
               'I already have an account',
               style: TextStyle(

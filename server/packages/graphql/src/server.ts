@@ -31,7 +31,7 @@ const graphqlSettingsPerReq = async (ctx: { req: any; res: any; }) => {
       request: ctx.req
     },
     context: {
-      request,
+      request
     }
   };
 };

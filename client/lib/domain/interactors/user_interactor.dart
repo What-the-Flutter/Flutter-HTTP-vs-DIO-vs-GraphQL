@@ -14,7 +14,7 @@ class UserInteractor extends BaseInteractor {
 
   Future<bool> login(CreateUserModel entity) async {
     final dbUser = await _userRepository.loginUser(entity);
-    if(dbUser != null){
+    if (dbUser != null) {
       user = dbUser;
       return true;
     }
