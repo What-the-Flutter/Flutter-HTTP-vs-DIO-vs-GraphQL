@@ -1,12 +1,12 @@
 import 'package:client/domain/entities/post/post.dart';
 
-class PostsState {
+class HomeState {
   final List<Post> posts;
 
-  PostsState({required this.posts});
+  HomeState({required this.posts});
 
-  PostsState copyWith({List<Post>? posts}) {
-    return PostsState(
+  HomeState copyWith({List<Post>? posts}) {
+    return HomeState(
       posts: posts ?? this.posts,
     );
   }

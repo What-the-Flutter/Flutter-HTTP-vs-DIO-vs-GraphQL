@@ -5,20 +5,20 @@ import 'package:client/domain/interactors/post_iteractor.dart';
 import 'package:client/presentation/pages/home/home_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final postsProvider = StateNotifierProvider<PostsStateNotifier, PostsState>((ref) {
-  return PostsStateNotifier();
+final homeProvider = StateNotifierProvider<HomeStateNotifier, HomeState>((ref) {
+  return HomeStateNotifier();
 });
 
-class PostsStateNotifier extends StateNotifier<PostsState> {
+class HomeStateNotifier extends StateNotifier<HomeState> {
   late Timer _timer;
   final _pollingTimeout = const Duration(seconds: 10);
 
   late final PostInteractor _postInteractor;
   //TODO: implement error handling
 
-  PostsStateNotifier()
+  HomeStateNotifier()
       : super(
-          PostsState(
+          HomeState(
             posts: [],
           ),
         ) {

@@ -9,21 +9,21 @@ enum PostActions {
   edit,
 }
 
-class PostConstructor extends ConsumerStatefulWidget {
+class PostConstructorPage extends ConsumerStatefulWidget {
   final PostActions postAction;
   final String? postId;
 
-  const PostConstructor({
+  const PostConstructorPage({
     Key? key,
     required this.postAction,
     this.postId,
   }) : super(key: key);
 
   @override
-  ConsumerState<PostConstructor> createState() => _PostConstructorState();
+  ConsumerState<PostConstructorPage> createState() => _PostConstructorPageState();
 }
 
-class _PostConstructorState extends ConsumerState<PostConstructor> {
+class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
   final _postTextController = TextEditingController();
   final _titleTextController = TextEditingController();
 
@@ -56,8 +56,7 @@ class _PostConstructorState extends ConsumerState<PostConstructor> {
       ),
       actions: [
         NetworkingTextButton(
-          buttonText:
-              widget.postAction == PostActions.create ? 'create' : 'edit',
+          buttonText: widget.postAction == PostActions.create ? 'create' : 'edit',
           isButtonActive: ref.watch(addPostProvider).isButtonActive,
           onClick: () {
             final postTitle = _titleTextController.text;
