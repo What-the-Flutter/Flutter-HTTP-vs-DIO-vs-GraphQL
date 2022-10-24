@@ -46,7 +46,7 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
         await _postInteractor.addPost(post);
         onSuccess();
       },
-      errorHandler: onError,
+      errorHandler: (e) => onError,
     );
   }
 

@@ -14,7 +14,7 @@ void showInfoDialog({
       actions: <Widget>[
         TextButton(
           onPressed: onButtonClick,
-          child: const Text('Approve'),
+          child: const Text('OK'),
         ),
       ],
     ),
