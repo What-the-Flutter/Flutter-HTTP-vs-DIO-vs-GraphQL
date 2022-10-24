@@ -1,6 +1,7 @@
 import 'package:client/presentation/pages/home/home_provider.dart';
 import 'package:client/presentation/pages/postConstructor/post_constructor_page.dart';
-import 'package:client/presentation/widgets/card.dart';
+import 'package:client/presentation/widgets/error_dialog.dart';
+import 'package:client/presentation/widgets/post_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -107,16 +108,24 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
               top: 8.0,
             ),
             itemBuilder: (context, index) {
-              return CardWidget(
+              return PostCardWidget(
                 post: state.posts[index],
+                onDeleteButtonPressed: () {
+                  ref.read(homeProvider.notifier).removePost(
+                        state.posts[index].id,
+                        () => showInfoDialog(
+                          context: context,
+                          title: 'Post error',
+                          content: 'Error occurred while deleting the post',
+                          onButtonClick: ref.read(homeProvider.notifier).pop,
+                        ),
+                      );
+                },
+                onEditButtonPressed: () {},
               );
             },
             itemCount: state.posts.length,
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                height: 4.0,
-              );
-            },
+            separatorBuilder: (_, __) => const SizedBox(height: 4.0),
           ),
         ),
       ),
@@ -128,9 +137,9 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) {
-            return const PostConstructorPage(postAction: PostActions.create);
-          },
+          builder: (context) => const PostConstructorPage(
+            postAction: PostActions.create,
+          ),
         );
       },
       backgroundColor: const Color(0xff2da9ef),
@@ -147,9 +156,7 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
       color: const Color(0xff2da9ef),
       shape: const CircularNotchedRectangle(),
       notchMargin: 8.0,
-      child: SizedBox(
-        height: size.height / 18.0,
-      ),
+      child: SizedBox(height: size.height / 18.0),
     );
   }
 }

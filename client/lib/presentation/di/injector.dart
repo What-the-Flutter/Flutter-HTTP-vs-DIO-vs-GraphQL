@@ -1,5 +1,10 @@
 import 'package:get_it/get_it.dart';
 
+import 'navigation_module.dart';
+
 GetIt get i => GetIt.instance;
 
-//TODO: implement di
+void initInjector() {
+  initNavigationModule();
+  //TODO: implement di
+}
