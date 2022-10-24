@@ -49,7 +49,7 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
         await _postInteractor.removePost(postId);
         await getPosts();
       },
-      errorHandler: onError,
+      errorHandler: (e) => onError,
     );
   }
 

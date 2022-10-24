@@ -1,3 +1,4 @@
+import 'package:client/data/utils/remote_utils.dart';
 import 'package:client/domain/entities/user/user.dart';
 import 'package:client/domain/interactors/user_interactor.dart';
 import 'package:client/presentation/app/navigation/route_constants.dart';
@@ -28,6 +29,7 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
     required String username,
     required String password,
     required Function onSuccess,
+    required Function onError,
   }) async {
     final user = CreateUserModel(name: username, password: password);
     return launchRetrieveResult(
@@ -40,18 +42,34 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
         );
         onSuccess();
       },
-      errorHandler: () => state = state.copyWith(showErrorMessage: true),
+      errorHandler: (e) {
+        if (e is WrongUserDataException) {
+          state = state.copyWith(showErrorMessage: true);
+        } else {
+          onError();
+        }
+      },
     );
   }
 
-  Future<void> login({required String username, required String password}) async {
+  Future<void> login({
+    required String username,
+    required String password,
+    required Function onError,
+  }) async {
     final user = CreateUserModel(name: username, password: password);
     return launchRetrieveResult(
       () async {
         await _userInteractor.login(user);
         appRouter.replaceNamed(Routes.post);
       },
-      errorHandler: (_) => state = state.copyWith(showErrorMessage: true),
+      errorHandler: (e) {
+        if (e is WrongUserDataException) {
+          state = state.copyWith(showErrorMessage: true);
+        } else {
+          onError();
+        }
+      },
     );
   }
 
