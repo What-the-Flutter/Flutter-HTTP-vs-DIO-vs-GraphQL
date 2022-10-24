@@ -4,6 +4,8 @@ import {
     GraphQLID,
 } from 'graphql'
 
+const GraphQLDate = require('graphql-date')
+
 export default new GraphQLObjectType({
     name: 'Comments',
     fields: () => ({
@@ -23,7 +25,7 @@ export default new GraphQLObjectType({
             type: GraphQLString
         },
         date: {
-            type: GraphQLString
+            type: GraphQLDate
         },
     })
 })

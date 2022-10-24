@@ -5,6 +5,8 @@ import {
     GraphQLInt,
 } from 'graphql'
 
+const GraphQLDate = require('graphql-date')
+
 export default new GraphQLObjectType({
     name: 'Posts',
     fields: () => ({
@@ -27,7 +29,7 @@ export default new GraphQLObjectType({
             type: GraphQLInt
         },
         date: {
-            type: GraphQLString
+            type: GraphQLDate
         },
     })
 })
