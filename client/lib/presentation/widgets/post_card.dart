@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
-class CardWidget extends StatelessWidget {
+class PostCardWidget extends StatelessWidget {
   final Post post;
-  const CardWidget({
+  final Function onEditButtonPressed;
+  final Function onDeleteButtonPressed;
+  const PostCardWidget({
     Key? key,
     required this.post,
+    required this.onDeleteButtonPressed,
+    required this.onEditButtonPressed,
   }) : super(key: key);
 
   @override
@@ -22,8 +26,8 @@ class CardWidget extends StatelessWidget {
           ),
           SlidableAction(
             borderRadius: BorderRadius.circular(16),
-            onPressed: (_) {},
-            backgroundColor: Color.fromARGB(255, 239, 207, 45),
+            onPressed: (_) => onEditButtonPressed,
+            backgroundColor: const Color.fromARGB(255, 239, 207, 45),
             foregroundColor: Colors.white,
             icon: Icons.edit,
             label: 'Edit',
@@ -33,7 +37,7 @@ class CardWidget extends StatelessWidget {
           ),
           SlidableAction(
             borderRadius: BorderRadius.circular(16),
-            onPressed: (_) {},
+            onPressed: (_) => onDeleteButtonPressed,
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
             icon: Icons.delete,

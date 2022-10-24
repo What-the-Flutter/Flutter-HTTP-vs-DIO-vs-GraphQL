@@ -1,6 +1,7 @@
+import 'package:client/presentation/pages/home/home_provider.dart';
 import 'package:client/presentation/pages/postConstructor/post_constructor_provider.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
-import 'package:client/presentation/widgets/text_button.dart';
+import 'package:client/presentation/widgets/networking_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -56,32 +57,38 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
       ),
       actions: [
         NetworkingTextButton(
-          buttonText: widget.postAction == PostActions.create ? 'create' : 'edit',
-          isButtonActive: ref.watch(addPostProvider).isButtonActive,
-          onClick: () {
-            final postTitle = _titleTextController.text;
-            final postText = _postTextController.text;
-            ref
-                .read(addPostProvider.notifier)
-                .addPost(postTitle, postText)
-                .then(
-                  (_) => Navigator.pop(context),
-                )
-                .onError(
-                  (error, stackTrace) => showDialog(
-                    context: context,
-                    builder: (_) => errorDialog(
-                      context: context,
-                      errorTitle: 'Post error',
-                      errorMessage: error.toString(),
-                    ),
-                    barrierDismissible: true,
-                  ),
-                );
-          },
+          buttonText: widget.postAction == PostActions.create ? 'Create' : 'Edit',
+          isButtonActive: ref.watch(postConstructorProvider).isButtonActive,
+          onClick: onButtonClick,
         ),
       ],
     );
+  }
+
+  void onButtonClick() async {
+    final postTitle = _titleTextController.text;
+    final postText = _postTextController.text;
+    switch (widget.postAction) {
+      case PostActions.create:
+        ref.read(postConstructorProvider.notifier).addPost(
+              title: postTitle,
+              text: postText,
+              onSuccess: () async {
+                await ref.read(homeProvider.notifier).getPosts();
+                ref.read(postConstructorProvider.notifier).pop();
+              },
+              onError: () => showInfoDialog(
+                context: context,
+                title: 'Post error',
+                content: 'Error occurred while creating the post',
+                onButtonClick: ref.read(postConstructorProvider.notifier).pop,
+              ),
+            );
+        break;
+      case PostActions.edit:
+        // TODO: Handle this case.
+        break;
+    }
   }
 
   Widget _inputField({
@@ -104,7 +111,7 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
         ),
       ),
       onChanged: (_) => {
-        ref.read(addPostProvider.notifier).setButtonActive(
+        ref.read(postConstructorProvider.notifier).setButtonActive(
               _titleTextController.value.text,
               _postTextController.value.text,
             )

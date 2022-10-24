@@ -1,6 +1,7 @@
 import 'package:client/domain/entities/post/post.dart';
+import 'package:client/presentation/base/base_state.dart';
 
-class HomeState {
+class HomeState extends BaseState {
   final List<Post> posts;
 
   HomeState({required this.posts});

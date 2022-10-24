@@ -14,4 +14,8 @@ class PostInteractor extends BaseInteractor {
   Future<List<Post>> getPosts() async {
     return _postRepository.getAllPosts();
   }
+
+  Future<void> removePost(String postId) async {
+    return _postRepository.delete(postId);
+  }
 }

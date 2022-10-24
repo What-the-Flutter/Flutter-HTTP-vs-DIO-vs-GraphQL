@@ -1,10 +1,12 @@
-class AddPageState {
+import 'package:client/presentation/base/base_state.dart';
+
+class PostConstructorState extends BaseState{
   final bool isButtonActive;
 
-  AddPageState({required this.isButtonActive});
+  PostConstructorState({required this.isButtonActive});
 
-  AddPageState copyWith({bool? isButtonActive}) {
-    return AddPageState(
+  PostConstructorState copyWith({bool? isButtonActive}) {
+    return PostConstructorState(
       isButtonActive: isButtonActive ?? this.isButtonActive,
     );
   }

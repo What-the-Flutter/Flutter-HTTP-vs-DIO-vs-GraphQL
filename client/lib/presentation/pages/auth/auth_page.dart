@@ -1,6 +1,7 @@
+import 'package:client/presentation/pages/auth/auth_state.dart';
+import 'package:client/presentation/widgets/error_dialog.dart';
 import 'auth_provider.dart';
-import 'auth_state.dart';
-import 'package:client/presentation/widgets/text_button.dart';
+import 'package:client/presentation/widgets/networking_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,6 +26,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            _errorMessage(),
             _usernameField(),
             _passwordField(),
             _confirmationButton(),
@@ -33,6 +35,25 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         ),
       ),
     );
+  }
+
+  Widget _errorMessage() {
+    final showError = ref.watch(authProvider).showErrorMessage;
+    if (showError) {
+      return Container(
+        margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
+        child: const Text(
+          'Wrong username or/and password',
+          style: TextStyle(
+            color: Colors.redAccent,
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   Widget _usernameField() {
@@ -72,17 +93,43 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         return NetworkingTextButton(
           isButtonActive: state.isButtonActive,
           buttonText: 'Login',
-          onClick: () => Navigator.pushNamed(context, '/posts'),
+          onClick: onLoginClick,
         );
       case AuthPageView.signup:
         return NetworkingTextButton(
           isButtonActive: state.isButtonActive,
           buttonText: 'SignUp',
-          onClick: () {},
+          onClick: onSignupClick,
         );
       default:
         return Container();
     }
+  }
+
+  void onLoginClick(){
+    _usernameTextController.clear();
+    _passwordTextController.clear();
+    FocusScope.of(context).unfocus();
+    ref.read(authProvider.notifier).login(
+      username: _usernameTextController.value.text,
+      password: _passwordTextController.value.text,
+    );
+  }
+
+  void onSignupClick(){
+    _usernameTextController.clear();
+    _passwordTextController.clear();
+    FocusScope.of(context).unfocus();
+    ref.read(authProvider.notifier).signup(
+      username: _usernameTextController.value.text,
+      password: _passwordTextController.value.text,
+      onSuccess: () => showInfoDialog(
+        context: context,
+        title: 'Signup was successful!',
+        content: 'Now you can login to your account',
+        onButtonClick: ref.read(authProvider.notifier).pop,
+      ),
+    );
   }
 
   Widget _switchPageViewButton() {

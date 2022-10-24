@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
-AlertDialog errorDialog({
+void showInfoDialog({
   required BuildContext context,
-  required String errorTitle,
-  required String errorMessage,
+  required String title,
+  required String content,
+  required VoidCallback onButtonClick,
 }) {
-  return AlertDialog(
-    title: Text(errorTitle),
-    content: Text(errorMessage),
-    actions: <Widget>[
-      TextButton(
-        child: const Text('Approve'),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      ),
-    ],
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: Text(title),
+      content: Text(content),
+      actions: <Widget>[
+        TextButton(
+          onPressed: onButtonClick,
+          child: const Text('Approve'),
+        ),
+      ],
+    ),
+    barrierDismissible: true,
   );
 }
