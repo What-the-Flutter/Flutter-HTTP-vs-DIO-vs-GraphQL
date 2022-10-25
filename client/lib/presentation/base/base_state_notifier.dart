@@ -20,12 +20,12 @@ class BaseStateNotifier<St extends BaseState> extends StateNotifier<St> {
 
   Future<void> launchRetrieveResult(
     Function action, {
-    Function? errorHandler,
+    Function(dynamic e)? errorHandler,
   }) async {
     try {
       await action.call();
-    } catch (_) {
-      errorHandler?.call();
+    } catch (e) {
+      errorHandler?.call(e);
     }
   }
 }

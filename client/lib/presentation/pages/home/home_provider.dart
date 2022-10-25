@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:client/domain/entities/post/post.dart';
+import 'package:client/domain/entities/user/user.dart';
 import 'package:client/domain/interactors/post_interactor.dart';
 import 'package:client/presentation/base/base_state_notifier.dart';
 import 'package:client/presentation/pages/home/home_state.dart';
@@ -14,6 +16,7 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
   final _pollingTimeout = const Duration(seconds: 10);
 
   late final PostInteractor _postInteractor;
+  late final User _user;
 
   HomeStateNotifier()
       : super(
@@ -22,7 +25,8 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
           ),
         ) {
     //_postInteractor = i.get();
-    //_getPosts();
+    //_user = i.get<UserInteractor>().user;
+    //getPosts();
   }
 
   void initPolling() {
@@ -49,8 +53,12 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
         await _postInteractor.removePost(postId);
         await getPosts();
       },
-      errorHandler: onError,
+      errorHandler: (e) => onError,
     );
+  }
+
+  bool isPostAuthor(String authorId) {
+    return _user.id == authorId;
   }
 
   void openPostPage(String postId) {}

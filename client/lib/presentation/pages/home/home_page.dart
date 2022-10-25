@@ -108,7 +108,11 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
               top: 8.0,
             ),
             itemBuilder: (context, index) {
+              final canUserSlidePost =
+                  ref.read(homeProvider.notifier).isPostAuthor(state.posts[index].userId);
+
               return PostCardWidget(
+                isSlidable: canUserSlidePost,
                 post: state.posts[index],
                 onDeleteButtonPressed: () {
                   ref.read(homeProvider.notifier).removePost(
@@ -121,7 +125,6 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
                         ),
                       );
                 },
-                onEditButtonPressed: () {},
               );
             },
             itemCount: state.posts.length,

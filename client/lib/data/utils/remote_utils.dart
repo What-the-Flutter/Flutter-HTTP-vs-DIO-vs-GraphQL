@@ -6,6 +6,8 @@ import 'package:client/domain/entities/user/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart' as dio;
 
+class WrongUserDataException implements Exception{}
+
 extension DioResponseTo on dio.Response {
   T? retrieveResult<T>() {
     return data.isNotEmpty ? _createFromJSON<T>(data)! : null;
@@ -18,6 +20,7 @@ extension DioResponseTo on dio.Response {
 
 extension HttpResponseTo on http.Response {
   bool isSuccessful() => statusCode == 200 || statusCode == 201 || statusCode == 204;
+  bool wrongUserData() => statusCode == 401 || statusCode == 409;
 
   T? retrieveResult<T>() {
     T? result;
@@ -27,6 +30,8 @@ extension HttpResponseTo on http.Response {
           : body.isNotEmpty
               ? _createFromJSON<T>(json.decode(body.toString()))!
               : null;
+    } else if (wrongUserData()) {
+      throw WrongUserDataException();
     } else {
       throw Exception('Error: $reasonPhrase \n Error code: $statusCode');
     }

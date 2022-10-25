@@ -1,7 +1,7 @@
 import 'package:client/presentation/pages/auth/auth_state.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
 import 'auth_provider.dart';
-import 'package:client/presentation/widgets/networking_text_button.dart';
+import 'package:client/presentation/widgets/text_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,13 +38,15 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
   }
 
   Widget _errorMessage() {
-    final showError = ref.watch(authProvider).showErrorMessage;
-    if (showError) {
+    final state = ref.watch(authProvider);
+    if (state.showErrorMessage) {
       return Container(
         margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
-        child: const Text(
-          'Wrong username or/and password',
-          style: TextStyle(
+        child: Text(
+          state.pageView == AuthPageView.login
+              ? 'Wrong username or/and password'
+              : 'User with same login already exists',
+          style: const TextStyle(
             color: Colors.redAccent,
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -106,30 +108,42 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
     }
   }
 
-  void onLoginClick(){
+  void onLoginClick() {
     _usernameTextController.clear();
     _passwordTextController.clear();
     FocusScope.of(context).unfocus();
     ref.read(authProvider.notifier).login(
-      username: _usernameTextController.value.text,
-      password: _passwordTextController.value.text,
-    );
+          username: _usernameTextController.value.text,
+          password: _passwordTextController.value.text,
+          onError: () => showInfoDialog(
+            context: context,
+            title: 'Auth error',
+            content: 'Error occurred while trying to login',
+            onButtonClick: ref.read(authProvider.notifier).pop,
+          ),
+        );
   }
 
-  void onSignupClick(){
+  void onSignupClick() {
     _usernameTextController.clear();
     _passwordTextController.clear();
     FocusScope.of(context).unfocus();
     ref.read(authProvider.notifier).signup(
-      username: _usernameTextController.value.text,
-      password: _passwordTextController.value.text,
-      onSuccess: () => showInfoDialog(
-        context: context,
-        title: 'Signup was successful!',
-        content: 'Now you can login to your account',
-        onButtonClick: ref.read(authProvider.notifier).pop,
-      ),
-    );
+          username: _usernameTextController.value.text,
+          password: _passwordTextController.value.text,
+          onSuccess: () => showInfoDialog(
+            context: context,
+            title: 'Signup was successful!',
+            content: 'Now you can login to your account',
+            onButtonClick: ref.read(authProvider.notifier).pop,
+          ),
+          onError: () => showInfoDialog(
+            context: context,
+            title: 'Auth error',
+            content: 'Error occurred while trying to signup',
+            onButtonClick: ref.read(authProvider.notifier).pop,
+          ),
+        );
   }
 
   Widget _switchPageViewButton() {
@@ -139,9 +153,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         return Container(
           margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
           child: GestureDetector(
-            onTap: () => ref
-                .read(authProvider.notifier)
-                .switchPageView(AuthPageView.signup),
+            onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.signup),
             child: const Text(
               'I don`t have an account',
               style: TextStyle(
@@ -156,9 +168,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         return Container(
           margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
           child: GestureDetector(
-            onTap: () => ref
-                .read(authProvider.notifier)
-                .switchPageView(AuthPageView.login),
+            onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.login),
             child: const Text(
               'I already have an account',
               style: TextStyle(
