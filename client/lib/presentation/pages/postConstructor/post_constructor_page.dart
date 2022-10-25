@@ -1,7 +1,8 @@
+import 'package:client/domain/entities/post/post.dart';
 import 'package:client/presentation/pages/home/home_provider.dart';
 import 'package:client/presentation/pages/postConstructor/post_constructor_provider.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
-import 'package:client/presentation/widgets/networking_text_button.dart';
+import 'package:client/presentation/widgets/text_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,12 +13,12 @@ enum PostActions {
 
 class PostConstructorPage extends ConsumerStatefulWidget {
   final PostActions postAction;
-  final String? postId;
+  final Post? post;
 
   const PostConstructorPage({
     Key? key,
     required this.postAction,
-    this.postId,
+    this.post,
   }) : super(key: key);
 
   @override
@@ -29,34 +30,55 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
   final _titleTextController = TextEditingController();
 
   @override
+  void initState() {
+    if (widget.post != null) {
+      _titleTextController.text = widget.post!.title;
+      _postTextController.text = widget.post!.text;
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _titleTextController.dispose();
+    _postTextController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
-          16,
+          16.0,
         ),
       ),
-      title: const Text('New post'),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+      title: Text(widget.postAction == PostActions.create ? 'New post' : 'Edit'),
       content: SizedBox(
+        width: MediaQuery.of(context).size.width - 80.0,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             _inputField(
               hintText: 'Title',
               controller: _titleTextController,
+              maxLines: 2,
             ),
             const SizedBox(
-              height: 12,
+              height: 12.0,
             ),
             _inputField(
               hintText: 'Text',
               controller: _postTextController,
+              maxLines: 6,
             ),
           ],
         ),
       ),
+      actionsPadding: const EdgeInsets.all(25.0),
       actions: [
-        NetworkingTextButton(
+        StateTextButton(
           buttonText: widget.postAction == PostActions.create ? 'Create' : 'Edit',
           isButtonActive: ref.watch(postConstructorProvider).isButtonActive,
           onClick: onButtonClick,
@@ -86,7 +108,21 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
             );
         break;
       case PostActions.edit:
-        // TODO: Handle this case.
+        ref.read(postConstructorProvider.notifier).editPost(
+              postId: widget.post!.id,
+              title: postTitle,
+              text: postText,
+              onSuccess: () async {
+                await ref.read(homeProvider.notifier).getPosts();
+                ref.read(postConstructorProvider.notifier).pop();
+              },
+              onError: () => showInfoDialog(
+                context: context,
+                title: 'Post error',
+                content: 'Error occurred while editing the post',
+                onButtonClick: ref.read(postConstructorProvider.notifier).pop,
+              ),
+            );
         break;
     }
   }
@@ -94,16 +130,19 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
   Widget _inputField({
     required String hintText,
     required TextEditingController controller,
+    required int maxLines,
   }) {
     return TextField(
+      minLines: 1,
+      maxLines: maxLines,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 2, color: Colors.grey),
-          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(width: 1.0, color: Colors.grey),
+          borderRadius: BorderRadius.circular(5.0),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 2, color: Colors.grey),
-          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(width: 1.0, color: Color(0xff2da9ef)),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         hintText: hintText,
         hintStyle: const TextStyle(

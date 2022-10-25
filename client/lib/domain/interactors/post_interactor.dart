@@ -11,6 +11,10 @@ class PostInteractor extends BaseInteractor {
     return _postRepository.create(post);
   }
 
+  Future<void> editPost(Post post) {
+    return _postRepository.update(post);
+  }
+
   Future<List<Post>> getPosts() async {
     return _postRepository.getAllPosts();
   }

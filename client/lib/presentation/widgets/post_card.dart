@@ -1,22 +1,25 @@
 import 'package:client/domain/entities/post/post.dart';
+import 'package:client/presentation/pages/postConstructor/post_constructor_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
 class PostCardWidget extends StatelessWidget {
   final Post post;
-  final Function onEditButtonPressed;
-  final Function onDeleteButtonPressed;
+  final bool isSlidable;
+  final Function? onDeleteButtonPressed;
+
   const PostCardWidget({
     Key? key,
     required this.post,
-    required this.onDeleteButtonPressed,
-    required this.onEditButtonPressed,
+    required this.isSlidable,
+    this.onDeleteButtonPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
+      enabled: isSlidable,
       key: const ValueKey(0),
       startActionPane: ActionPane(
         motion: const ScrollMotion(),
@@ -26,7 +29,13 @@ class PostCardWidget extends StatelessWidget {
           ),
           SlidableAction(
             borderRadius: BorderRadius.circular(16),
-            onPressed: (_) => onEditButtonPressed,
+            onPressed: (_) => showDialog(
+              context: context,
+              builder: (context) => PostConstructorPage(
+                postAction: PostActions.edit,
+                post: post,
+              ),
+            ),
             backgroundColor: const Color.fromARGB(255, 239, 207, 45),
             foregroundColor: Colors.white,
             icon: Icons.edit,
