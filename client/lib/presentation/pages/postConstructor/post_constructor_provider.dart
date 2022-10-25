@@ -50,6 +50,30 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
     );
   }
 
+  Future<void> editPost({
+    required String postId,
+    required String title,
+    required String text,
+    required Function onSuccess,
+    required Function onError,
+  }) async {
+    final post = Post(
+      id: postId,
+      userId: _user.id,
+      authorName: _user.name,
+      text: text,
+      title: title,
+      date: DateTime.now(),
+    );
+    return launchRetrieveResult(
+      () async {
+        await _postInteractor.editPost(post);
+        onSuccess();
+      },
+      errorHandler: onError,
+    );
+  }
+
   void setButtonActive(String title, String text) =>
       state = state.copyWith(isButtonActive: title.isNotEmpty && text.isNotEmpty);
 }

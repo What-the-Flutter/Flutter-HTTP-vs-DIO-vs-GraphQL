@@ -1,7 +1,7 @@
 import 'package:client/presentation/pages/auth/auth_state.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
 import 'auth_provider.dart';
-import 'package:client/presentation/widgets/networking_text_button.dart';
+import 'package:client/presentation/widgets/text_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
