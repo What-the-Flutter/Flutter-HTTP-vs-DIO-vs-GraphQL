@@ -13,8 +13,6 @@ final postConstructorProvider =
 });
 
 class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorState> {
-  //TODO: implement error handling
-
   late final PostInteractor _postInteractor;
   late final User _user;
 

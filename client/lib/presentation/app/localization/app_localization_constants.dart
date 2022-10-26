@@ -58,18 +58,6 @@ abstract class AppStrings {
     return AppLocalizations.of(context)!.translate('post_error');
   }
 
-  static String postCreateErrorDescription(BuildContext context) {
-    return AppLocalizations.of(context)!.translate('post_error_create_description');
-  }
-
-  static String postDeleteErrorDescription(BuildContext context) {
-    return AppLocalizations.of(context)!.translate('post_error_delete_description');
-  }
-
-  static String postEditErrorDescription(BuildContext context) {
-    return AppLocalizations.of(context)!.translate('post_error_edit_description');
-  }
-
   static String create(BuildContext context) {
     return AppLocalizations.of(context)!.translate('create');
   }
@@ -98,11 +86,7 @@ abstract class AppStrings {
     return AppLocalizations.of(context)!.translate('auth_error');
   }
 
-  static String authLoginErrorDescription(BuildContext context) {
-    return AppLocalizations.of(context)!.translate('auth_error_login_description');
-  }
-
-  static String authSignupErrorDescription(BuildContext context) {
-    return AppLocalizations.of(context)!.translate('auth_error_signup_description');
+  static String serverErrorDescription(BuildContext context) {
+    return AppLocalizations.of(context)!.translate('server_error_description');
   }
 }

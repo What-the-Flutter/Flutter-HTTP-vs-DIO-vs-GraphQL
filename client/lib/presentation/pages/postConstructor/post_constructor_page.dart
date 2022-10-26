@@ -102,15 +102,10 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               title: postTitle,
               text: postText,
               onSuccess: () async {
-                await ref.read(homeProvider.notifier).getPosts();
+                await ref.read(homeProvider.notifier).getPosts(_showErrorDialog);
                 ref.read(postConstructorProvider.notifier).pop();
               },
-              onError: () => showInfoDialog(
-                context: context,
-                title: AppStrings.postError(context),
-                content: AppStrings.postCreateErrorDescription(context),
-                onButtonClick: ref.read(postConstructorProvider.notifier).pop,
-              ),
+              onError: _showErrorDialog,
             );
         break;
       case PostActions.edit:
@@ -119,15 +114,10 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               title: postTitle,
               text: postText,
               onSuccess: () async {
-                await ref.read(homeProvider.notifier).getPosts();
+                await ref.read(homeProvider.notifier).getPosts(_showErrorDialog);
                 ref.read(postConstructorProvider.notifier).pop();
               },
-              onError: () => showInfoDialog(
-                context: context,
-                title: AppStrings.postError(context),
-                content: AppStrings.postEditErrorDescription(context),
-                onButtonClick: ref.read(postConstructorProvider.notifier).pop,
-              ),
+              onError: _showErrorDialog,
             );
         break;
     }
@@ -162,6 +152,15 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
             )
       },
       controller: controller,
+    );
+  }
+
+  void _showErrorDialog() {
+    showInfoDialog(
+      context: context,
+      title: AppStrings.postError(context),
+      content: AppStrings.serverErrorDescription(context),
+      onButtonClick: ref.read(postConstructorProvider.notifier).pop,
     );
   }
 }
