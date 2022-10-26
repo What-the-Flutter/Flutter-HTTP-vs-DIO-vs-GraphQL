@@ -1,3 +1,27 @@
 {
-    "authentication": "Authentication"
+    "authentication_page_name": "Authentification",
+    "home_page_name": "Feed",
+    "wrong_auth_fields" : "Wrong username or/and password",
+    "wrong_login_fields": "User with same login already exists",
+    "name" : "Name",
+    "password" : "Password",
+    "login" : "Login",
+    "sign_up" : "Signup",
+    "user_has_account": "I already have an account",
+    "user_has_no_account": "I don`t have an account",
+    "successful_sign_up": "Signup was successful!",
+    "successful_sign_up_description": "Now you can login to your account",
+    "post_error": "Post error",
+    "auth_error": "Auth error",
+    "auth_error_login_description": "Error occurred while trying to login",
+    "auth_error_signup_description": "Error occurred while trying to signup",    
+    "post_error_create_description": "Error occurred while creating the post",
+    "post_error_delete_description": "Error occurred while deleting the post",
+    "post_error_edit_description": "Error occurred while editing the post",
+    "create" : "Create",
+    "edit" : "Edit",
+    "delete" : "Delete",
+    "title" : "Title",
+    "text" : "Text",
+    "approve" : "Approve"
 }
