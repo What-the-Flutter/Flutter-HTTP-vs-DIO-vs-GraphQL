@@ -17,12 +17,14 @@ export default mutationWithClientMutationId({
     },
     text: {
       type: new GraphQLNonNull(GraphQLString)
+    },
+    date: {
+      type: new GraphQLNonNull(GraphQLString)
     }
   },
   mutateAndGetPayload: async (
-    { postId, authorName, text, userId }
+    { postId, authorName, text, userId, date }
   ) => {
-    const date = Date.now();
 
     const comment = await Comment.create({
       postId,
