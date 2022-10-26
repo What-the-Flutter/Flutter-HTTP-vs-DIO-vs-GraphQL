@@ -123,12 +123,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
     ref.read(authProvider.notifier).login(
           username: _usernameTextController.value.text,
           password: _passwordTextController.value.text,
-          onError: () => showInfoDialog(
-            context: context,
-            title: AppStrings.authError(context),
-            content: AppStrings.authLoginErrorDescription(context),
-            onButtonClick: ref.read(authProvider.notifier).pop,
-          ),
+          onError: _showErrorDialog,
         );
   }
 
@@ -145,12 +140,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
             content: AppStrings.successfulSignUpDescription(context),
             onButtonClick: ref.read(authProvider.notifier).pop,
           ),
-          onError: () => showInfoDialog(
-            context: context,
-            title: AppStrings.authError(context),
-            content: AppStrings.authSignupErrorDescription(context),
-            onButtonClick: ref.read(authProvider.notifier).pop,
-          ),
+          onError: _showErrorDialog,
         );
   }
 
@@ -190,5 +180,14 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
       default:
         return Container();
     }
+  }
+
+  void _showErrorDialog() {
+    showInfoDialog(
+      context: context,
+      title: AppStrings.authError(context),
+      content: AppStrings.serverErrorDescription(context),
+      onButtonClick: ref.read(authProvider.notifier).pop,
+    );
   }
 }

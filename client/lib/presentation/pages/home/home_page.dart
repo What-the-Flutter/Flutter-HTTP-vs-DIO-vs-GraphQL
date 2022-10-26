@@ -18,7 +18,7 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-    ref.read(homeProvider.notifier).initPolling();
+    ref.read(homeProvider.notifier).initPolling(_showErrorDialog);
   }
 
   @override
@@ -119,12 +119,7 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
                 onDeleteButtonPressed: () {
                   ref.read(homeProvider.notifier).removePost(
                         state.posts[index].id,
-                        () => showInfoDialog(
-                          context: context,
-                          title: AppStrings.postError(context),
-                          content: AppStrings.postDeleteErrorDescription(context),
-                          onButtonClick: ref.read(homeProvider.notifier).pop,
-                        ),
+                        _showErrorDialog,
                       );
                 },
               );
@@ -162,6 +157,15 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
       shape: const CircularNotchedRectangle(),
       notchMargin: 8.0,
       child: SizedBox(height: size.height / 18.0),
+    );
+  }
+
+  void _showErrorDialog() {
+    showInfoDialog(
+      context: context,
+      title: AppStrings.postError(context),
+      content: AppStrings.serverErrorDescription(context),
+      onButtonClick: ref.read(homeProvider.notifier).pop,
     );
   }
 }
