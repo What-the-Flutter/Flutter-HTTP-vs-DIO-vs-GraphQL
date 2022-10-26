@@ -1,3 +1,4 @@
+import 'package:client/presentation/app/localization/app_localization_constants.dart';
 import 'package:flutter/material.dart';
 
 void showInfoDialog({
@@ -14,7 +15,9 @@ void showInfoDialog({
       actions: <Widget>[
         TextButton(
           onPressed: onButtonClick,
-          child: const Text('OK'),
+          child: Text(
+            AppStrings.approve(context),
+          ),
         ),
       ],
     ),

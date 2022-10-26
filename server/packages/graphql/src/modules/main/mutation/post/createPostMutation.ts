@@ -1,5 +1,5 @@
 import Post from "../../../../model/post";
-import { GraphQLString, GraphQLNonNull, GraphQLList, GraphQLSchema } from "graphql";
+import { GraphQLString, GraphQLNonNull, GraphQLList, GraphQLSchema, GraphQLInt } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 import PostType from "../../PostType";
 
@@ -18,12 +18,13 @@ export default mutationWithClientMutationId({
     text: {
       type: new GraphQLNonNull(GraphQLString)
     },
+    date: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
   },
   mutateAndGetPayload: async (
-    { userId, authorName, title, text }
+    { userId, authorName, title, text, date}
   ) => {
-    const date = Date.now();
-
     const post = await Post.create({
       userId,
       authorName,

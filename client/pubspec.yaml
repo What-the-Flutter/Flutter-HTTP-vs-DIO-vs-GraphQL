@@ -22,6 +22,7 @@ dependencies:
   intl: ^0.17.0
   package_info_plus: ^3.0.1
   http: ^0.13.5
+  graphql: ^5.1.1
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +35,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - lang/en.json
+

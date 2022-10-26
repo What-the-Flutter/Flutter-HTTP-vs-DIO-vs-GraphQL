@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:client/domain/entities/comment/comment.dart';
 import 'package:client/domain/entities/post/post.dart';
 import 'package:client/domain/entities/user/user.dart';
+import 'package:graphql/client.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart' as dio;
 
@@ -44,6 +45,31 @@ extension HttpResponseTo on http.Response {
       return result;
     }
     throw Exception('Error: $reasonPhrase \n Error code: $statusCode');
+  }
+}
+
+//Extension for GraphQL response
+extension ResponseTo on QueryResult {
+  T? retrieveResult<T>({String? tag}) {
+    T? result;
+    if (exception != null) {
+      throw Exception('Error: ${exception.toString()}');
+    } else {
+      if (tag != null) {
+        result = data![tag] == null ? null : _createFromJSON<T>(data![tag]);
+      }
+      return result;
+    }
+  }
+
+  List<T> retrieveResultAsList<T>({required String tag}) {
+    List<T> result;
+    if (exception != null) {
+      throw Exception('Error: ${exception.toString()}');
+    } else {
+      result = (data![tag] as List).map((e) => (_createFromJSON<T>(e)!)).toList();
+      return result;
+    }
   }
 }
 

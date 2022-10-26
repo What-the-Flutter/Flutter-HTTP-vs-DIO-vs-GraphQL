@@ -1,3 +1,5 @@
+import 'package:client/presentation/app/localization/app_localization_constants.dart';
+import 'package:client/presentation/app/theme/base_color_canstatns.dart';
 import 'package:client/presentation/pages/auth/auth_state.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
 import 'auth_provider.dart';
@@ -20,7 +22,9 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Authentication'),
+        title: Text(
+          AppStrings.authenticationPageName(context),
+        ),
       ),
       body: Center(
         child: Column(
@@ -44,10 +48,10 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
         child: Text(
           state.pageView == AuthPageView.login
-              ? 'Wrong username or/and password'
-              : 'User with same login already exists',
-          style: const TextStyle(
-            color: Colors.redAccent,
+              ? AppStrings.wrongAuthFields(context)
+              : AppStrings.wrongLoginFields(context),
+          style: TextStyle(
+            color: BaseColors.textColorError,
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
@@ -62,7 +66,9 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
     return Container(
       margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
       child: TextField(
-        decoration: const InputDecoration.collapsed(hintText: 'Name'),
+        decoration: InputDecoration.collapsed(
+          hintText: AppStrings.name(context),
+        ),
         onChanged: (text) => ref.read(authProvider.notifier).setButtonActive(
               text,
               _passwordTextController.value.text,
@@ -77,7 +83,9 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
     return Container(
       margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
       child: TextField(
-        decoration: const InputDecoration.collapsed(hintText: 'Password'),
+        decoration: InputDecoration.collapsed(
+          hintText: AppStrings.password(context),
+        ),
         onChanged: (text) => ref.read(authProvider.notifier).setButtonActive(
               _usernameTextController.value.text,
               text,
@@ -94,13 +102,13 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
       case AuthPageView.login:
         return NetworkingTextButton(
           isButtonActive: state.isButtonActive,
-          buttonText: 'Login',
+          buttonText: AppStrings.login(context),
           onClick: onLoginClick,
         );
       case AuthPageView.signup:
         return NetworkingTextButton(
           isButtonActive: state.isButtonActive,
-          buttonText: 'SignUp',
+          buttonText: AppStrings.signUp(context),
           onClick: onSignupClick,
         );
       default:
@@ -117,8 +125,8 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
           password: _passwordTextController.value.text,
           onError: () => showInfoDialog(
             context: context,
-            title: 'Auth error',
-            content: 'Error occurred while trying to login',
+            title: AppStrings.authError(context),
+            content: AppStrings.authLoginErrorDescription(context),
             onButtonClick: ref.read(authProvider.notifier).pop,
           ),
         );
@@ -133,14 +141,14 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
           password: _passwordTextController.value.text,
           onSuccess: () => showInfoDialog(
             context: context,
-            title: 'Signup was successful!',
-            content: 'Now you can login to your account',
+            title: AppStrings.successfulSignUp(context),
+            content: AppStrings.successfulSignUpDescription(context),
             onButtonClick: ref.read(authProvider.notifier).pop,
           ),
           onError: () => showInfoDialog(
             context: context,
-            title: 'Auth error',
-            content: 'Error occurred while trying to signup',
+            title: AppStrings.authError(context),
+            content: AppStrings.authSignupErrorDescription(context),
             onButtonClick: ref.read(authProvider.notifier).pop,
           ),
         );
@@ -154,10 +162,10 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
           margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
           child: GestureDetector(
             onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.signup),
-            child: const Text(
-              'I don`t have an account',
+            child: Text(
+              AppStrings.userHasNoAccount(context),
               style: TextStyle(
-                color: Colors.black26,
+                color: BaseColors.textColorDark,
                 fontSize: 15,
                 decoration: TextDecoration.underline,
               ),
@@ -169,10 +177,10 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
           margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
           child: GestureDetector(
             onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.login),
-            child: const Text(
-              'I already have an account',
+            child: Text(
+              AppStrings.userHasAccount(context),
               style: TextStyle(
-                color: Colors.black26,
+                color: BaseColors.textColorDark,
                 fontSize: 15,
                 decoration: TextDecoration.underline,
               ),
