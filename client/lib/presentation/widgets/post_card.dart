@@ -1,4 +1,6 @@
 import 'package:client/domain/entities/post/post.dart';
+import 'package:client/presentation/app/localization/app_localization_constants.dart';
+import 'package:client/presentation/app/theme/base_color_canstatns.dart';
 import 'package:client/presentation/pages/postConstructor/post_constructor_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -36,10 +38,10 @@ class PostCardWidget extends StatelessWidget {
                 post: post,
               ),
             ),
-            backgroundColor: const Color.fromARGB(255, 239, 207, 45),
-            foregroundColor: Colors.white,
+            backgroundColor: BaseColors.editButtonColor,
+            foregroundColor: BaseColors.textColorLight,
             icon: Icons.edit,
-            label: 'Edit',
+            label: AppStrings.edit(context),
           ),
           const SizedBox(
             width: 2,
@@ -47,83 +49,84 @@ class PostCardWidget extends StatelessWidget {
           SlidableAction(
             borderRadius: BorderRadius.circular(16),
             onPressed: (_) => onDeleteButtonPressed,
-            backgroundColor: const Color(0xFFFE4A49),
-            foregroundColor: Colors.white,
+            backgroundColor: BaseColors.deleteButtonColor,
+            foregroundColor: BaseColors.textColorLight,
             icon: Icons.delete,
-            label: 'Delete',
+            label: AppStrings.delete(context),
           ),
         ],
       ),
       child: Card(
         elevation: 8,
-        shadowColor: const Color(0xff2da9ef),
+        shadowColor: BaseColors.shadowColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             10,
           ),
         ),
         child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 8,
-              horizontal: 16,
-            ),
-            title: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          post.title,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        DateFormat.yMMMMd('en_US').format(post.date),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 8,
+            horizontal: 16,
+          ),
+          title: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        post.title,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          color: Colors.black45,
-                          fontSize: 16,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '@${post.authorName}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                    ),
+                    Text(
+                      DateFormat.yMMMMd('en_US').format(post.date),
+                      style: TextStyle(
+                        color: BaseColors.textColorDark,
+                        fontSize: 16,
                       ),
-                      const Text(
-                        'comments: 0',
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontSize: 16,
-                        ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '@${post.authorName}',
+                      style: const TextStyle(
+                        fontSize: 16,
                       ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                    Text(
+                      'comments: ${post.commentCount}',
+                      style: TextStyle(
+                        color: BaseColors.textColorDark,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                )
+              ],
             ),
-            subtitle: Text(
-              post.text,
-              overflow: TextOverflow.fade,
-              maxLines: 3,
-              softWrap: true,
-              style: TextStyle(
-                color: Colors.blue.shade700,
-                fontSize: 16,
-              ),
-            )),
+          ),
+          subtitle: Text(
+            post.text,
+            overflow: TextOverflow.fade,
+            maxLines: 3,
+            softWrap: true,
+            style: TextStyle(
+              color: BaseColors.textColorCustom,
+              fontSize: 16,
+            ),
+          ),
+        ),
       ),
     );
   }

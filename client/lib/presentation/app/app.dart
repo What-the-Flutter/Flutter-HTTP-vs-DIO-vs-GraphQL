@@ -1,3 +1,4 @@
+import 'package:client/presentation/app/localization/app_localization.dart';
 import 'package:client/presentation/app/navigation/auto_router.gr.dart';
 import 'package:client/presentation/di/injector.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,12 @@ class App extends StatelessWidget {
         title: 'Networking DI samples',
         routerDelegate: _appRouter.delegate(),
         routeInformationParser: _appRouter.defaultRouteParser(),
+        supportedLocales: const [
+          Locale('en', 'US'),
+        ],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+        ],
       ),
     );
   }

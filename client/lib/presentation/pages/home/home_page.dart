@@ -1,3 +1,5 @@
+import 'package:client/presentation/app/localization/app_localization_constants.dart';
+import 'package:client/presentation/app/theme/base_color_canstatns.dart';
 import 'package:client/presentation/pages/home/home_provider.dart';
 import 'package:client/presentation/pages/postConstructor/post_constructor_page.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
@@ -50,34 +52,34 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
       child: Container(
         width: size.width,
         height: size.height / 3.0,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.horizontal(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.horizontal(
             left: Radius.circular(10),
             right: Radius.circular(10),
           ),
           gradient: LinearGradient(
             colors: [
-              Color(0xff8d70fe),
-              Color(0xff2da9ef),
+              BaseColors.gradientColorOne,
+              BaseColors.gradientColorTwo,
             ],
             begin: Alignment.centerRight,
             end: Alignment.centerLeft,
           ),
         ),
         child: Column(
-          children: const [
-            SizedBox(
+          children: [
+            const SizedBox(
               height: 60.0,
             ),
             Text(
-              'Feed',
+              AppStrings.homePageName(context),
               style: TextStyle(
-                color: Colors.white,
+                color: BaseColors.textColorLight,
                 fontSize: 36.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8.0,
             ),
           ],
@@ -94,9 +96,9 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
       child: Container(
         width: size.width - 32.0,
         height: size.height / 1.2,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.horizontal(
+        decoration: BoxDecoration(
+          color: BaseColors.foregroundColor,
+          borderRadius: const BorderRadius.horizontal(
             left: Radius.circular(10.0),
             right: Radius.circular(10.0),
           ),
@@ -119,8 +121,8 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
                         state.posts[index].id,
                         () => showInfoDialog(
                           context: context,
-                          title: 'Post error',
-                          content: 'Error occurred while deleting the post',
+                          title: AppStrings.postError(context),
+                          content: AppStrings.postDeleteErrorDescription(context),
                           onButtonClick: ref.read(homeProvider.notifier).pop,
                         ),
                       );
@@ -145,8 +147,8 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
           ),
         );
       },
-      backgroundColor: const Color(0xff2da9ef),
-      foregroundColor: const Color(0xffffffff),
+      backgroundColor: BaseColors.backgroundColor,
+      foregroundColor: BaseColors.foregroundColor,
       child: const Icon(
         Icons.add,
         size: 36.0,
@@ -156,7 +158,7 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
 
   BottomAppBar _homeBottomAppBar(Size size) {
     return BottomAppBar(
-      color: const Color(0xff2da9ef),
+      color: BaseColors.backgroundColor,
       shape: const CircularNotchedRectangle(),
       notchMargin: 8.0,
       child: SizedBox(height: size.height / 18.0),

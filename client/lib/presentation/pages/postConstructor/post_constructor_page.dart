@@ -1,4 +1,6 @@
 import 'package:client/domain/entities/post/post.dart';
+import 'package:client/presentation/app/localization/app_localization_constants.dart';
+import 'package:client/presentation/app/theme/base_color_canstatns.dart';
 import 'package:client/presentation/pages/home/home_provider.dart';
 import 'package:client/presentation/pages/postConstructor/post_constructor_provider.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
@@ -54,14 +56,16 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
         ),
       ),
       insetPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
-      title: Text(widget.postAction == PostActions.create ? 'New post' : 'Edit'),
+      title: Text(widget.postAction == PostActions.create
+          ? AppStrings.create(context)
+          : AppStrings.edit(context)),
       content: SizedBox(
         width: MediaQuery.of(context).size.width - 80.0,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             _inputField(
-              hintText: 'Title',
+              hintText: AppStrings.title(context),
               controller: _titleTextController,
               maxLines: 2,
             ),
@@ -69,7 +73,7 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               height: 12.0,
             ),
             _inputField(
-              hintText: 'Text',
+              hintText: AppStrings.text(context),
               controller: _postTextController,
               maxLines: 6,
             ),
@@ -79,7 +83,9 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
       actionsPadding: const EdgeInsets.all(25.0),
       actions: [
         StateTextButton(
-          buttonText: widget.postAction == PostActions.create ? 'Create' : 'Edit',
+          buttonText: widget.postAction == PostActions.create
+              ? AppStrings.create(context)
+              : AppStrings.edit(context),
           isButtonActive: ref.watch(postConstructorProvider).isButtonActive,
           onClick: onButtonClick,
         ),
@@ -101,8 +107,8 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               },
               onError: () => showInfoDialog(
                 context: context,
-                title: 'Post error',
-                content: 'Error occurred while creating the post',
+                title: AppStrings.postError(context),
+                content: AppStrings.postCreateErrorDescription(context),
                 onButtonClick: ref.read(postConstructorProvider.notifier).pop,
               ),
             );
@@ -118,8 +124,8 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               },
               onError: () => showInfoDialog(
                 context: context,
-                title: 'Post error',
-                content: 'Error occurred while editing the post',
+                title: AppStrings.postError(context),
+                content: AppStrings.postEditErrorDescription(context),
                 onButtonClick: ref.read(postConstructorProvider.notifier).pop,
               ),
             );
@@ -137,16 +143,16 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
       maxLines: maxLines,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 1.0, color: Colors.grey),
+          borderSide: BorderSide(width: 1.0, color: BaseColors.borderColorBlocked),
           borderRadius: BorderRadius.circular(5.0),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 1.0, color: Color(0xff2da9ef)),
+          borderSide: BorderSide(width: 1.0, color: BaseColors.borderColorActive),
           borderRadius: BorderRadius.circular(8.0),
         ),
         hintText: hintText,
-        hintStyle: const TextStyle(
-          color: Colors.grey,
+        hintStyle: TextStyle(
+          color: BaseColors.hintTextColor,
         ),
       ),
       onChanged: (_) => {
