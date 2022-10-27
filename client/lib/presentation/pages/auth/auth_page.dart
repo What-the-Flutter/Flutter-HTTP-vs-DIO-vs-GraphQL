@@ -30,6 +30,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            _appLogo(),
             _errorMessage(),
             _usernameField(),
             _passwordField(),
@@ -37,6 +38,16 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
             _switchPageViewButton(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _appLogo() {
+    return Container(
+      margin:  const EdgeInsets.only(left: 25, right: 25, bottom: 45),
+      child: const FlutterLogo(
+        size: 100,
+        style: FlutterLogoStyle.markOnly,
       ),
     );
   }
