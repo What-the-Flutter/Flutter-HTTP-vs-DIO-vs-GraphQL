@@ -14,19 +14,19 @@ class DioRestRemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  Future<void> createComment(CreateCommentModel comment) async {
+  Future<void> createComment(Comment comment) async {
     final response = await _dio.post('/comment', data: comment.toJson());
     return response.retrieveResult();
   }
 
   @override
-  Future<void> createPost(CreatePostModel post) async {
+  Future<void> createPost(Post post) async {
     final response = await _dio.post('/post', data: post.toJson());
     return response.retrieveResult();
   }
 
   @override
-  Future<void> createUser(CreateUserModel user) async {
+  Future<void> createUser(User user) async {
     final response = await _dio.post('/createUser', data: user.toJson());
     return response.retrieveResult();
   }
@@ -56,7 +56,7 @@ class DioRestRemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  Future<User> loginUser(CreateUserModel user) async {
+  Future<User> loginUser(User user) async {
     final response = await _dio.post('/login', data: user.toJson());
     return response.retrieveResult<User>()!;
   }
@@ -75,7 +75,7 @@ class DioRestRemoteDataSource implements IRemoteDataSource {
 
   @override
   Future<Post> getPost(String postId) async {
-    final response = await _dio.get('/posts/$postId');
+    final response = await _dio.get('/post/$postId');
     return response.retrieveResult<Post>()!;
   }
 }

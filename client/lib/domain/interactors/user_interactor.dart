@@ -8,11 +8,11 @@ class UserInteractor extends BaseInteractor {
 
   UserInteractor(this._userRepository);
 
-  Future<void> signup(CreateUserModel entity) async {
+  Future<void> signup(User entity) async {
     return _userRepository.signupUser(entity);
   }
 
-  Future<void> login(CreateUserModel entity) async {
+  Future<void> login(User entity) async {
     user = await _userRepository.loginUser(entity);
   }
 }

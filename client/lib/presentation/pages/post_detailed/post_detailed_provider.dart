@@ -48,7 +48,8 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
   }
 
   Future<void> addComment(String text, Function onError) async {
-    final commentModel = CreateCommentModel(
+    final commentModel = Comment(
+      id: '0',
       userId: _user.id,
       postId: post.id,
       authorName: _user.name,

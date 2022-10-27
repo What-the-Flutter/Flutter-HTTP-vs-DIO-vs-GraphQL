@@ -8,7 +8,7 @@ class CommentRepository implements ICommentRepository {
   CommentRepository(this._remoteDataSource);
 
   @override
-  Future<void> create(CreateCommentModel comment) async {
+  Future<void> create(Comment comment) async {
     return await _remoteDataSource.createComment(comment);
   }
 

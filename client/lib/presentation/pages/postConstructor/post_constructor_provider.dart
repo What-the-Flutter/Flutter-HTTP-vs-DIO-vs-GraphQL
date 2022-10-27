@@ -32,7 +32,8 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
     required Function onSuccess,
     required Function onError,
   }) async {
-    final post = CreatePostModel(
+    final post = Post(
+      id: '0',
       userId: _user.id,
       authorName: _user.name,
       text: text,

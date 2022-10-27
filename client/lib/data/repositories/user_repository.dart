@@ -8,12 +8,12 @@ class UserRepository implements IUserRepository {
   UserRepository(this._remoteDataSource);
 
   @override
-  Future<User> loginUser(CreateUserModel user) async {
+  Future<User> loginUser(User user) async {
     return await _remoteDataSource.loginUser(user);
   }
 
   @override
-  Future<void> signupUser(CreateUserModel user) async {
+  Future<void> signupUser(User user) async {
     return await _remoteDataSource.createUser(user);
   }
 }

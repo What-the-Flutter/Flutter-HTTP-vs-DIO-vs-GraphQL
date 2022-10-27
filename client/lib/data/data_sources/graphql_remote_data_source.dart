@@ -26,7 +26,7 @@ class GraphqlRemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  Future<void> createComment(CreateCommentModel comment) async {
+  Future<void> createComment(Comment comment) async {
     final MutationOptions options = MutationOptions(
       document: gql(GraphQLQueryStrings.createComment),
       variables: <String, dynamic>{
@@ -43,7 +43,7 @@ class GraphqlRemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  Future<void> createPost(CreatePostModel post) async {
+  Future<void> createPost(Post post) async {
     final MutationOptions options = MutationOptions(
       document: gql(GraphQLQueryStrings.createPost),
       variables: <String, dynamic>{
@@ -61,7 +61,7 @@ class GraphqlRemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  Future<void> createUser(CreateUserModel user) async {
+  Future<void> createUser(User user) async {
     final MutationOptions options = MutationOptions(
       document: gql(GraphQLQueryStrings.createUser),
       variables: <String, dynamic>{
@@ -134,7 +134,7 @@ class GraphqlRemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  Future<User> loginUser(CreateUserModel user) async {
+  Future<User> loginUser(User user) async {
     final MutationOptions options = MutationOptions(
       document: gql(GraphQLQueryStrings.loginUser),
       variables: <String, dynamic>{

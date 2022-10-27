@@ -12,7 +12,7 @@ class PostInteractor extends BaseInteractor {
     post = await _postRepository.getPost(postId);
   }
 
-  Future<void> addPost(CreatePostModel post) {
+  Future<void> addPost(Post post) {
     return _postRepository.create(post);
   }
 
