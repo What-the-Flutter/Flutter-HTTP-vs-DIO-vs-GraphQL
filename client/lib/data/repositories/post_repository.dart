@@ -8,7 +8,7 @@ class PostRepository implements IPostRepository {
   PostRepository(this._remoteDataSource);
 
   @override
-  Future<void> create(CreatePostModel post) async {
+  Future<void> create(Post post) async {
     return await _remoteDataSource.createPost(post);
   }
 

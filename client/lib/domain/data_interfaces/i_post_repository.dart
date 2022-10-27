@@ -3,7 +3,7 @@ import 'entity_repository.dart';
 
 abstract class IPostRepository implements EntityRepository<Post> {
   Future<List<Post>> getAllPosts();
-  Future<void> create(CreatePostModel post);
+  Future<void> create(Post post);
   Future<void> delete(String id);
   Future<void> update(Post newPost);
   Future<Post> getPost(String id);

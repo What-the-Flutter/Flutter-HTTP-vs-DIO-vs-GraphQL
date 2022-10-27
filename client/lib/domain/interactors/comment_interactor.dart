@@ -7,7 +7,7 @@ class CommentInteractor extends BaseInteractor {
 
   CommentInteractor(this._commentRepository);
 
-  Future<void> createComment(CreateCommentModel commentModel) {
+  Future<void> createComment(Comment commentModel) {
     return _commentRepository.create(commentModel);
   }
 

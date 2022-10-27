@@ -7,7 +7,7 @@ part 'comment.freezed.dart';
 part 'comment.g.dart';
 
 @freezed
-class Comment with _$Comment implements ApiObject{
+class Comment with _$Comment implements ApiObject {
   const factory Comment({
     required String id,
     required String userId,
@@ -18,18 +18,4 @@ class Comment with _$Comment implements ApiObject{
   }) = _Comment;
 
   factory Comment.fromJson(Map<String, Object?> json) => _$CommentFromJson(json);
-}
-
-@freezed
-class CreateCommentModel with _$CreateCommentModel implements ApiObject{
-  const factory CreateCommentModel({
-    required String userId,
-    required String postId,
-    required String authorName,
-    required String text,
-    required DateTime date,
-  }) = _CreateCommentModel;
-
-  factory CreateCommentModel.fromJson(Map<String, Object?> json) =>
-      _$CreateCommentModelFromJson(json);
 }

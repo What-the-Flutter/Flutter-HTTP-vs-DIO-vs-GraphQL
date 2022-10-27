@@ -24,19 +24,19 @@ class HttpRestRemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  Future<void> createComment(CreateCommentModel comment) async {
+  Future<void> createComment(Comment comment) async {
     final response = await _request(_Http.post, '/comment', body: comment);
     return response.retrieveResult();
   }
 
   @override
-  Future<void> createPost(CreatePostModel post) async {
+  Future<void> createPost(Post post) async {
     final response = await _request(_Http.post, '/post', body: post);
     return response.retrieveResult();
   }
 
   @override
-  Future<void> createUser(CreateUserModel user) async {
+  Future<void> createUser(User user) async {
     final response = await _request(_Http.post, '/createUser', body: user);
     return response.retrieveResult();
   }
@@ -72,7 +72,7 @@ class HttpRestRemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  Future<User> loginUser(CreateUserModel user) async {
+  Future<User> loginUser(User user) async {
     final response = await _request(_Http.post, '/login', body: user);
     return response.retrieveResult<User>()!;
   }

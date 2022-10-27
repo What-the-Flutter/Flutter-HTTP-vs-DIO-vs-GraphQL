@@ -3,7 +3,6 @@ import 'package:client/domain/entities/user/user.dart';
 import 'package:client/domain/interactors/user_interactor.dart';
 import 'package:client/presentation/app/navigation/route_constants.dart';
 import 'package:client/presentation/base/base_state_notifier.dart';
-import 'package:client/presentation/di/injector.dart';
 import 'package:client/presentation/pages/auth/auth_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,7 +30,11 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
     required Function onSuccess,
     required Function onError,
   }) async {
-    final user = CreateUserModel(name: username, password: password);
+    final user = User(
+      id: '0',
+      name: username,
+      password: password,
+    );
     return launchRetrieveResult(
       () async {
         await _userInteractor.signup(user);
@@ -57,7 +60,11 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
     required String password,
     required Function onError,
   }) async {
-    final user = CreateUserModel(name: username, password: password);
+    final user = User(
+      id: '0',
+      name: username,
+      password: password,
+    );
     return launchRetrieveResult(
       () async {
         await _userInteractor.login(user);
