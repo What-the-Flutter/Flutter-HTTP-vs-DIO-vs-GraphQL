@@ -1,3 +1,4 @@
+import 'package:client/presentation/app/theme/base_color_canstatns.dart';
 import 'package:flutter/material.dart';
 
 class NetworkingTextButton extends StatelessWidget {
@@ -21,7 +22,7 @@ class NetworkingTextButton extends StatelessWidget {
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: MaterialStatePropertyAll<Color>(
-            isButtonActive ? Colors.lightBlue : Colors.blue.shade300,
+            isButtonActive ? BaseColors.buttonColorActive : BaseColors.buttonColorBlocked,
           ),
         ),
         onPressed: () {
@@ -31,7 +32,7 @@ class NetworkingTextButton extends StatelessWidget {
         },
         child: Text(
           buttonText,
-          style: TextStyle(fontSize: textSize, color: Colors.white),
+          style: TextStyle(fontSize: textSize, color: BaseColors.textColorLight),
         ),
       ),
     );
@@ -61,7 +62,7 @@ class StateTextButton extends StatelessWidget {
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: MaterialStatePropertyAll<Color>(
-            isButtonActive ? Colors.lightBlue : Colors.blue.shade300,
+            isButtonActive ? BaseColors.buttonColorActive : BaseColors.buttonColorBlocked,
           ),
         ),
         onPressed: () {
@@ -71,7 +72,7 @@ class StateTextButton extends StatelessWidget {
         },
         child: Text(
           buttonText,
-          style: TextStyle(fontSize: textSize, color: Colors.white),
+          style: TextStyle(fontSize: textSize, color: BaseColors.textColorLight),
         ),
       ),
     );
