@@ -1,5 +1,5 @@
 import 'package:client/presentation/app/localization/app_localization_constants.dart';
-import 'package:client/presentation/app/theme/base_color_canstatns.dart';
+import 'package:client/presentation/app/theme/base_color_constants.dart';
 import 'package:client/presentation/pages/auth/auth_state.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
 import 'auth_provider.dart';

@@ -1,8 +1,6 @@
 import 'package:client/domain/entities/comment/comment.dart';
-import 'package:client/presentation/app/localization/app_localization_constants.dart';
-import 'package:client/presentation/app/theme/base_color_canstatns.dart';
+import 'package:client/presentation/app/theme/base_color_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
 class CommentCardWidget extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:client/domain/entities/post/post.dart';
 import 'package:client/presentation/app/localization/app_localization_constants.dart';
-import 'package:client/presentation/app/theme/base_color_canstatns.dart';
+import 'package:client/presentation/app/theme/base_color_constants.dart';
 import 'package:client/presentation/pages/post_detailed/post_detailed_provider.dart';
 import 'package:client/presentation/pages/post_detailed/post_detailed_state.dart';
 import 'package:client/presentation/widgets/comment_card.dart';

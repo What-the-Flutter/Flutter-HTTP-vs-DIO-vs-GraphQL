@@ -1,4 +1,4 @@
-import 'package:client/presentation/app/theme/base_color_canstatns.dart';
+import 'package:client/presentation/app/theme/base_color_constants.dart';
 import 'package:flutter/material.dart';
 
 class NetworkingTextButton extends StatelessWidget {

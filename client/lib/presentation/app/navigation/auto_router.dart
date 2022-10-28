@@ -10,7 +10,6 @@ import 'route_constants.dart';
     AutoRoute(path: Routes.auth, page: AuthPageWidget, initial: true),
     AutoRoute(path: Routes.home, page: HomePage),
     AutoRoute(path: Routes.post, page: PostDetailedPage),
-    //TODO: implement routes
   ],
 )
 class $AppRouter {}

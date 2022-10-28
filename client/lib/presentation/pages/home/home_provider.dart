@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:client/domain/entities/user/user.dart';
 import 'package:client/domain/interactors/post_interactor.dart';
+import 'package:client/domain/interactors/user_interactor.dart';
 import 'package:client/presentation/app/navigation/route_constants.dart';
 import 'package:client/presentation/base/base_state_notifier.dart';
+import 'package:client/presentation/di/injector.dart';
 import 'package:client/presentation/pages/home/home_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,8 +26,8 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
             posts: [],
           ),
         ) {
-    //_postInteractor = i.get();
-    //_user = i.get<UserInteractor>().user;
+    _postInteractor = i.get();
+    _user = i.get<UserInteractor>().user;
   }
 
   void initPolling(Function onError) async {

@@ -1,6 +1,6 @@
 import 'package:client/domain/entities/post/post.dart';
 import 'package:client/presentation/app/localization/app_localization_constants.dart';
-import 'package:client/presentation/app/theme/base_color_canstatns.dart';
+import 'package:client/presentation/app/theme/base_color_constants.dart';
 import 'package:client/presentation/pages/post_constructor/post_constructor_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

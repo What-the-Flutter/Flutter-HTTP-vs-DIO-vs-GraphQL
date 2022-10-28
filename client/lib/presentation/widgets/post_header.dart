@@ -1,5 +1,5 @@
 import 'package:client/domain/entities/post/post.dart';
-import 'package:client/presentation/app/theme/base_color_canstatns.dart';
+import 'package:client/presentation/app/theme/base_color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

@@ -22,8 +22,8 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
             isButtonActive: false,
           ),
         ) {
-    //_postInteractor = i.get();
-    //_user = i.get<UserInteractor>().user;
+    _postInteractor = i.get();
+    _user = i.get<UserInteractor>().user;
   }
 
   Future<void> addPost({
