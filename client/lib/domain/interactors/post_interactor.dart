@@ -4,7 +4,7 @@ import 'package:client/domain/interactors/base_interactor.dart';
 
 class PostInteractor extends BaseInteractor {
   final IPostRepository _postRepository;
-  late final Post post;
+  late Post post;
 
   PostInteractor(this._postRepository);
 

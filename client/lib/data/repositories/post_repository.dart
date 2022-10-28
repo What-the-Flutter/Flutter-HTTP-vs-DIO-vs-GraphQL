@@ -1,34 +1,32 @@
-import 'package:client/data/data_sources/interfaces/i_remote_data_source.dart';
+import 'package:client/data/repositories/base_repository.dart';
 import 'package:client/domain/data_interfaces/i_post_repository.dart';
 import 'package:client/domain/entities/post/post.dart';
 
-class PostRepository implements IPostRepository {
-  final IRemoteDataSource _remoteDataSource;
-
-  PostRepository(this._remoteDataSource);
+class PostRepository extends BaseRepository implements IPostRepository {
+  PostRepository(super.remoteDataSource);
 
   @override
   Future<void> create(Post post) async {
-    return await _remoteDataSource.createPost(post);
+    return await remoteDataSource.createPost(post);
   }
 
   @override
   Future<void> delete(String id) async {
-    return await _remoteDataSource.deletePost(id);
+    return await remoteDataSource.deletePost(id);
   }
 
   @override
   Future<List<Post>> getAllPosts() async {
-    return await _remoteDataSource.getAllPosts();
+    return await remoteDataSource.getAllPosts();
   }
 
   @override
   Future<Post> getPost(String id) async {
-    return await _remoteDataSource.getPost(id);
+    return await remoteDataSource.getPost(id);
   }
 
   @override
   Future<void> update(Post newPost) async {
-    return await _remoteDataSource.updatePost(newPost);
+    return await remoteDataSource.updatePost(newPost);
   }
 }
