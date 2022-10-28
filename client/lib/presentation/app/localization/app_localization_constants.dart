@@ -54,6 +54,10 @@ abstract class AppStrings {
     return AppLocalizations.of(context)!.translate('home_page_name');
   }
 
+  static String postDetailedPageName(BuildContext context) {
+    return AppLocalizations.of(context)!.translate('post_detailed_page_name');
+  }
+
   static String postError(BuildContext context) {
     return AppLocalizations.of(context)!.translate('post_error');
   }
@@ -88,5 +92,13 @@ abstract class AppStrings {
 
   static String serverErrorDescription(BuildContext context) {
     return AppLocalizations.of(context)!.translate('server_error_description');
+  }
+
+  static String commentInputHintText(BuildContext context) {
+    return AppLocalizations.of(context)!.translate('comment_input_hint_text');
+  }
+
+  static String comments(BuildContext context) {
+    return AppLocalizations.of(context)!.translate('comments');
   }
 }

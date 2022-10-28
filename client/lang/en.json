@@ -1,10 +1,13 @@
 {
     "authentication_page_name": "Authentification",
     "home_page_name": "Feed",
+    "post_detailed_page_name": "Post info",
+    "comment_input_hint_text": "comment this post..",    
     "wrong_auth_fields" : "Wrong username or/and password",
     "wrong_login_fields": "User with same login already exists",
     "name" : "Name",
     "password" : "Password",
+    "comments" : "Comments: ",
     "login" : "Login",
     "sign_up" : "Signup",
     "user_has_account": "I already have an account",

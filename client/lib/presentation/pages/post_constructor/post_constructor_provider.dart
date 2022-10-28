@@ -4,7 +4,7 @@ import 'package:client/domain/interactors/post_interactor.dart';
 import 'package:client/domain/interactors/user_interactor.dart';
 import 'package:client/presentation/base/base_state_notifier.dart';
 import 'package:client/presentation/di/injector.dart';
-import 'package:client/presentation/pages/postConstructor/post_constructor_state.dart';
+import 'package:client/presentation/pages/post_constructor/post_constructor_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final postConstructorProvider =
