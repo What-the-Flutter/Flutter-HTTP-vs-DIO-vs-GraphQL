@@ -1,7 +1,7 @@
 import 'package:client/presentation/app/localization/app_localization_constants.dart';
 import 'package:client/presentation/app/theme/base_color_canstatns.dart';
 import 'package:client/presentation/pages/home/home_provider.dart';
-import 'package:client/presentation/pages/postConstructor/post_constructor_page.dart';
+import 'package:client/presentation/pages/post_constructor/post_constructor_page.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
 import 'package:client/presentation/widgets/post_card.dart';
 import 'package:flutter/material.dart';
