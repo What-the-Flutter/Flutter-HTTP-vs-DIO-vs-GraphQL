@@ -58,7 +58,7 @@ class PostCardWidget extends StatelessWidget {
       ),
       child: Card(
         elevation: 8,
-        shadowColor: BaseColors.shadowColor,
+        shadowColor: BaseColors.customShadowColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             10,
