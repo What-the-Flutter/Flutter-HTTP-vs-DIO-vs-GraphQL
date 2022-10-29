@@ -1,14 +1,14 @@
 import 'package:client/presentation/app/localization/app_localization_constants.dart';
 import 'package:client/presentation/app/theme/base_color_constants.dart';
 import 'package:client/presentation/pages/auth/auth_state.dart';
+import 'package:client/presentation/pages/auth/widgets/auth_background.dart';
 import 'package:client/presentation/widgets/error_dialog.dart';
 import 'auth_provider.dart';
-import 'package:client/presentation/widgets/text_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthPageWidget extends ConsumerStatefulWidget {
-  const AuthPageWidget({super.key});
+  const AuthPageWidget({Key? key}) : super(key: key);
 
   @override
   ConsumerState<AuthPageWidget> createState() => AuthPageWidgetState();
@@ -20,34 +20,91 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          AppStrings.authenticationPageName(context),
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _appLogo(),
-            _errorMessage(),
-            _usernameField(),
-            _passwordField(),
-            _confirmationButton(),
-            _switchPageViewButton(),
-          ],
-        ),
+      body: Stack(
+        children: [
+          const Background(),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _appLogo(size),
+              _authStateString(),
+              _errorMessage(),
+              SizedBox(
+                height: size.height / 6,
+                child: Stack(
+                  children: [
+                    _authInputsContainer(),
+                    _confirmationButton(),
+                  ],
+                ),
+              ),
+              _switchPageViewButton(),
+            ],
+          ),
+        ],
       ),
     );
   }
 
-  Widget _appLogo() {
+  Widget _appLogo(Size size) {
     return Container(
-      margin:  const EdgeInsets.only(left: 25, right: 25, bottom: 45),
-      child: const FlutterLogo(
-        size: 100,
+      margin: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 24.0),
+      child: FlutterLogo(
+        size: size.height / 8,
         style: FlutterLogoStyle.markOnly,
+      ),
+    );
+  }
+
+  Widget _authStateString() {
+    final state = ref.watch(authProvider);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(right: 32.0, bottom: 24),
+          child: Text(
+            state.pageView.name,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: BaseColors.textColorCustom,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _authInputsContainer() {
+    return Container(
+      height: 150,
+      margin: const EdgeInsets.only(
+        right: 70,
+      ),
+      decoration: BoxDecoration(
+        color: BaseColors.backgroundColorLight,
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(100),
+          bottomRight: Radius.circular(100),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: BaseColors.shadowColor.withOpacity(0.5),
+            spreadRadius: 0,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _usernameField(),
+          _passwordField(),
+        ],
       ),
     );
   }
@@ -56,7 +113,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
     final state = ref.watch(authProvider);
     if (state.showErrorMessage) {
       return Container(
-        margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
+        margin: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 8.0),
         child: Text(
           state.pageView == AuthPageView.login
               ? AppStrings.wrongAuthFields(context)
@@ -64,7 +121,7 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
           style: TextStyle(
             color: BaseColors.textColorError,
             fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontSize: 16,
           ),
         ),
       );
@@ -75,9 +132,11 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
 
   Widget _usernameField() {
     return Container(
-      margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
+      margin: const EdgeInsets.only(left: 16.0, right: 32.0),
       child: TextField(
-        decoration: InputDecoration.collapsed(
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: const Icon(Icons.account_circle_rounded),
           hintText: AppStrings.name(context),
         ),
         onChanged: (text) => ref.read(authProvider.notifier).setButtonActive(
@@ -85,16 +144,17 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
               _passwordTextController.value.text,
             ),
         controller: _usernameTextController,
-        textAlign: TextAlign.center,
       ),
     );
   }
 
   Widget _passwordField() {
     return Container(
-      margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
+      margin: const EdgeInsets.only(left: 16, right: 32),
       child: TextField(
-        decoration: InputDecoration.collapsed(
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: const Icon(Icons.lock),
           hintText: AppStrings.password(context),
         ),
         onChanged: (text) => ref.read(authProvider.notifier).setButtonActive(
@@ -102,45 +162,66 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
               text,
             ),
         controller: _passwordTextController,
-        textAlign: TextAlign.center,
       ),
     );
   }
 
   Widget _confirmationButton() {
     final state = ref.watch(authProvider);
-    switch (state.pageView) {
-      case AuthPageView.login:
-        return NetworkingTextButton(
-          isButtonActive: state.isButtonActive,
-          buttonText: AppStrings.login(context),
-          onClick: onLoginClick,
-        );
-      case AuthPageView.signup:
-        return NetworkingTextButton(
-          isButtonActive: state.isButtonActive,
-          buttonText: AppStrings.signUp(context),
-          onClick: onSignupClick,
-        );
-      default:
-        return Container();
-    }
+    return Align(
+      alignment: Alignment.centerRight,
+      child: GestureDetector(
+        onTap: () {
+          if (state.isButtonActive) {
+            switch (state.pageView) {
+              case AuthPageView.login:
+                return onLoginClick();
+              case AuthPageView.signup:
+                return onSignupClick();
+              default:
+                return;
+            }
+          }
+        },
+        child: Container(
+          margin: const EdgeInsets.only(right: 24.0),
+          height: 70,
+          width: 70,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: BaseColors.backgroundColor.withOpacity(0.3),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+              ),
+            ],
+            shape: BoxShape.circle,
+            color:
+                state.isButtonActive ? BaseColors.buttonColorActive : BaseColors.borderColorBlocked,
+          ),
+          child: Icon(
+            Icons.arrow_forward_outlined,
+            color: BaseColors.iconColorLight,
+            size: 32,
+          ),
+        ),
+      ),
+    );
   }
 
   void onLoginClick() {
-    _usernameTextController.clear();
-    _passwordTextController.clear();
     FocusScope.of(context).unfocus();
     ref.read(authProvider.notifier).login(
           username: _usernameTextController.value.text,
           password: _passwordTextController.value.text,
           onError: _showErrorDialog,
         );
+    _usernameTextController.clear();
+    _passwordTextController.clear();
   }
 
   void onSignupClick() {
-    _usernameTextController.clear();
-    _passwordTextController.clear();
     FocusScope.of(context).unfocus();
     ref.read(authProvider.notifier).signup(
           username: _usernameTextController.value.text,
@@ -153,39 +234,51 @@ class AuthPageWidgetState extends ConsumerState<AuthPageWidget> {
           ),
           onError: _showErrorDialog,
         );
+    _usernameTextController.clear();
+    _passwordTextController.clear();
   }
 
   Widget _switchPageViewButton() {
     final pageView = ref.watch(authProvider).pageView;
     switch (pageView) {
       case AuthPageView.login:
-        return Container(
-          margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
-          child: GestureDetector(
-            onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.signup),
-            child: Text(
-              AppStrings.userHasNoAccount(context),
-              style: TextStyle(
-                color: BaseColors.textColorDark,
-                fontSize: 15,
-                decoration: TextDecoration.underline,
+        return GestureDetector(
+          onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.signup),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 16, top: 24),
+                child: Text(
+                  AppStrings.userHasNoAccount(context),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: BaseColors.textColorSwitch,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         );
       case AuthPageView.signup:
-        return Container(
-          margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
-          child: GestureDetector(
-            onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.login),
-            child: Text(
-              AppStrings.userHasAccount(context),
-              style: TextStyle(
-                color: BaseColors.textColorDark,
-                fontSize: 15,
-                decoration: TextDecoration.underline,
+        return GestureDetector(
+          onTap: () => ref.read(authProvider.notifier).switchPageView(AuthPageView.login),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 16, top: 24),
+                child: Text(
+                  AppStrings.userHasAccount(context),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: BaseColors.textColorSwitch,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         );
       default:

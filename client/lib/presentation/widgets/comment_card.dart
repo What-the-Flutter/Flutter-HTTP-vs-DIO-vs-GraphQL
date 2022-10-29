@@ -32,7 +32,7 @@ class _CommentCardWidgetState extends State<CommentCardWidget> {
       child: Card(
         color: widget.isSlidable ? BaseColors.backgroundHighlightColor : BaseColors.cardColor,
         elevation: 1.0,
-        shadowColor: BaseColors.shadowColor,
+        shadowColor: BaseColors.customShadowColor,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: BaseColors.borderColorBlocked),
           borderRadius: BorderRadius.circular(
