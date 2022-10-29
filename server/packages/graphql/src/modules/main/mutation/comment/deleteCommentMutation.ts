@@ -1,7 +1,7 @@
 import Comment from "./../../../../model/comment";
-import { GraphQLString, GraphQLNonNull, GraphQLList } from "graphql";
+import Post from "./../../../../model/post";
+import { GraphQLString, GraphQLNonNull } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import CommentType from "../../CommentType";
 
 export default mutationWithClientMutationId({
   name: "deleteMyCommentMutation",
@@ -11,6 +11,9 @@ export default mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: async ({ id }) => {
+    let { postId } = await Comment.findOne({ _id: id });
+    let { commentCount } = await Post.findOne({ _id: postId });
+    await Post.updateOne({ _id: postId }, { commentCount: --commentCount });
     const { deletedCount } = await Comment.deleteOne({ _id: id });
     if (deletedCount === 0) {
       return {

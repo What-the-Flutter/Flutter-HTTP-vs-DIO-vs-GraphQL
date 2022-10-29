@@ -80,6 +80,9 @@ export const DeleteOneComment = async (ctx) => {
   const { id } = ctx.params;
 
   try {
+    let { postId } = await Comment.findOne({ _id: id });
+    let { commentCount } = await Post.findOne({ _id: postId });
+    await Post.updateOne({ _id: postId }, { commentCount: --commentCount });
     const { deletedCount } = await Comment.deleteOne({ _id: id });
     if (deletedCount === 0) {
       return (ctx.status = 500);
