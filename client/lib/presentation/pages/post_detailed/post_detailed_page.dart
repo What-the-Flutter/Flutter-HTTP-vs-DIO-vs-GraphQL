@@ -180,7 +180,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () => ref.read(postDetailedProvider.notifier).pop,
+                  onPressed: () => ref.read(postDetailedProvider.notifier).pop(),
                   icon: Icon(
                     Icons.arrow_back_ios_new,
                     color: BaseColors.iconColorLight,

@@ -17,14 +17,14 @@ final postDetailedProvider =
 });
 
 class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
-  late final UserInteractor _userInteractor;
-  late final PostInteractor _postInteractor;
-  late final CommentInteractor _commentInteractor;
+  final UserInteractor _userInteractor = i.get();
+  final PostInteractor _postInteractor = i.get();
+  final CommentInteractor _commentInteractor = i.get();
 
   late final Timer _timer;
   final _pollingTimeout = const Duration(seconds: 10);
 
-  late final Post post;
+  late Post post;
   late final User _user;
 
   PostDetailedStateNotifier()
@@ -39,21 +39,18 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
         );
 
   void initState(Function onError) async {
-    _userInteractor = i.get();
-    _postInteractor = i.get();
-    _commentInteractor = i.get();
-
+    post = _postInteractor.post;
+    await _getComments();
+    _initPolling(onError);
     await launchRetrieveResult(
       () async {
-        post = _postInteractor.post;
         _user = _userInteractor.user;
-        initPolling(onError);
       },
       errorHandler: (e) => onError,
     );
   }
 
-  void initPolling(Function onError) {
+  void _initPolling(Function onError) {
     launchRetrieveResult(
       () => _timer = Timer.periodic(_pollingTimeout, (_) async => await _getComments()),
       errorHandler: (e) => onError,

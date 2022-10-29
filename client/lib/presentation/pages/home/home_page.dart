@@ -18,7 +18,7 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-    ref.read(homeProvider.notifier).initPolling(_showErrorDialog);
+    ref.read(homeProvider.notifier).initState(_showErrorDialog);
   }
 
   @override
@@ -93,6 +93,7 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
     return Positioned(
       top: size.height / 6.5,
       left: 16.0,
+      bottom: -16,
       child: Container(
         width: size.width - 32.0,
         height: size.height / 1.2,
@@ -118,6 +119,12 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
                 post: state.posts[index],
                 onDeleteButtonPressed: () {
                   ref.read(homeProvider.notifier).removePost(
+                        state.posts[index].id,
+                        _showErrorDialog,
+                      );
+                },
+                onTap: () {
+                  ref.read(homeProvider.notifier).openPostPage(
                         state.posts[index].id,
                         _showErrorDialog,
                       );

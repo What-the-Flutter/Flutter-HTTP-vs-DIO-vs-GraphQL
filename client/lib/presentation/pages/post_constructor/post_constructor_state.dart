@@ -1,6 +1,6 @@
 import 'package:client/presentation/base/base_state.dart';
 
-class PostConstructorState extends BaseState{
+class PostConstructorState extends BaseState {
   final bool isButtonActive;
 
   PostConstructorState({required this.isButtonActive});
