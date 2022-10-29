@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:client/domain/entities/post/post.dart';
 import 'package:client/presentation/app/localization/app_localization_constants.dart';
 import 'package:client/presentation/app/theme/base_color_constants.dart';
@@ -65,7 +67,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
               onTap: () => ref.read(postDetailedProvider.notifier).switchHeaderInfoState(),
               child: Container(
                 constraints: BoxConstraints(
-                  minHeight: size.height / 6,
+                  minHeight: max(130, size.height / 6),
                   maxHeight: size.height / 3,
                   minWidth: double.infinity,
                 ),

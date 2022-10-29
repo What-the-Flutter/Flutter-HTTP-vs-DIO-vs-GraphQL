@@ -49,6 +49,7 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
@@ -60,14 +61,14 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
           ? AppStrings.create(context)
           : AppStrings.edit(context)),
       content: SizedBox(
-        width: MediaQuery.of(context).size.width - 80.0,
+        width: size.width - 80.0,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             _inputField(
               hintText: AppStrings.title(context),
               controller: _titleTextController,
-              maxLines: 2,
+              maxLines: (size.height > 700) ? 2 : 1,
             ),
             const SizedBox(
               height: 12.0,
@@ -75,7 +76,7 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
             _inputField(
               hintText: AppStrings.text(context),
               controller: _postTextController,
-              maxLines: 6,
+              maxLines: (size.height > 700) ? 5 : 1,
             ),
           ],
         ),
