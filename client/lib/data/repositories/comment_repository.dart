@@ -2,7 +2,7 @@ import 'package:client/data/repositories/base_repository.dart';
 import 'package:client/domain/data_interfaces/i_comment_repository.dart';
 import 'package:client/domain/entities/comment/comment.dart';
 
-class CommentRepository extends BaseRepository implements ICommentRepository{
+class CommentRepository extends BaseRepository implements ICommentRepository {
   CommentRepository(super.remoteDataSource);
 
   @override

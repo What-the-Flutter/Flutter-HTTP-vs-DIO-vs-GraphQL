@@ -30,7 +30,12 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
     _user = i.get<UserInteractor>().user;
   }
 
-  void initPolling(Function onError) async {
+  void initState(Function onError) async {
+    await getPosts(onError);
+    _initPolling(onError);
+  }
+
+  void _initPolling(Function onError) async {
     _timer = Timer.periodic(_pollingTimeout, (_) async => await getPosts(onError));
   }
 

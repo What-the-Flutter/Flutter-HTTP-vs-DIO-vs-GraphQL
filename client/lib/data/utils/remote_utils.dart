@@ -7,7 +7,7 @@ import 'package:graphql/client.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart' as dio;
 
-class WrongUserDataException implements Exception{}
+class WrongUserDataException implements Exception {}
 
 extension DioResponseTo on dio.Response {
   T? retrieveResult<T>() {

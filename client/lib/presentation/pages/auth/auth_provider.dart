@@ -69,7 +69,7 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
     return launchRetrieveResult(
       () async {
         await _userInteractor.login(user);
-        appRouter.replaceNamed(Routes.post);
+        appRouter.replaceNamed(Routes.home);
       },
       errorHandler: (e) {
         if (e is WrongUserDataException) {

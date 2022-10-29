@@ -9,13 +9,15 @@ import 'package:intl/intl.dart';
 class PostCardWidget extends StatelessWidget {
   final Post post;
   final bool isSlidable;
-  final Function? onDeleteButtonPressed;
+  final VoidCallback onDeleteButtonPressed;
+  final VoidCallback onTap;
 
   const PostCardWidget({
     Key? key,
     required this.post,
     required this.isSlidable,
-    this.onDeleteButtonPressed,
+    required this.onDeleteButtonPressed,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -48,7 +50,7 @@ class PostCardWidget extends StatelessWidget {
           ),
           SlidableAction(
             borderRadius: BorderRadius.circular(16),
-            onPressed: (_) => onDeleteButtonPressed,
+            onPressed: (_) => onDeleteButtonPressed(),
             backgroundColor: BaseColors.deleteButtonColor,
             foregroundColor: BaseColors.textColorLight,
             icon: Icons.delete,
@@ -65,6 +67,7 @@ class PostCardWidget extends StatelessWidget {
           ),
         ),
         child: ListTile(
+          onTap: onTap,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 8,
             horizontal: 16,
