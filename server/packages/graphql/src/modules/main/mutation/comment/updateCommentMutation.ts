@@ -1,7 +1,6 @@
 import Comment from "./../../../../model/comment";
-import { GraphQLString, GraphQLNonNull, GraphQLList } from "graphql";
+import { GraphQLString, GraphQLNonNull } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import CommentType from "../../CommentType";
 
 export default mutationWithClientMutationId({
   name: "updateCommentMutation",

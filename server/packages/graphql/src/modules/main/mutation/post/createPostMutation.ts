@@ -1,7 +1,6 @@
 import Post from "../../../../model/post";
-import { GraphQLString, GraphQLNonNull, GraphQLList, GraphQLSchema, GraphQLInt } from "graphql";
+import { GraphQLString, GraphQLNonNull } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
-import PostType from "../../PostType";
 
 export default mutationWithClientMutationId({
   name: "createPostMutation",

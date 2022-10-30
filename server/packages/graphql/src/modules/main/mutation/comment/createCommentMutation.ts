@@ -1,6 +1,6 @@
 import Comment from "./../../../../model/comment";
 import Post from "./../../../../model/post";
-import { GraphQLString, GraphQLNonNull, GraphQLList } from "graphql";
+import { GraphQLString, GraphQLNonNull } from "graphql";
 import { mutationWithClientMutationId } from "graphql-relay";
 
 export default mutationWithClientMutationId({
