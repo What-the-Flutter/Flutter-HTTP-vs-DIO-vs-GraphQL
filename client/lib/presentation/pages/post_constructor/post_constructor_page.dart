@@ -83,12 +83,13 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
       ),
       actionsPadding: const EdgeInsets.all(25.0),
       actions: [
-        StateTextButton(
+        NetworkingTextButton(
           buttonText: widget.postAction == PostActions.create
               ? AppStrings.create(context)
               : AppStrings.edit(context),
           isButtonActive: ref.watch(postConstructorProvider).isButtonActive,
           onClick: onButtonClick,
+          margin: 0,
         ),
       ],
     );

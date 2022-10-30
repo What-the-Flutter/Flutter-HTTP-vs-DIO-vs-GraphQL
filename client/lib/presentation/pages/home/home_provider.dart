@@ -39,9 +39,7 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
     _timer = Timer.periodic(_pollingTimeout, (_) async => await getPosts(onError));
   }
 
-  void stopPolling() {
-    _timer.cancel();
-  }
+  void stopPolling() => _timer.cancel();
 
   Future<void> getPosts(Function onError) async {
     return launchRetrieveResult(

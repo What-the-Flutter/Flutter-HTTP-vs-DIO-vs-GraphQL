@@ -43,6 +43,7 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
     return launchRetrieveResult(
       () async {
         await _postInteractor.addPost(post);
+        state = state.copyWith(isButtonActive: false);
         onSuccess();
       },
       errorHandler: (e) => onError,
@@ -67,6 +68,7 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
     return launchRetrieveResult(
       () async {
         await _postInteractor.editPost(post);
+        state = state.copyWith(isButtonActive: false);
         onSuccess();
       },
       errorHandler: (e) => onError,
