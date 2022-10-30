@@ -61,24 +61,26 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
           ? AppStrings.create(context)
           : AppStrings.edit(context)),
       content: SizedBox(
-        width: size.width - 80.0,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _inputField(
-              hintText: AppStrings.title(context),
-              controller: _titleTextController,
-              maxLines: (size.height > 700) ? 2 : 1,
-            ),
-            const SizedBox(
-              height: 12.0,
-            ),
-            _inputField(
-              hintText: AppStrings.text(context),
-              controller: _postTextController,
-              maxLines: (size.height > 700) ? 5 : 1,
-            ),
-          ],
+        width: size.width - 80,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _inputField(
+                hintText: AppStrings.title(context),
+                controller: _titleTextController,
+                maxLines: (size.height > 700) ? 2 : 1,
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+              _inputField(
+                hintText: AppStrings.text(context),
+                controller: _postTextController,
+                maxLines: (size.height > 700) ? 5 : 1,
+              ),
+            ],
+          ),
         ),
       ),
       actionsPadding: const EdgeInsets.all(25.0),
