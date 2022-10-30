@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:client/domain/entities/post/post.dart';
 import 'package:client/presentation/app/localization/app_localization_constants.dart';
 import 'package:client/presentation/app/theme/base_color_constants.dart';
+import 'package:client/presentation/pages/home/home_provider.dart';
 import 'package:client/presentation/pages/post_detailed/post_detailed_provider.dart';
 import 'package:client/presentation/pages/post_detailed/post_detailed_state.dart';
 import 'package:client/presentation/widgets/comment_card.dart';
@@ -182,7 +183,10 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () => ref.read(postDetailedProvider.notifier).pop(),
+                  onPressed: () {
+                    ref.read(postDetailedProvider.notifier).pop();
+                    ref.read(homeProvider.notifier).initState(_showErrorDialog);
+                  },
                   icon: Icon(
                     Icons.arrow_back_ios_new,
                     color: BaseColors.iconColorLight,

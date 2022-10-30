@@ -41,12 +41,6 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
     );
   }
 
-  @override
-  void deactivate() {
-    ref.read(homeProvider.notifier).stopPolling();
-    super.deactivate();
-  }
-
   Widget _positionedBackGround(Size size) {
     return Positioned(
       child: Container(
@@ -124,6 +118,7 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
                       );
                 },
                 onTap: () {
+                  ref.read(homeProvider.notifier).stopPolling();
                   ref.read(homeProvider.notifier).openPostPage(
                         state.posts[index].id,
                         _showErrorDialog,

@@ -10,12 +10,31 @@ import 'package:dio/dio.dart' as dio;
 class WrongUserDataException implements Exception {}
 
 extension DioResponseTo on dio.Response {
+  bool isSuccessful() => statusCode == 200 || statusCode == 201 || statusCode == 204;
+  bool wrongUserData() => statusCode == 401 || statusCode == 409;
+
   T? retrieveResult<T>() {
-    return data.isNotEmpty ? _createFromJSON<T>(data)! : null;
+    T? result;
+    if (isSuccessful()) {
+      return data == 'OK'
+          ? result
+          : data.isNotEmpty
+              ? _createFromJSON<T>(data)!
+              : null;
+    } else if (wrongUserData()) {
+      throw WrongUserDataException();
+    } else {
+      throw Exception('Error: $statusMessage \n Error code: $statusCode');
+    }
   }
 
   List<T> retrieveResultAsList<T>() {
-    return (data as List).map((e) => (_createFromJSON<T>(e)!)).toList();
+    List<T> result;
+    if (isSuccessful()) {
+      result = (data as List).map((e) => (_createFromJSON<T>(e)!)).toList();
+      return result;
+    }
+    throw Exception('Error: $statusMessage \n Error code: $statusCode');
   }
 }
 
