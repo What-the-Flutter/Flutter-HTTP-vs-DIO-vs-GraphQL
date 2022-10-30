@@ -52,7 +52,6 @@ class GraphqlRemoteDataSource implements IRemoteDataSource {
         'title': post.title,
         'text': post.text,
         'date': post.date.toString(),
-        'commentCount': post.commentCount,
       },
     );
 
@@ -71,7 +70,7 @@ class GraphqlRemoteDataSource implements IRemoteDataSource {
     );
 
     final QueryResult result = await _client.mutate(options);
-    return result.retrieveResult();
+    return result.retrieveResult(tag: 'createUserMutation');
   }
 
   @override

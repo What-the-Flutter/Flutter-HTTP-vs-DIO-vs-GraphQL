@@ -81,7 +81,10 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
     );
   }
 
-  void switchPageView(AuthPageView newView) => state = state.copyWith(pageView: newView);
+  void switchPageView(AuthPageView newView) => state = state.copyWith(
+        pageView: newView,
+        showErrorMessage: false,
+      );
 
   void setButtonActive(String username, String password) =>
       state = state.copyWith(isButtonActive: username.isNotEmpty && password.isNotEmpty);

@@ -10,31 +10,12 @@ import 'package:dio/dio.dart' as dio;
 class WrongUserDataException implements Exception {}
 
 extension DioResponseTo on dio.Response {
-  bool isSuccessful() => statusCode == 200 || statusCode == 201 || statusCode == 204;
-  bool wrongUserData() => statusCode == 401 || statusCode == 409;
-
   T? retrieveResult<T>() {
-    T? result;
-    if (isSuccessful()) {
-      return data == 'OK'
-          ? result
-          : data.isNotEmpty
-              ? _createFromJSON<T>(data)!
-              : null;
-    } else if (wrongUserData()) {
-      throw WrongUserDataException();
-    } else {
-      throw Exception('Error: $statusMessage \n Error code: $statusCode');
-    }
+    return data != 'OK' && data.isNotEmpty ? _createFromJSON<T>(data)! : null;
   }
 
   List<T> retrieveResultAsList<T>() {
-    List<T> result;
-    if (isSuccessful()) {
-      result = (data as List).map((e) => (_createFromJSON<T>(e)!)).toList();
-      return result;
-    }
-    throw Exception('Error: $statusMessage \n Error code: $statusCode');
+    return (data as List).map((e) => (_createFromJSON<T>(e)!)).toList();
   }
 }
 
@@ -43,13 +24,10 @@ extension HttpResponseTo on http.Response {
   bool wrongUserData() => statusCode == 401 || statusCode == 409;
 
   T? retrieveResult<T>() {
-    T? result;
     if (isSuccessful()) {
-      return body == 'OK'
-          ? result
-          : body.isNotEmpty
-              ? _createFromJSON<T>(json.decode(body.toString()))!
-              : null;
+      return body != 'OK' && body.isNotEmpty
+          ? _createFromJSON<T>(json.decode(body.toString()))!
+          : null;
     } else if (wrongUserData()) {
       throw WrongUserDataException();
     } else {
@@ -75,7 +53,11 @@ extension ResponseTo on QueryResult {
       throw Exception('Error: ${exception.toString()}');
     } else {
       if (tag != null) {
-        result = data![tag] == null ? null : _createFromJSON<T>(data![tag]);
+        result = data![tag] == null
+            ? null
+            : data![tag]['error'] != null
+                ? throw WrongUserDataException()
+                : _createFromJSON<T>(data![tag]);
       }
       return result;
     }

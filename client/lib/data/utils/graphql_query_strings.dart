@@ -43,7 +43,6 @@ class GraphQLQueryStrings {
   static const String createUser = r'''
     mutation CreateUserMutation($name: String!, $password: String!) {
       createUserMutation(input: { name: $name, password: $password }) {
-        success
         error
       }
     }
@@ -54,6 +53,7 @@ class GraphQLQueryStrings {
       loginMutation(input: { name: $name, password: $password }) {
         id
         name
+        error
       }
     }
   ''';
@@ -65,7 +65,6 @@ class GraphQLQueryStrings {
       $title: String!
       $text: String!
       $date: String!
-      $commentCount: Int!
     ) {
       createPostMutation(
         input: {
@@ -74,10 +73,8 @@ class GraphQLQueryStrings {
           title: $title
           text: $text
           date: $date
-          commentCount: $commentCount
         }
       ) {
-        success
         error
       }
     }
@@ -100,7 +97,6 @@ class GraphQLQueryStrings {
           date: $date
         }
       ) {
-        success
         error
       }
     }
@@ -109,7 +105,6 @@ class GraphQLQueryStrings {
   static const String updatePost = r'''
     mutation updatePost($id: String!, $title: String!, $text: String!) {
       updatePostMutation(input: { id: $id, title: $title, text: $text }) {
-        success
         error
       }
     }
@@ -118,7 +113,6 @@ class GraphQLQueryStrings {
   static const String updateComment = r'''
     mutation updateComment($id: String!, $text: String!) {
       updateCommentMutation(input: { id: $id, text: $text }) {
-        success
         error
       }
     }
@@ -127,7 +121,6 @@ class GraphQLQueryStrings {
   static const String deletePost = r'''
     mutation deletePost($id: String!) {
       deletePostMutation(input: { id: $id }) {
-        success
         error
       }
     }
@@ -136,7 +129,6 @@ class GraphQLQueryStrings {
   static const String deleteComment = r'''
     mutation deleteComment($id: String!) {
       deleteCommentMutation(input: { id: $id }) {
-        success
         error
       }
     }
