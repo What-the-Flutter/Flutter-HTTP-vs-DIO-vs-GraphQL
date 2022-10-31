@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:client/domain/entities/post/post.dart';
 import 'package:client/presentation/app/localization/app_localization_constants.dart';
 import 'package:client/presentation/app/theme/base_color_constants.dart';
 import 'package:client/presentation/pages/home/home_provider.dart';
@@ -12,6 +11,8 @@ import 'package:client/presentation/widgets/post_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final _commentTextController = Provider((ref) => TextEditingController());
+
 class PostDetailedPage extends ConsumerStatefulWidget {
   const PostDetailedPage({super.key});
 
@@ -20,13 +21,9 @@ class PostDetailedPage extends ConsumerStatefulWidget {
 }
 
 class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
-  final _commentTextController = TextEditingController();
-  late final Post post;
-
   @override
   void initState() {
     ref.read(postDetailedProvider.notifier).initState(_showErrorDialog);
-    post = ref.read(postDetailedProvider.notifier).post;
     super.initState();
   }
 
@@ -73,7 +70,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
                   minWidth: double.infinity,
                 ),
                 child: PostHeaderWidget(
-                  post: post,
+                  post: ref.read(postDetailedProvider.notifier).post,
                   showHeaderAdditionalInfo:
                       ref.watch(postDetailedProvider).showHeaderAdditionalInfo,
                 ),
@@ -119,9 +116,11 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
               ),
             ),
             onChanged: (_) => {
-              ref.read(postDetailedProvider.notifier).setButtonActive(_commentTextController.text)
+              ref
+                  .read(postDetailedProvider.notifier)
+                  .setButtonActive(ref.read(_commentTextController).text)
             },
-            controller: _commentTextController,
+            controller: ref.read(_commentTextController),
           ),
         ),
         IconButton(
@@ -236,7 +235,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
               ref
                   .read(postDetailedProvider.notifier)
                   .initEditCommentState(state.comments[index].id);
-              _commentTextController.text = state.comments[index].text;
+              ref.read(_commentTextController).text = state.comments[index].text;
             },
           );
         },
@@ -248,7 +247,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
 
   void onButtonClick() async {
     final state = ref.watch(postDetailedProvider);
-    final commentText = _commentTextController.text;
+    final commentText = ref.read(_commentTextController).text;
     switch (state.commentAction) {
       case CommentActions.create:
         ref.read(postDetailedProvider.notifier).addComment(
@@ -263,7 +262,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
             );
         break;
     }
-    _commentTextController.clear();
+    ref.read(_commentTextController).clear();
     FocusScope.of(context).unfocus();
   }
 

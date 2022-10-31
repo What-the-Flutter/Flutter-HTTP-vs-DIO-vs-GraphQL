@@ -14,24 +14,22 @@ final homeProvider = StateNotifierProvider<HomeStateNotifier, HomeState>((ref) {
 });
 
 class HomeStateNotifier extends BaseStateNotifier<HomeState> {
+  static final _initialState = HomeState(posts: [], userId: '');
+
   late Timer _timer;
   final _pollingTimeout = const Duration(seconds: 10);
 
   late final PostInteractor _postInteractor;
   late final User _user;
 
-  HomeStateNotifier()
-      : super(
-          HomeState(
-            posts: [],
-          ),
-        ) {
+  HomeStateNotifier() : super(_initialState) {
     _postInteractor = i.get();
     _user = i.get<UserInteractor>().user;
   }
 
   void initState(Function onError) async {
     await getPosts(onError);
+    state = state.copyWith(userId: _user.id);
     _initPolling(onError);
   }
 
@@ -60,10 +58,6 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
       },
       errorHandler: (e) => onError,
     );
-  }
-
-  bool isPostAuthor(String authorId) {
-    return _user.id == authorId;
   }
 
   void openPostPage(String postId, Function onError) async {

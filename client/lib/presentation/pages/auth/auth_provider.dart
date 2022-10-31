@@ -12,16 +12,15 @@ final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
 });
 
 class AuthStateNotifier extends BaseStateNotifier<AuthState> {
+  static final _initialState = AuthState(
+    isButtonActive: false,
+    pageView: AuthPageView.login,
+    showErrorMessage: false,
+  );
+
   late final UserInteractor _userInteractor;
 
-  AuthStateNotifier()
-      : super(
-          AuthState(
-            isButtonActive: false,
-            pageView: AuthPageView.login,
-            showErrorMessage: false,
-          ),
-        ) {
+  AuthStateNotifier() : super(_initialState) {
     _userInteractor = i.get();
   }
 
