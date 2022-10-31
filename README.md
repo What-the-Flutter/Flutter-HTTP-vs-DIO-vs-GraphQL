@@ -41,7 +41,7 @@ Our app implements the following network approaches:
 To start the client:
 
 ```
-cd grpc_flutter_client && flutter run --dart-define NETWORK_MODULE=chosen approach(http, dio or graphql)
+cd client && flutter run --dart-define NETWORK_MODULE=chosen approach(http, dio or graphql)
 ```
 ### Running on a Device
 
