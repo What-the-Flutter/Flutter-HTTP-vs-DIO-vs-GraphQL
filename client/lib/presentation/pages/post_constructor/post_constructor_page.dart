@@ -13,6 +13,9 @@ enum PostActions {
   edit,
 }
 
+final _postTextController = Provider((ref) => TextEditingController());
+final _titleTextController = Provider((ref) => TextEditingController());
+
 class PostConstructorPage extends ConsumerStatefulWidget {
   final PostActions postAction;
   final Post? post;
@@ -28,23 +31,13 @@ class PostConstructorPage extends ConsumerStatefulWidget {
 }
 
 class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
-  final _postTextController = TextEditingController();
-  final _titleTextController = TextEditingController();
-
   @override
   void initState() {
     if (widget.post != null) {
-      _titleTextController.text = widget.post!.title;
-      _postTextController.text = widget.post!.text;
+      ref.read(_titleTextController).text = widget.post!.title;
+      ref.read(_postTextController).text = widget.post!.text;
     }
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _titleTextController.dispose();
-    _postTextController.dispose();
-    super.dispose();
   }
 
   @override
@@ -68,7 +61,7 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
             children: [
               _inputField(
                 hintText: AppStrings.title(context),
-                controller: _titleTextController,
+                controller: ref.read(_titleTextController),
                 maxLines: (size.height > 700) ? 2 : 1,
               ),
               const SizedBox(
@@ -76,7 +69,7 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               ),
               _inputField(
                 hintText: AppStrings.text(context),
-                controller: _postTextController,
+                controller: ref.read(_postTextController),
                 maxLines: (size.height > 700) ? 5 : 1,
               ),
             ],
@@ -98,8 +91,8 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
   }
 
   void onButtonClick() async {
-    final postTitle = _titleTextController.text;
-    final postText = _postTextController.text;
+    final postTitle = ref.read(_titleTextController).text;
+    final postText = ref.read(_postTextController).text;
     switch (widget.postAction) {
       case PostActions.create:
         ref.read(postConstructorProvider.notifier).addPost(
@@ -108,6 +101,8 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               onSuccess: () async {
                 await ref.read(homeProvider.notifier).getPosts(_showErrorDialog);
                 ref.read(postConstructorProvider.notifier).pop();
+                ref.read(_titleTextController).clear();
+                ref.read(_postTextController).clear();
               },
               onError: _showErrorDialog,
             );
@@ -120,6 +115,8 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               onSuccess: () async {
                 await ref.read(homeProvider.notifier).getPosts(_showErrorDialog);
                 ref.read(postConstructorProvider.notifier).pop();
+                ref.read(_titleTextController).clear();
+                ref.read(_postTextController).clear();
               },
               onError: _showErrorDialog,
             );
@@ -151,8 +148,8 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
       ),
       onChanged: (_) => {
         ref.read(postConstructorProvider.notifier).setButtonActive(
-              _titleTextController.value.text,
-              _postTextController.value.text,
+              ref.read(_titleTextController).value.text,
+              ref.read(_postTextController).value.text,
             )
       },
       controller: controller,

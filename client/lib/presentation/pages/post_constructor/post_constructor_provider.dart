@@ -13,15 +13,12 @@ final postConstructorProvider =
 });
 
 class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorState> {
+  static final _initialValue = PostConstructorState(isButtonActive: false);
+
   late final PostInteractor _postInteractor;
   late final User _user;
 
-  PostConstructorStateNotifier()
-      : super(
-          PostConstructorState(
-            isButtonActive: false,
-          ),
-        ) {
+  PostConstructorStateNotifier() : super(_initialValue) {
     _postInteractor = i.get();
     _user = i.get<UserInteractor>().user;
   }

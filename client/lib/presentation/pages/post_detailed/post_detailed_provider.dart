@@ -17,6 +17,14 @@ final postDetailedProvider =
 });
 
 class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
+  static final _initialState = PostDetailedState(
+    isButtonActive: false,
+    comments: [],
+    showHeaderAdditionalInfo: false,
+    commentAction: CommentActions.create,
+    commentIdToUpdate: null,
+  );
+
   final UserInteractor _userInteractor = i.get();
   final PostInteractor _postInteractor = i.get();
   final CommentInteractor _commentInteractor = i.get();
@@ -27,16 +35,7 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
   late Post post;
   late User _user;
 
-  PostDetailedStateNotifier()
-      : super(
-          PostDetailedState(
-            isButtonActive: false,
-            comments: [],
-            showHeaderAdditionalInfo: false,
-            commentAction: CommentActions.create,
-            commentIdToUpdate: null,
-          ),
-        );
+  PostDetailedStateNotifier() : super(_initialState);
 
   void initState(Function onError) async {
     post = _postInteractor.post;
