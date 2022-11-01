@@ -268,7 +268,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
 
   void onButtonClick() async {
     final state = ref.watch(postDetailedProvider);
-    final commentText = ref.read(_commentTextController).text;
+    final commentText = ref.read(_commentTextController).text.trim();
     switch (state.commentAction) {
       case CommentActions.create:
         ref.read(postDetailedProvider.notifier).addComment(
@@ -283,7 +283,12 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
             );
         break;
     }
+    _resetInputWidget();
+  }
+
+  void _resetInputWidget() {
     ref.read(_commentTextController).clear();
+    ref.read(postDetailedProvider.notifier).resetButtonState();
     FocusScope.of(context).unfocus();
   }
 
