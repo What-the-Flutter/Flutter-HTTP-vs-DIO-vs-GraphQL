@@ -20,7 +20,6 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
   static final _initialState = PostDetailedState(
     isButtonActive: false,
     comments: [],
-    showHeaderAdditionalInfo: false,
     commentAction: CommentActions.create,
     commentIdToUpdate: null,
   );
@@ -37,7 +36,7 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
 
   PostDetailedStateNotifier() : super(_initialState);
 
-  void initState(Function onError) async {
+  Future<void> initState(Function onError) async {
     post = _postInteractor.post;
     _user = _userInteractor.user;
     await _getComments(onError);
@@ -112,9 +111,6 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
     );
     await _getComments(onError);
   }
-
-  void switchHeaderInfoState() =>
-      state = state.copyWith(showHeaderAdditionalInfo: !state.showHeaderAdditionalInfo);
 
   void setButtonActive(String text) => state = state.copyWith(isButtonActive: text.isNotEmpty);
 }
