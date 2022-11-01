@@ -83,15 +83,15 @@ class _CommentCardWidgetState extends State<CommentCardWidget> {
                         '@${widget.comment.authorName}',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                       Text(
                         DateFormat.yMMMMd('en_US').format(widget.comment.date),
                         style: TextStyle(
                           color: BaseColors.textColorDark,
-                          fontSize: 12.0,
+                          fontSize: 14.0,
                         ),
                       ),
                     ],

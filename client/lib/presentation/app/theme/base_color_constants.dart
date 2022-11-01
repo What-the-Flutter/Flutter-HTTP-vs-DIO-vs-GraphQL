@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 abstract class BaseColors {
   static Color backgroundColorLight = const Color.fromARGB(255, 255, 255, 255);
   static Color backgroundColor = const Color.fromARGB(255, 45, 170, 245);
-  static Color foregroundColor = const Color.fromARGB(255, 223, 223, 223);
+  static Color foregroundColor = const Color.fromARGB(255, 245, 245, 245);
   static Color backgroundHighlightColor = const Color.fromARGB(255, 240, 240, 240);
   static Color textColorLight = backgroundColorLight;
   static Color textColorDark = const Color.fromARGB(255, 0, 0, 0);

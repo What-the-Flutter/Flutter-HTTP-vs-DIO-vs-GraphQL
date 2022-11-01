@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:client/presentation/app/localization/app_localization_constants.dart';
 import 'package:client/presentation/app/theme/base_color_constants.dart';
 import 'package:client/presentation/pages/home/home_provider.dart';
@@ -21,9 +19,11 @@ class PostDetailedPage extends ConsumerStatefulWidget {
 }
 
 class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
+  late final Future<void> _stateInitialization;
+
   @override
   void initState() {
-    ref.read(postDetailedProvider.notifier).initState(_showErrorDialog);
+    _stateInitialization = ref.read(postDetailedProvider.notifier).initState(_showErrorDialog);
     super.initState();
   }
 
@@ -62,17 +62,13 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
         child: Column(
           children: [
             GestureDetector(
-              onTap: () => ref.read(postDetailedProvider.notifier).switchHeaderInfoState(),
               child: Container(
                 constraints: BoxConstraints(
-                  minHeight: max(130, size.height / 6),
-                  maxHeight: size.height / 3,
+                  maxHeight: size.height / 2.5,
                   minWidth: double.infinity,
                 ),
                 child: PostHeaderWidget(
                   post: ref.read(postDetailedProvider.notifier).post,
-                  showHeaderAdditionalInfo:
-                      ref.watch(postDetailedProvider).showHeaderAdditionalInfo,
                 ),
               ),
             ),
@@ -80,8 +76,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
               child: Column(
                 children: [
                   _commentInput(size),
-                  _commentsCounter(),
-                  _commentsList(),
+                  _commentsBlock(),
                 ],
               ),
             ),
@@ -134,22 +129,6 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
           ),
         )
       ],
-    );
-  }
-
-  Widget _commentsCounter() {
-    final state = ref.watch(postDetailedProvider);
-
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      alignment: Alignment.centerLeft,
-      child: Text(
-        AppStrings.comments(context) + state.comments.length.toString(),
-        style: TextStyle(
-          fontSize: 16.0,
-          color: BaseColors.textColorDark,
-        ),
-      ),
     );
   }
 
@@ -211,37 +190,79 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
     );
   }
 
-  Widget _commentsList() {
+  Widget _commentsBlock() {
     final state = ref.watch(postDetailedProvider);
     return Expanded(
-      child: ListView.separated(
-        padding: const EdgeInsets.only(
-          top: 8.0,
-        ),
-        itemBuilder: (context, index) {
-          final canUserSlideComment =
-              ref.read(postDetailedProvider.notifier).isCommentAuthor(state.comments[index].userId);
+      child: FutureBuilder<void>(
+        future: _stateInitialization,
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<void> snapshot,
+        ) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            return Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppStrings.comments(context) + state.comments.length.toString(),
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: BaseColors.textColorDark,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.only(
+                      bottom: 8.0,
+                    ),
+                    itemBuilder: (context, index) {
+                      final canUserSlideComment = ref
+                          .read(postDetailedProvider.notifier)
+                          .isCommentAuthor(state.comments[index].userId);
 
-          return CommentCardWidget(
-            isSlidable: canUserSlideComment,
-            comment: state.comments[index],
-            onDeleteButtonPressed: () {
-              ref.read(postDetailedProvider.notifier).deleteComment(
-                    state.comments[index].id,
-                    () => _showErrorDialog,
-                  );
-            },
-            onEditButtonPressed: () {
-              ref
-                  .read(postDetailedProvider.notifier)
-                  .initEditCommentState(state.comments[index].id);
-              ref.read(_commentTextController).text = state.comments[index].text;
-            },
-          );
+                      return CommentCardWidget(
+                        isSlidable: canUserSlideComment,
+                        comment: state.comments[index],
+                        onDeleteButtonPressed: () {
+                          ref.read(postDetailedProvider.notifier).deleteComment(
+                                state.comments[index].id,
+                                () => _showErrorDialog,
+                              );
+                        },
+                        onEditButtonPressed: () {
+                          ref
+                              .read(postDetailedProvider.notifier)
+                              .initEditCommentState(state.comments[index].id);
+                          ref.read(_commentTextController).text = state.comments[index].text;
+                        },
+                      );
+                    },
+                    itemCount: state.comments.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 2.0),
+                  ),
+                ),
+              ],
+            );
+          }
+          return Container();
         },
-        itemCount: state.comments.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 4.0),
       ),
+    );
+  }
+
+  void _showErrorDialog() {
+    showInfoDialog(
+      context: context,
+      title: AppStrings.postError(context),
+      content: AppStrings.serverErrorDescription(context),
+      onButtonClick: ref.read(postDetailedProvider.notifier).pop,
     );
   }
 
@@ -264,15 +285,6 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
     }
     ref.read(_commentTextController).clear();
     FocusScope.of(context).unfocus();
-  }
-
-  void _showErrorDialog() {
-    showInfoDialog(
-      context: context,
-      title: AppStrings.postError(context),
-      content: AppStrings.serverErrorDescription(context),
-      onButtonClick: ref.read(postDetailedProvider.notifier).pop,
-    );
   }
 
   @override
