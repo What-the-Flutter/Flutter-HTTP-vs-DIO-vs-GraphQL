@@ -143,8 +143,8 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
           ),
         );
       },
-      backgroundColor: BaseColors.backgroundColor,
-      foregroundColor: BaseColors.foregroundColor,
+      backgroundColor: BaseColors.buttonColorActive,
+      foregroundColor: BaseColors.backgroundColorLight,
       child: const Icon(
         Icons.add,
         size: 36.0,

@@ -83,6 +83,8 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
     state = state.copyWith(commentAction: CommentActions.edit, commentIdToUpdate: commentId);
   }
 
+  void resetButtonState() => state = state.copyWith(isButtonActive: false);
+
   Future<void> editComment(String text, Function onError) async {
     final comment = Comment(
       id: state.commentIdToUpdate!,

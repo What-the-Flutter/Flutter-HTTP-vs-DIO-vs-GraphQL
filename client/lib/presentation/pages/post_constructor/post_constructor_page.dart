@@ -91,19 +91,14 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
   }
 
   void onButtonClick() async {
-    final postTitle = ref.read(_titleTextController).text;
-    final postText = ref.read(_postTextController).text;
+    final postTitle = ref.read(_titleTextController).text.trim();
+    final postText = ref.read(_postTextController).text.trim();
     switch (widget.postAction) {
       case PostActions.create:
         ref.read(postConstructorProvider.notifier).addPost(
               title: postTitle,
               text: postText,
-              onSuccess: () async {
-                await ref.read(homeProvider.notifier).getPosts(_showErrorDialog);
-                ref.read(postConstructorProvider.notifier).pop();
-                ref.read(_titleTextController).clear();
-                ref.read(_postTextController).clear();
-              },
+              onSuccess: _resetPage,
               onError: _showErrorDialog,
             );
         break;
@@ -112,12 +107,7 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               postId: widget.post!.id,
               title: postTitle,
               text: postText,
-              onSuccess: () async {
-                await ref.read(homeProvider.notifier).getPosts(_showErrorDialog);
-                ref.read(postConstructorProvider.notifier).pop();
-                ref.read(_titleTextController).clear();
-                ref.read(_postTextController).clear();
-              },
+              onSuccess: _resetPage,
               onError: _showErrorDialog,
             );
         break;
@@ -154,6 +144,13 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
       },
       controller: controller,
     );
+  }
+
+  void _resetPage() async {
+    await ref.read(homeProvider.notifier).getPosts(_showErrorDialog);
+    ref.read(postConstructorProvider.notifier).pop();
+    ref.read(_titleTextController).clear();
+    ref.read(_postTextController).clear();
   }
 
   void _showErrorDialog() {
