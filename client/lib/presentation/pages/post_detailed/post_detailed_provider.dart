@@ -9,6 +9,7 @@ import 'package:client/domain/interactors/user_interactor.dart';
 import 'package:client/presentation/base/base_state_notifier.dart';
 import 'package:client/presentation/di/injector.dart';
 import 'package:client/presentation/pages/post_detailed/post_detailed_state.dart';
+import 'package:client/presentation/tools/error_handler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final postDetailedProvider =
@@ -54,7 +55,9 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
   Future<void> _getComments(Function onError) async {
     return launchRetrieveResult(
       () async {
-        state = state.copyWith(comments: await _commentInteractor.getAllCommentsByPostId(post.id));
+        final comments = await _commentInteractor.getAllCommentsByPostId(post.id);
+        comments.sort((a, b) => -a.date.compareTo(b.date));
+        state = state.copyWith(comments: comments);
       },
       errorHandler: (e) => onError,
     );

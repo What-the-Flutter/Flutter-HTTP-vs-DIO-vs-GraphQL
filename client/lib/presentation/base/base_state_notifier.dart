@@ -17,15 +17,4 @@ class BaseStateNotifier<St extends BaseState> extends StateNotifier<St> {
   }
 
   void pop() => appRouter.pop();
-
-  Future<void> launchRetrieveResult(
-    Function action, {
-    Function(dynamic e)? errorHandler,
-  }) async {
-    try {
-      await action.call();
-    } catch (e) {
-      errorHandler?.call(e);
-    }
-  }
 }

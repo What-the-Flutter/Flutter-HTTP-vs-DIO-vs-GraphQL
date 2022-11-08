@@ -5,6 +5,7 @@ import 'package:client/presentation/app/navigation/route_constants.dart';
 import 'package:client/presentation/base/base_state_notifier.dart';
 import 'package:client/presentation/di/injector.dart';
 import 'package:client/presentation/pages/auth/auth_state.dart';
+import 'package:client/presentation/tools/error_handler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authProvider = StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
