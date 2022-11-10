@@ -1,6 +1,6 @@
-import 'package:client/data/data_sources/dio_rest_remote_data_source.dart';
-import 'package:client/data/data_sources/graphql_remote_data_source.dart';
-import 'package:client/data/data_sources/http_rest_remote_data_source.dart';
+import 'package:client/data/data_sources/dio/dio_rest_remote_data_source.dart';
+import 'package:client/data/data_sources/graphql/graphql_remote_data_source.dart';
+import 'package:client/data/data_sources/http/http_rest_remote_data_source.dart';
 import 'package:client/data/data_sources/interfaces/i_remote_data_source.dart';
 import 'package:client/domain/constants/connectivity_constants.dart';
 

@@ -4,19 +4,9 @@ abstract class ConnectivityStrings {
     defaultValue: 'http',
   );
   static const _baseDomain = 'localhost';
-  static late int _port;
-  static late String _domain;
-
-  static String get baseUrl {
-    if (networkModule == NetworkModule.http.name || networkModule == NetworkModule.dio.name) {
-      _port = 5001;
-      _domain = 'api';
-    } else if (networkModule == NetworkModule.graphql.name) {
-      _port = 5000;
-      _domain = 'graphql';
-    }
-    return 'http://$_baseDomain:$_port/$_domain';
-  }
+  static final int _port = networkModule == NetworkModule.graphql.name ? 5000 : 5001;
+  static final String _domain = networkModule == NetworkModule.graphql.name ? 'graphql' : 'api';
+  static final String baseUrl = 'http://$_baseDomain:$_port/$_domain';
 }
 
 enum NetworkModule {
