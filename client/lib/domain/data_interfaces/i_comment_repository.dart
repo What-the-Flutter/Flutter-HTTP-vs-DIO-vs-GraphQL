@@ -1,7 +1,6 @@
 import 'package:client/domain/entities/comment/comment.dart';
-import 'entity_repository.dart';
 
-abstract class ICommentRepository implements EntityRepository<Comment> {
+abstract class ICommentRepository {
   Future<void> create(Comment comment);
   Future<void> delete(String id);
   Future<void> update(Comment newComment);

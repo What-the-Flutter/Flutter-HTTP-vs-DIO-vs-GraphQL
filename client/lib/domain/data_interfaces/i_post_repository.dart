@@ -1,7 +1,6 @@
 import 'package:client/domain/entities/post/post.dart';
-import 'entity_repository.dart';
 
-abstract class IPostRepository implements EntityRepository<Post> {
+abstract class IPostRepository {
   Future<List<Post>> getAllPosts();
   Future<void> create(Post post);
   Future<void> delete(String id);

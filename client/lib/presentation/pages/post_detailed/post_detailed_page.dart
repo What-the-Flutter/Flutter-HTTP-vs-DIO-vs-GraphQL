@@ -23,14 +23,18 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
 
   @override
   void initState() {
-    _stateInitialization = ref.read(postDetailedProvider.notifier).initState(_showErrorDialog);
+    _stateInitialization = ref.read(postDetailedProvider.notifier).initState();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    ref.listen(postDetailedProvider, (previous, next) {
+      if (next.showServerErrorMessage) {
+        _showErrorDialog();
+      }
+    });
     return Scaffold(
       body: SizedBox(
         width: size.width,
@@ -122,7 +126,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
           color: ref.watch(postDetailedProvider).isButtonActive
               ? BaseColors.iconColorDark
               : BaseColors.borderColorBlocked,
-          onPressed: () => {if (ref.watch(postDetailedProvider).isButtonActive) onButtonClick()},
+          onPressed: () => {if (ref.watch(postDetailedProvider).isButtonActive) _onButtonClick()},
           icon: Icon(
             state.commentAction == CommentActions.create ? Icons.send : Icons.refresh,
             size: 30.0,
@@ -163,7 +167,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
                 IconButton(
                   onPressed: () {
                     ref.read(postDetailedProvider.notifier).pop();
-                    ref.read(homeProvider.notifier).initState(_showErrorDialog);
+                    ref.read(homeProvider.notifier).initState();
                   },
                   icon: Icon(
                     Icons.arrow_back_ios_new,
@@ -231,10 +235,9 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
                         isSlidable: canUserSlideComment,
                         comment: state.comments[index],
                         onDeleteButtonPressed: () {
-                          ref.read(postDetailedProvider.notifier).deleteComment(
-                                state.comments[index].id,
-                                () => _showErrorDialog,
-                              );
+                          ref
+                              .read(postDetailedProvider.notifier)
+                              .deleteComment(state.comments[index].id);
                         },
                         onEditButtonPressed: () {
                           ref
@@ -266,21 +269,15 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
     );
   }
 
-  void onButtonClick() async {
+  void _onButtonClick() async {
     final state = ref.watch(postDetailedProvider);
     final commentText = ref.read(_commentTextController).text.trim();
     switch (state.commentAction) {
       case CommentActions.create:
-        ref.read(postDetailedProvider.notifier).addComment(
-              commentText,
-              _showErrorDialog,
-            );
+        ref.read(postDetailedProvider.notifier).addComment(commentText);
         break;
       case CommentActions.edit:
-        ref.read(postDetailedProvider.notifier).editComment(
-              commentText,
-              _showErrorDialog,
-            );
+        ref.read(postDetailedProvider.notifier).editComment(commentText);
         break;
     }
     _resetInputWidget();

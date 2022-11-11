@@ -15,7 +15,7 @@ final homeProvider = StateNotifierProvider<HomeStateNotifier, HomeState>((ref) {
 });
 
 class HomeStateNotifier extends BaseStateNotifier<HomeState> {
-  static final _initialState = HomeState(posts: [], userId: '');
+  static final _initialState = HomeState(posts: [], userId: '', showServerErrorMessage: false);
 
   late Timer _timer;
   final _pollingTimeout = const Duration(seconds: 10);
@@ -28,47 +28,53 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
     _user = i.get<UserInteractor>().user;
   }
 
-  void initState(Function onError) async {
-    await getPosts(onError);
+  void initState() async {
+    await getPosts();
     state = state.copyWith(userId: _user.id);
-    _initPolling(onError);
+    _initPolling();
   }
 
-  void _initPolling(Function onError) async {
-    _timer = Timer.periodic(_pollingTimeout, (_) async => await getPosts(onError));
-  }
+  void _initPolling() async =>
+      _timer = Timer.periodic(_pollingTimeout, (_) async => await getPosts());
 
   void stopPolling() => _timer.cancel();
 
-  Future<void> getPosts(Function onError) async {
+  Future<void> getPosts() async {
     return launchRetrieveResult(
       () async {
         final newPosts = await _postInteractor.getPosts();
         newPosts.sort((a, b) => -a.date.compareTo(b.date));
         state = state.copyWith(posts: newPosts);
       },
-      errorHandler: (e) => onError,
+      errorHandler: (e) => _openErrorDialog,
     );
   }
 
-  void removePost(String postId, Function onError) async {
+  void removePost(String postId) async {
     return launchRetrieveResult(
       () async {
         await _postInteractor.removePost(postId);
         final newPosts = await _postInteractor.getPosts();
         state = state.copyWith(posts: newPosts);
       },
-      errorHandler: (e) => onError,
+      errorHandler: (e) => _openErrorDialog,
     );
   }
 
-  void openPostPage(String postId, Function onError) async {
+  void openPostPage(String postId) async {
     return launchRetrieveResult(
       () async {
         await _postInteractor.setPost(postId);
         appRouter.pushNamed(Routes.post);
       },
-      errorHandler: (e) => onError,
+      errorHandler: (e) => _openErrorDialog,
     );
+  }
+
+  void _openErrorDialog() => state.copyWith(showServerErrorMessage: true);
+
+  void closeErrorDialog() {
+    pop();
+    state.copyWith(showServerErrorMessage: false);
   }
 }

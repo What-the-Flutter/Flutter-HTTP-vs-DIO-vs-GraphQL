@@ -6,22 +6,14 @@ class CommentRepository extends BaseRepository implements ICommentRepository {
   CommentRepository(super.remoteDataSource);
 
   @override
-  Future<void> create(Comment comment) async {
-    return await remoteDataSource.createComment(comment);
-  }
+  Future<void> create(_) async => await remoteDataSource.createComment(_);
 
   @override
-  Future<void> delete(String id) async {
-    return await remoteDataSource.deleteComment(id);
-  }
+  Future<void> delete(_) async => await remoteDataSource.deleteComment(_);
 
   @override
-  Future<List<Comment>> getAllByPostId(String postId) async {
-    return await remoteDataSource.getCommentsByPostId(postId);
-  }
+  Future<List<Comment>> getAllByPostId(_) async => await remoteDataSource.getCommentsByPostId(_);
 
   @override
-  Future<void> update(Comment newComment) async {
-    return await remoteDataSource.updateComment(newComment);
-  }
+  Future<void> update(_) async => await remoteDataSource.updateComment(_);
 }

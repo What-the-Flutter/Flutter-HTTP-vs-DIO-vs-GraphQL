@@ -12,14 +12,14 @@ class Background extends StatelessWidget {
         color: BaseColors.backgroundColorLight,
         child: CustomPaint(
           size: Size(size.width, size.height),
-          painter: Curved(),
+          painter: _Curved(),
         ),
       ),
     );
   }
 }
 
-class Curved extends CustomPainter {
+class _Curved extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var rect = Offset.zero & size;

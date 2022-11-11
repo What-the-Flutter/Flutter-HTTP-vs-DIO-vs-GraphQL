@@ -17,6 +17,7 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
     isButtonActive: false,
     pageView: AuthPageView.login,
     showErrorMessage: false,
+    showServerErrorMessage: false,
   );
 
   late final UserInteractor _userInteractor;
@@ -29,7 +30,6 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
     required String username,
     required String password,
     required Function onSuccess,
-    required Function onError,
   }) async {
     final user = User(
       id: '0',
@@ -50,7 +50,7 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
         if (e is WrongUserDataException) {
           state = state.copyWith(showErrorMessage: true);
         } else {
-          onError();
+          _openErrorDialog();
         }
       },
     );
@@ -59,7 +59,6 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
   Future<void> login({
     required String username,
     required String password,
-    required Function onError,
   }) async {
     final user = User(
       id: '0',
@@ -75,10 +74,17 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
         if (e is WrongUserDataException) {
           state = state.copyWith(showErrorMessage: true);
         } else {
-          onError();
+          _openErrorDialog();
         }
       },
     );
+  }
+
+  void _openErrorDialog() => state.copyWith(showServerErrorMessage: true);
+
+  void closeErrorDialog() {
+    pop();
+    state.copyWith(showServerErrorMessage: false);
   }
 
   void switchPageView(AuthPageView newView) => state = state.copyWith(

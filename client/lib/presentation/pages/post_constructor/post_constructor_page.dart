@@ -43,6 +43,11 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    ref.listen(postConstructorProvider, (previous, next) {
+      if (next.showServerErrorMessage) {
+        _showErrorDialog();
+      }
+    });
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
@@ -83,14 +88,14 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               ? AppStrings.create(context)
               : AppStrings.edit(context),
           isButtonActive: ref.watch(postConstructorProvider).isButtonActive,
-          onClick: onButtonClick,
+          onClick: _onButtonClick,
           margin: 0,
         ),
       ],
     );
   }
 
-  void onButtonClick() async {
+  void _onButtonClick() async {
     final postTitle = ref.read(_titleTextController).text.trim();
     final postText = ref.read(_postTextController).text.trim();
     switch (widget.postAction) {
@@ -99,7 +104,6 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               title: postTitle,
               text: postText,
               onSuccess: _resetPage,
-              onError: _showErrorDialog,
             );
         break;
       case PostActions.edit:
@@ -108,7 +112,6 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
               title: postTitle,
               text: postText,
               onSuccess: _resetPage,
-              onError: _showErrorDialog,
             );
         break;
     }
@@ -147,7 +150,7 @@ class _PostConstructorPageState extends ConsumerState<PostConstructorPage> {
   }
 
   void _resetPage() async {
-    await ref.read(homeProvider.notifier).getPosts(_showErrorDialog);
+    await ref.read(homeProvider.notifier).getPosts();
     ref.read(postConstructorProvider.notifier).pop();
     ref.read(_titleTextController).clear();
     ref.read(_postTextController).clear();

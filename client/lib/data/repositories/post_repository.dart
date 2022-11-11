@@ -6,27 +6,17 @@ class PostRepository extends BaseRepository implements IPostRepository {
   PostRepository(super.remoteDataSource);
 
   @override
-  Future<void> create(Post post) async {
-    return await remoteDataSource.createPost(post);
-  }
+  Future<void> create(_) async => await remoteDataSource.createPost(_);
 
   @override
-  Future<void> delete(String id) async {
-    return await remoteDataSource.deletePost(id);
-  }
+  Future<void> delete(_) async => await remoteDataSource.deletePost(_);
 
   @override
-  Future<List<Post>> getAllPosts() async {
-    return await remoteDataSource.getAllPosts();
-  }
+  Future<List<Post>> getAllPosts() async => await remoteDataSource.getAllPosts();
 
   @override
-  Future<Post> getPost(String id) async {
-    return await remoteDataSource.getPost(id);
-  }
+  Future<Post> getPost(_) async => await remoteDataSource.getPost(_);
 
   @override
-  Future<void> update(Post newPost) async {
-    return await remoteDataSource.updatePost(newPost);
-  }
+  Future<void> update(_) async => await remoteDataSource.updatePost(_);
 }

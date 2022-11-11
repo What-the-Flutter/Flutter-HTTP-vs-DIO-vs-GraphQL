@@ -1,7 +1,7 @@
 import 'package:client/domain/entities/user/user.dart';
-import 'entity_repository.dart';
 
-abstract class IUserRepository implements EntityRepository<User> {
+abstract class IUserRepository {
+  late final User user;
   Future<void> signupUser(User user);
-  Future<User> loginUser(User user);
+  Future<void> loginUser(User user);
 }

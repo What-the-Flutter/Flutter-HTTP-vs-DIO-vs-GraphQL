@@ -11,12 +11,14 @@ class PostDetailedState extends BaseState {
   final List<Comment> comments;
   final String? commentIdToUpdate;
   final CommentActions commentAction;
+  final bool showServerErrorMessage;
 
   PostDetailedState({
     this.commentIdToUpdate,
     required this.isButtonActive,
     required this.comments,
     required this.commentAction,
+    required this.showServerErrorMessage,
   });
 
   PostDetailedState copyWith({
@@ -24,12 +26,14 @@ class PostDetailedState extends BaseState {
     bool? isButtonActive,
     List<Comment>? comments,
     CommentActions? commentAction,
+    bool? showServerErrorMessage,
   }) {
     return PostDetailedState(
       commentIdToUpdate: commentIdToUpdate ?? this.commentIdToUpdate,
       isButtonActive: isButtonActive ?? this.isButtonActive,
       comments: comments ?? this.comments,
       commentAction: commentAction ?? this.commentAction,
+      showServerErrorMessage: showServerErrorMessage ?? this.showServerErrorMessage,
     );
   }
 }

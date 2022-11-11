@@ -18,12 +18,17 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-    ref.read(homeProvider.notifier).initState(_showErrorDialog);
+    ref.read(homeProvider.notifier).initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    ref.listen(homeProvider, (previous, next) {
+      if (next.showServerErrorMessage) {
+        _showErrorDialog();
+      }
+    });
     return Scaffold(
       body: SizedBox(
         width: size.width,
@@ -111,17 +116,11 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
                 isSlidable: canUserSlidePost,
                 post: state.posts[index],
                 onDeleteButtonPressed: () {
-                  ref.read(homeProvider.notifier).removePost(
-                        state.posts[index].id,
-                        _showErrorDialog,
-                      );
+                  ref.read(homeProvider.notifier).removePost(state.posts[index].id);
                 },
                 onTap: () {
                   ref.read(homeProvider.notifier).stopPolling();
-                  ref.read(homeProvider.notifier).openPostPage(
-                        state.posts[index].id,
-                        _showErrorDialog,
-                      );
+                  ref.read(homeProvider.notifier).openPostPage(state.posts[index].id);
                 },
               );
             },

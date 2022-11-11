@@ -23,6 +23,7 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
     comments: [],
     commentAction: CommentActions.create,
     commentIdToUpdate: null,
+    showServerErrorMessage: false,
   );
 
   final UserInteractor _userInteractor = i.get();
@@ -37,33 +38,33 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
 
   PostDetailedStateNotifier() : super(_initialState);
 
-  Future<void> initState(Function onError) async {
+  Future<void> initState() async {
     post = _postInteractor.post;
     _user = _userInteractor.user;
-    await _getComments(onError);
-    _initPolling(onError);
+    await _getComments();
+    _initPolling();
   }
 
-  void _initPolling(Function onError) {
-    _timer = Timer.periodic(_pollingTimeout, (_) async => await _getComments(onError));
+  void _initPolling() {
+    _timer = Timer.periodic(_pollingTimeout, (_) async => await _getComments());
   }
 
   void stopPolling() => _timer.cancel();
 
   bool isCommentAuthor(String commentUserId) => commentUserId == _user.id;
 
-  Future<void> _getComments(Function onError) async {
+  Future<void> _getComments() async {
     return launchRetrieveResult(
       () async {
         final comments = await _commentInteractor.getAllCommentsByPostId(post.id);
         comments.sort((a, b) => -a.date.compareTo(b.date));
         state = state.copyWith(comments: comments);
       },
-      errorHandler: (e) => onError,
+      errorHandler: (e) => _openErrorDialog(),
     );
   }
 
-  Future<void> addComment(String text, Function onError) async {
+  Future<void> addComment(String text) async {
     final commentModel = Comment(
       id: '0',
       userId: _user.id,
@@ -77,9 +78,9 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
       () async {
         await _commentInteractor.createComment(commentModel);
       },
-      errorHandler: (e) => onError,
+      errorHandler: (e) => _openErrorDialog(),
     );
-    await _getComments(onError);
+    await _getComments();
   }
 
   void initEditCommentState(String commentId) {
@@ -88,7 +89,7 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
 
   void resetButtonState() => state = state.copyWith(isButtonActive: false);
 
-  Future<void> editComment(String text, Function onError) async {
+  Future<void> editComment(String text) async {
     final comment = Comment(
       id: state.commentIdToUpdate!,
       userId: _user.id,
@@ -102,20 +103,27 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
         await _commentInteractor.updateComment(comment);
         state = state.copyWith(commentAction: CommentActions.create, commentIdToUpdate: null);
       },
-      errorHandler: (e) => onError,
+      errorHandler: (e) => _openErrorDialog(),
     );
-    await _getComments(onError);
+    await _getComments();
   }
 
-  Future<void> deleteComment(String commentId, Function onError) async {
+  Future<void> deleteComment(String commentId) async {
     await launchRetrieveResult(
       () async {
         await _commentInteractor.deleteComment(commentId);
       },
-      errorHandler: (e) => onError,
+      errorHandler: (e) => _openErrorDialog(),
     );
-    await _getComments(onError);
+    await _getComments();
   }
 
   void setButtonActive(String text) => state = state.copyWith(isButtonActive: text.isNotEmpty);
+
+  void _openErrorDialog() => state.copyWith(showServerErrorMessage: true);
+
+  void closeErrorDialog() {
+    pop();
+    state.copyWith(showServerErrorMessage: false);
+  }
 }

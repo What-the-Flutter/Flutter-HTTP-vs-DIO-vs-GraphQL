@@ -10,12 +10,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final _usernameTextController = Provider((ref) => TextEditingController());
 final _passwordTextController = Provider((ref) => TextEditingController());
 
-class AuthPageWidget extends StatelessWidget {
+class AuthPageWidget extends ConsumerWidget {
   const AuthPageWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
+    ref.listen(authProvider, (previous, next) {
+      if (next.showServerErrorMessage) {
+        _showErrorDialog(ref, context);
+      }
+    });
     return Scaffold(
       body: Stack(
         children: [
@@ -188,9 +193,9 @@ class AuthPageWidget extends StatelessWidget {
               if (state.isButtonActive) {
                 switch (state.pageView) {
                   case AuthPageView.login:
-                    return onLoginClick(ref, context);
+                    return _onLoginClick(ref, context);
                   case AuthPageView.signup:
-                    return onSignupClick(ref, context);
+                    return _onSignupClick(ref, context);
                   default:
                     return;
                 }
@@ -226,18 +231,17 @@ class AuthPageWidget extends StatelessWidget {
     );
   }
 
-  void onLoginClick(WidgetRef ref, BuildContext context) {
+  void _onLoginClick(WidgetRef ref, BuildContext context) {
     FocusScope.of(context).unfocus();
     ref.read(authProvider.notifier).login(
           username: ref.read(_usernameTextController).value.text,
           password: ref.read(_passwordTextController).value.text,
-          onError: () => _showErrorDialog(ref, context),
         );
     ref.read(_usernameTextController).clear();
     ref.read(_passwordTextController).clear();
   }
 
-  void onSignupClick(WidgetRef ref, BuildContext context) {
+  void _onSignupClick(WidgetRef ref, BuildContext context) {
     FocusScope.of(context).unfocus();
     ref.read(authProvider.notifier).signup(
           username: ref.read(_usernameTextController).value.text,
@@ -248,7 +252,6 @@ class AuthPageWidget extends StatelessWidget {
             content: AppStrings.successfulSignUpDescription(context),
             onButtonClick: ref.read(authProvider.notifier).pop,
           ),
-          onError: () => _showErrorDialog(ref, context),
         );
     ref.read(_usernameTextController).clear();
     ref.read(_passwordTextController).clear();
@@ -311,7 +314,7 @@ class AuthPageWidget extends StatelessWidget {
       context: context,
       title: AppStrings.authError(context),
       content: AppStrings.serverErrorDescription(context),
-      onButtonClick: ref.read(authProvider.notifier).pop,
+      onButtonClick: ref.read(authProvider.notifier).closeErrorDialog,
     );
   }
 }

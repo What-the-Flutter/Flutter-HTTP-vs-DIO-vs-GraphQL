@@ -14,7 +14,10 @@ final postConstructorProvider =
 });
 
 class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorState> {
-  static final _initialValue = PostConstructorState(isButtonActive: false);
+  static final _initialValue = PostConstructorState(
+    isButtonActive: false,
+    showServerErrorMessage: false,
+  );
 
   late final PostInteractor _postInteractor;
   late final User _user;
@@ -28,7 +31,6 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
     required String title,
     required String text,
     required Function onSuccess,
-    required Function onError,
   }) async {
     final post = Post(
       id: '0',
@@ -44,7 +46,7 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
         state = state.copyWith(isButtonActive: false);
         onSuccess();
       },
-      errorHandler: (e) => onError,
+      errorHandler: (e) => _openErrorDialog(),
     );
   }
 
@@ -53,7 +55,6 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
     required String title,
     required String text,
     required Function onSuccess,
-    required Function onError,
   }) async {
     final post = Post(
       id: postId,
@@ -69,10 +70,17 @@ class PostConstructorStateNotifier extends BaseStateNotifier<PostConstructorStat
         state = state.copyWith(isButtonActive: false);
         onSuccess();
       },
-      errorHandler: (e) => onError,
+      errorHandler: (e) => _openErrorDialog(),
     );
   }
 
   void setButtonActive(String title, String text) =>
       state = state.copyWith(isButtonActive: title.isNotEmpty && text.isNotEmpty);
+
+  void _openErrorDialog() => state.copyWith(showServerErrorMessage: true);
+
+  void closeErrorDialog() {
+    pop();
+    state.copyWith(showServerErrorMessage: false);
+  }
 }
