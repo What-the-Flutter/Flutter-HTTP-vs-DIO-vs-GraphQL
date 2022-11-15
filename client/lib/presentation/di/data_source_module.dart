@@ -1,7 +1,8 @@
-import 'package:client/data/data_sources/dio/dio_rest_remote_data_source.dart';
-import 'package:client/data/data_sources/graphql/graphql_remote_data_source.dart';
-import 'package:client/data/data_sources/http/http_rest_remote_data_source.dart';
+import 'package:client/data/data_sources/crud/dio_crud.dart';
+import 'package:client/data/data_sources/graphql_remote_data_source.dart';
+import 'package:client/data/data_sources/crud/http_crud.dart';
 import 'package:client/data/data_sources/interfaces/i_remote_data_source.dart';
+import 'package:client/data/data_sources/rest_remote_data_source.dart';
 import 'package:client/domain/constants/connectivity_constants.dart';
 
 import 'injector.dart';
@@ -9,9 +10,9 @@ import 'injector.dart';
 void initDataSourceModule() {
   final IRemoteDataSource remoteDataSource;
   if (ConnectivityStrings.networkModule == NetworkModule.dio.name) {
-    remoteDataSource = DioRestRemoteDataSource();
+    remoteDataSource = RestRemoteDataSource(DioCrud());
   } else if (ConnectivityStrings.networkModule == NetworkModule.http.name) {
-    remoteDataSource = HttpRestRemoteDataSource();
+    remoteDataSource = RestRemoteDataSource(HttpCrud());
   } else if (ConnectivityStrings.networkModule == NetworkModule.graphql.name) {
     remoteDataSource = GraphqlRemoteDataSource();
   } else {

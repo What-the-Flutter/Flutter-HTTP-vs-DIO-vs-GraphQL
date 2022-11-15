@@ -11,36 +11,40 @@ class DioCrud implements ICrud {
   }
 
   @override
-  Future<Response> post(path, data) async {
+  Future<RestResponseWrapper> post(String path, dynamic data) async {
     try {
-      return await _dio.post(path, data: data.toJson());
+      final response = await _dio.post(path, data: data.toJson());
+      return RestResponseWrapper(data: response.data);
     } on DioError catch (e) {
       throw _getExceptionByStatusCode(e);
     }
   }
 
   @override
-  Future<Response> delete(path) async {
+  Future<RestResponseWrapper> delete(String path) async {
     try {
-      return await _dio.delete(path);
+      final response = await _dio.delete(path);
+      return RestResponseWrapper(data: response.data);
     } on DioError catch (e) {
       throw _getExceptionByStatusCode(e);
     }
   }
 
   @override
-  Future<Response> get(path) async {
+  Future<RestResponseWrapper> get(String path) async {
     try {
-      return await _dio.get(path);
+      final response = await _dio.get(path);
+      return RestResponseWrapper(data: response.data);
     } on DioError catch (e) {
       throw _getExceptionByStatusCode(e);
     }
   }
 
   @override
-  Future<Response> put(path, data) async {
+  Future<RestResponseWrapper> put(String path, dynamic data) async {
     try {
-      return await _dio.put(path, data: data.toJson());
+      final response = await _dio.put(path, data: data.toJson());
+      return RestResponseWrapper(data: response.data);
     } on DioError catch (e) {
       throw _getExceptionByStatusCode(e);
     }
