@@ -57,6 +57,7 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
       () async {
         await _postInteractor.removePost(postId);
         final newPosts = await _postInteractor.getPosts();
+        newPosts.sort((a, b) => -a.date.compareTo(b.date));
         state = state.copyWith(posts: newPosts);
       },
       errorHandler: (e) => _openErrorDialog,
