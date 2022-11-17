@@ -29,10 +29,12 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
   }
 
   void initState() async {
-    if(state.userId != _user.id) {
-      state = state.copyWith(userId: _user.id);
+    if(mounted) {
+      await getPosts();
+      if(state.userId != _user.id) {
+        state = state.copyWith(userId: _user.id);
+      }
     }
-    await getPosts();
     _initPolling();
   }
 
