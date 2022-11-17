@@ -1,78 +1,77 @@
-import 'package:client/data/data_sources/http/http_crud.dart';
 import 'package:client/data/data_sources/interfaces/I_crud.dart';
 import 'package:client/data/data_sources/interfaces/i_remote_data_source.dart';
-import 'package:client/data/utils/remote_utils.dart';
 import 'package:client/domain/entities/comment/comment.dart';
 import 'package:client/domain/entities/post/post.dart';
 import 'package:client/domain/entities/user/user.dart';
-import 'package:http/http.dart';
 
-class HttpRestRemoteDataSource implements IRemoteDataSource {
-  final ICrud _httpCrud = HttpCrud();
+class RestRemoteDataSource implements IRemoteDataSource {
+  late final ICrud _crud;
+
+  RestRemoteDataSource(this._crud);
 
   @override
   Future<void> createComment(Comment comment) async {
-    final Response response = await _httpCrud.post('/comment', comment);
+    final response = await _crud.post('/comment', comment);
     return response.retrieveResult();
   }
 
   @override
   Future<void> createPost(Post post) async {
-    final Response response = await _httpCrud.post('/post', post);
+    final response = await _crud.post('/post', post);
     return response.retrieveResult();
   }
 
   @override
   Future<void> createUser(User user) async {
-    final Response response = await _httpCrud.post('/createUser', user);
+    var response = await _crud.post('/createUser', user);
     return response.retrieveResult();
   }
 
   @override
   Future<void> deleteComment(String commentId) async {
-    final Response response = await _httpCrud.delete('/comment/$commentId');
+    final response = await _crud.delete('/comment/$commentId');
     return response.retrieveResult();
   }
 
   @override
   Future<void> deletePost(String postId) async {
-    final Response response = await _httpCrud.delete('/post/$postId');
+    final response = await _crud.delete('/post/$postId');
     return response.retrieveResult();
   }
 
   @override
-  Future<List<Post>> getAllPosts() async {
-    final Response response = await _httpCrud.get('/posts');
-    return response.retrieveResultAsList<Post>();
-  }
-
-  @override
   Future<List<Comment>> getCommentsByPostId(String postId) async {
-    final Response response = await _httpCrud.get('/comment/$postId');
+    final response = await _crud.get('/comment/$postId');
     return response.retrieveResultAsList<Comment>();
   }
 
   @override
-  Future<Post> getPost(String postId) async {
-    final Response response = await _httpCrud.get('/post/$postId');
-    return response.retrieveResult<Post>()!;
+  Future<List<Post>> getAllPosts() async {
+    final response = await _crud.get('/posts');
+    return response.retrieveResultAsList<Post>();
   }
 
   @override
   Future<User> loginUser(User user) async {
-    final Response response = await _httpCrud.post('/login', user);
+    var response = await _crud.post('/login', user);
     return response.retrieveResult<User>()!;
   }
 
   @override
   Future<void> updateComment(Comment comment) async {
-    final Response response = await _httpCrud.put('/comment/${comment.id}', comment);
+    final response = await _crud.put('/comment/${comment.id}', comment);
     return response.retrieveResult();
   }
 
   @override
   Future<void> updatePost(Post post) async {
-    final Response response = await _httpCrud.put('/post/${post.id}', post);
+    final response = await _crud.put('/post/${post.id}', post);
     return response.retrieveResult();
+  }
+
+  @override
+  Future<Post> getPost(String postId) async {
+    final response = await _crud.get('/post/$postId');
+    return response.retrieveResult<Post>()!;
   }
 }

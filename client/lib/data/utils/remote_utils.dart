@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:client/domain/constants/connectivity_constants.dart';
 import 'package:client/domain/entities/comment/comment.dart';
 import 'package:client/domain/entities/post/post.dart';
 import 'package:client/domain/entities/user/user.dart';
@@ -9,39 +10,46 @@ import 'package:dio/dio.dart' as dio;
 
 class WrongUserDataException implements Exception {}
 
-extension DioResponseTo on dio.Response {
-  T? retrieveResult<T>() {
-    return data != 'OK' && data.isNotEmpty ? _createFromJSON<T>(data)! : null;
-  }
+class RestResponseWrapper {
+  final dynamic data;
+  final int status;
+  final Type _type =
+      ConnectivityStrings.networkModule == NetworkModule.http.name ? http.Response : dio.Response;
 
-  List<T> retrieveResultAsList<T>() {
-    return (data as List).map((e) => (_createFromJSON<T>(e)!)).toList();
-  }
-}
+  RestResponseWrapper({required this.data, this.status = 200});
 
-extension HttpResponseTo on http.Response {
-  bool isSuccessful() => statusCode == 200 || statusCode == 201 || statusCode == 204;
-  bool wrongUserData() => statusCode == 401 || statusCode == 409;
+  bool isSuccessful() => status >= 200 && status < 400;
+
+  bool wrongUserData() => status >= 400 && status < 500;
 
   T? retrieveResult<T>() {
     if (isSuccessful()) {
-      return body != 'OK' && body.isNotEmpty
-          ? _createFromJSON<T>(json.decode(body.toString()))!
-          : null;
+      if (data.isNotEmpty && data != 'OK') {
+        if (_type == http.Response) {
+          return _createFromJSON<T>(json.decode(data.toString()))!;
+        } else {
+          return _createFromJSON<T>(data)!;
+        }
+      } else {
+        return null;
+      }
     } else if (wrongUserData()) {
       throw WrongUserDataException();
     } else {
-      throw Exception('Error: $reasonPhrase \n Error code: $statusCode');
+      throw Exception();
     }
   }
 
   List<T> retrieveResultAsList<T>() {
-    List<T> result;
     if (isSuccessful()) {
-      result = (json.decode(body.toString()) as List).map((e) => (_createFromJSON<T>(e)!)).toList();
-      return result;
+      if (_type == http.Response) {
+        return (json.decode(data.toString()) as List).map((e) => (_createFromJSON<T>(e)!)).toList();
+      } else {
+        return (data as List).map((e) => (_createFromJSON<T>(e)!)).toList();
+      }
+    } else {
+      throw Exception();
     }
-    throw Exception('Error: $reasonPhrase \n Error code: $statusCode');
   }
 }
 

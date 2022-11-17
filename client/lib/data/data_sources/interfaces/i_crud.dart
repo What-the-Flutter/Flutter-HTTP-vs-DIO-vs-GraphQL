@@ -1,8 +1,8 @@
-import 'package:client/domain/entities/api_object.dart';
+import 'package:client/data/utils/remote_utils.dart';
 
-abstract class ICrud<T extends ApiObject> {
-  Future<dynamic> post(String path, T data);
-  Future<dynamic> get(String path);
-  Future<dynamic> put(String path, T data);
-  Future<dynamic> delete(String path);
+abstract class ICrud<T> {
+  Future<RestResponseWrapper> post(String path, dynamic data);
+  Future<RestResponseWrapper> get(String path);
+  Future<RestResponseWrapper> put(String path, dynamic data);
+  Future<RestResponseWrapper> delete(String path);
 }
