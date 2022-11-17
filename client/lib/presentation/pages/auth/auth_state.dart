@@ -25,7 +25,7 @@ class AuthState extends BaseState {
       isButtonActive: isButtonActive ?? this.isButtonActive,
       pageView: pageView ?? this.pageView,
       showErrorMessage: showErrorMessage ?? this.showErrorMessage,
-      showServerErrorMessage: showServerErrorMessage ?? this.showErrorMessage,
+      showServerErrorMessage: showServerErrorMessage ?? this.showServerErrorMessage,
     );
   }
 }

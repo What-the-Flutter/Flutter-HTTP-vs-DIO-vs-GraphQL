@@ -33,6 +33,7 @@ class PostDetailedPageWidgetState extends ConsumerState<PostDetailedPage> {
     ref.listen(postDetailedProvider, (previous, next) {
       if (next.showServerErrorMessage) {
         _showErrorDialog();
+        ref.read(postDetailedProvider.notifier).dismissErrorDialog();
       }
     });
     return Scaffold(

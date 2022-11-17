@@ -76,10 +76,7 @@ class HomeStateNotifier extends BaseStateNotifier<HomeState> {
     );
   }
 
-  void _openErrorDialog() => state.copyWith(showServerErrorMessage: true);
+  void _openErrorDialog() => state = state.copyWith(showServerErrorMessage: true);
 
-  void closeErrorDialog() {
-    pop();
-    state.copyWith(showServerErrorMessage: false);
-  }
+  void dismissErrorDialog() => state = state.copyWith(showServerErrorMessage: false);
 }

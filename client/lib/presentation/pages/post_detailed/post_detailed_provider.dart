@@ -120,10 +120,7 @@ class PostDetailedStateNotifier extends BaseStateNotifier<PostDetailedState> {
 
   void setButtonActive(String text) => state = state.copyWith(isButtonActive: text.isNotEmpty);
 
-  void _openErrorDialog() => state.copyWith(showServerErrorMessage: true);
+  void _openErrorDialog() => state = state.copyWith(showServerErrorMessage: true);
 
-  void closeErrorDialog() {
-    pop();
-    state.copyWith(showServerErrorMessage: false);
-  }
+  void dismissErrorDialog() => state = state.copyWith(showServerErrorMessage: false);
 }

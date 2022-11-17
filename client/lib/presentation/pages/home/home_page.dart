@@ -27,6 +27,7 @@ class HomePageWidgetState extends ConsumerState<HomePage> {
     ref.listen(homeProvider, (previous, next) {
       if (next.showServerErrorMessage) {
         _showErrorDialog();
+        ref.read(homeProvider.notifier).dismissErrorDialog();
       }
     });
     return Scaffold(
