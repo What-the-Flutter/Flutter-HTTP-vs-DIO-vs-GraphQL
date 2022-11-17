@@ -19,6 +19,7 @@ class AuthPageWidget extends ConsumerWidget {
     ref.listen(authProvider, (previous, next) {
       if (next.showServerErrorMessage) {
         _showErrorDialog(ref, context);
+        ref.read(authProvider.notifier).dismissErrorDialog();
       }
     });
     return Scaffold(
@@ -314,7 +315,7 @@ class AuthPageWidget extends ConsumerWidget {
       context: context,
       title: AppStrings.authError(context),
       content: AppStrings.serverErrorDescription(context),
-      onButtonClick: ref.read(authProvider.notifier).closeErrorDialog,
+      onButtonClick: ref.read(authProvider.notifier).pop,
     );
   }
 }

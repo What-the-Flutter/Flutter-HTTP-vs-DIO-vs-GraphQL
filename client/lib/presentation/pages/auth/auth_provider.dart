@@ -80,12 +80,9 @@ class AuthStateNotifier extends BaseStateNotifier<AuthState> {
     );
   }
 
-  void _openErrorDialog() => state.copyWith(showServerErrorMessage: true);
+  void _openErrorDialog() => state = state.copyWith(showServerErrorMessage: true);
 
-  void closeErrorDialog() {
-    pop();
-    state.copyWith(showServerErrorMessage: false);
-  }
+  void dismissErrorDialog() => state = state.copyWith(showServerErrorMessage: false);
 
   void switchPageView(AuthPageView newView) => state = state.copyWith(
         pageView: newView,
